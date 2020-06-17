@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="base_button_width">280dp</dimen>
+    <dimen name="base_button_height">60dp</dimen>
+
+    <!-- region font -->
+    <dimen name="font_xsmall">12sp</dimen>
+    <dimen name="font_default">14sp</dimen>
+    <dimen name="font_large">16sp</dimen>
+    <dimen name="font_xlarge">20sp</dimen>
+    <!-- endregion -->
+
+    <!-- region margin -->
+    <dimen name="margin_xsmall">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_large">20dp</dimen>
+    <dimen name="margin_xlarge">24dp</dimen>
+    <dimen name="margin_glarge">28dp</dimen>
+    <dimen name="margin_xxlarge">36dp</dimen>
+    <dimen name="margin_xxxlarge">44dp</dimen>
+    <dimen name="margin_large_top">104dp</dimen>
+    <!-- endregion -->
+</resources>

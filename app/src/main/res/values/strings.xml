@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PucQuiz</string>
+    <string name="welcome_puc_quiz">Bem vindo ao PucQuiz</string>
+    <string name="welcome_puc_quiz_select">Selecione uma disciplina</string>
+    <string name="welcome_puc_quiz_redes">Redes II</string>
+    <string name="welcome_puc_quiz_hibridas">Hibridas</string>
+    <string name="welcome_puc_quiz_distribuidas">Distribuidas</string>
+
 </resources>
