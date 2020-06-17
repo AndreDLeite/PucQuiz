@@ -22,4 +22,14 @@
     <dimen name="margin_xxxlarge">44dp</dimen>
     <dimen name="margin_large_top">104dp</dimen>
     <!-- endregion -->
+
+    <!-- region padding -->
+    <dimen name="padding_xxsmall">2dp</dimen>
+    <dimen name="padding_xsmall">6dp</dimen>
+    <dimen name="padding_small">12dp</dimen>
+    <dimen name="paddingStart_medium">14dp</dimen>
+    <dimen name="paddingEnd_medium">14dp</dimen>
+    <dimen name="paddingTop_medium">16dp</dimen>
+    <dimen name="paddingBottom_medium">16dp</dimen>
+    <!-- endregion -->
 </resources>

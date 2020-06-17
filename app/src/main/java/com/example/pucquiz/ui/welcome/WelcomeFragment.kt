@@ -50,7 +50,7 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun navigateToRedesQuiz() {
-
+        listener?.onRedesQuizSelected()
     }
 
     private fun navigateToDistribuidasQuiz() {
