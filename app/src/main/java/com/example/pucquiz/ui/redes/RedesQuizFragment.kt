@@ -36,7 +36,7 @@ class RedesQuizFragment : Fragment() {
         }
 
         buttonStartQuiz.setOnClickListener {
-
+            //TODO: load fragment with questions loaded from server
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pucquiz.data.remote.QuestionsServiceFactory
 import com.example.pucquiz.models.QuestionItem
+import com.example.pucquiz.models.QuestionType
 import org.koin.core.KoinComponent
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,7 +35,8 @@ class RedesQuizViewModel(application: Application) : AndroidViewModel(applicatio
                 ) {
                     val questions = response.body()
                     questions?.let {
-                        _questionsLiveData.postValue(questions)
+                        val filteredQuestions = it.filter { it.questionType == QuestionType.REDES }
+                        _questionsLiveData.postValue(filteredQuestions)
                     }
                 }
 
