@@ -32,23 +32,37 @@
         tools:ignore="ContentDescription" />
 
     <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_puc_quiz_redes"
+        android:textAllCaps="true"
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="@dimen/font_xlarge"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/backButton" />
+
+    <TextView
         android:id="@+id/loadingQuestions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Carregando perguntas!"
+        android:text="@string/loading_questions"
         android:textSize="@dimen/font_xlarge"
+        android:fontFamily="@font/rubik_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
-    <TextView
-        android:id="@+id/questionsAppended"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="...!"
-        android:visibility="gone"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonStartQuiz"
+        android:layout_width="250dp"
+        android:layout_height="@dimen/base_button_height"
+        android:text="@string/all_start"
         android:textSize="@dimen/font_xlarge"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
