@@ -39,7 +39,6 @@ class RedesQuizViewModel(application: Application) : AndroidViewModel(applicatio
                         _questionsLiveData.postValue(filteredQuestions)
                     }
                 }
-
             })
     }
 }
