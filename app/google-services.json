@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "52992783783",
+    "project_id": "puqquiz-auth-android",
+    "storage_bucket": "puqquiz-auth-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52992783783:android:1a404bd8fad3a215497282",
+        "android_client_info": {
+          "package_name": "com.example.pucquiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52992783783-vmt2h6tldv4q4570lulgftqgl2gjd796.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIv6anCEGZII3OtJKAXNk7ScfubKSBVr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52992783783-vmt2h6tldv4q4570lulgftqgl2gjd796.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

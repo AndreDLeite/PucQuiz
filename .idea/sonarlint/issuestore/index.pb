@@ -19,3 +19,15 @@ e
 5app/src/main/java/com/example/pucquiz/MainActivity.kt,4/a/4af7a23d92a6d1f4e1bca5c702d1fb6cd16d1bda
 s
 Capp/src/main/java/com/example/pucquiz/ui/redes/RedesQuizFragment.kt,4/f/4f51f8c8ee835ac01d3d94579632048f883a6b86
+l
+<app/src/main/java/com/example/pucquiz/models/QuestionItem.kt,f/0/f0e14d980e618edb8d8aa5e1e9055820b6b93e82
+l
+<app/src/main/java/com/example/pucquiz/shared/AppConstants.kt,9/5/955367edcbafc65631c18f7fb9e24a868d29119c
+u
+Eapp/src/main/java/com/example/pucquiz/data/remote/QuestionsService.kt,d/b/db19a99640ba92eda82113594adc797f699fd288
+l
+<app/src/main/java/com/example/pucquiz/models/QuestionType.kt,2/a/2ae68dff188c88738bd12198c9e6c2f8f94b5c4c
+|
+Lapp/src/main/java/com/example/pucquiz/data/remote/QuestionsServiceFactory.kt,b/d/bdc0333313e4546c0850e0906242990f157991a3
+
+Oapp/src/main/java/com/example/pucquiz/ui/redes/viewmodels/RedesQuizViewModel.kt,0/b/0bfd5059fb4ebe3e8fbc3376612bfbf4b3cb9afe
