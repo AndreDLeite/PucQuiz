@@ -1,6 +1,7 @@
 package com.example.pucquiz.ui.register.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -28,10 +29,12 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
 
     fun registerUser(userName: String, userAge: Int, userEmail: String, userPassword: String) {
         ioScope.launch {
-            _registrationLiveData.postValue(Resource.loading(null))
+            _registrationLiveData.postValue(Resource.loading())
             auth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { itTask ->
+                    Log.e("Register","chegou aqui!")
                     if (itTask.isSuccessful) {
+                        Log.e("Register","chegou aqui!")
                         val user = User(
                             name = userName,
                             age = userAge,
@@ -53,6 +56,9 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
                                     }
                                 }
                         }
+                    } else {
+                        _registrationLiveData.postValue(Resource.error("Error registering user", null))
+                        Log.d("task resonse", "${itTask.exception}")
                     }
                 }
         }

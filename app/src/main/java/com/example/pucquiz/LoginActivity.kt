@@ -1,17 +1,18 @@
 package com.example.pucquiz
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.login.LoginFragment
 import com.example.pucquiz.ui.register.RegisterFragment
 
-class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionListener,
-    RegisterFragment.OnFragmentInteractionListener {
+class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_login)
         replaceFragment(LoginFragment(), false)
 
@@ -37,8 +38,13 @@ class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionLi
         replaceFragment(RegisterFragment(), true)
     }
 
+    override fun onSuccessfulLogin() {
+        val intent = Intent(this, OnBoardingActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onRegisterCompleted() {
-        //TODO: Go to logged in fragment
+        replaceFragment(LoginFragment(), false)
     }
 
 }

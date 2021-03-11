@@ -6,10 +6,29 @@
     android:layout_height="match_parent">
 
 
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="150dp"
+        android:layout_height="300dp"
+        android:paddingStart="30dp"
+        android:paddingTop="30dp"
+        android:paddingEnd="30dp"
+        android:paddingBottom="30dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.350" />
+
     <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="300dp"
+        android:id="@+id/editTextTextPersonEmail"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:hint="E-mail / Login"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,14 +39,16 @@
 
     <EditText
         android:id="@+id/editTextTextPassword"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:hint="Senha"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonEmail" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialButton_login"
@@ -41,16 +62,34 @@
         app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton_register"
+    <TextView
+        android:id="@+id/textView_forgot_password"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="2dp"
+        android:text="Esqueci minha senha"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/textView_register"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/materialButton_login" />
+
+    <TextView
+        android:id="@+id/textView_register"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="Criar conta"
+        android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
+        app:layout_constraintStart_toEndOf="@+id/textView_forgot_password"
         app:layout_constraintTop_toBottomOf="@+id/materialButton_login" />
 
 
