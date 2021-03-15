@@ -6,6 +6,8 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -20,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_register.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private var listener: OnFragmentInteractionListener? = null
     private val registerViewModel by inject<RegisterViewModel>()
@@ -39,6 +41,7 @@ class RegisterFragment : Fragment() {
         //TODO: Add 'eye' to show password
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
+        setupDropDownGradeStatus()
         setupViewModelObserver()
     }
 
@@ -49,6 +52,19 @@ class RegisterFragment : Fragment() {
         materialButton_register.setOnClickListener {
             checkUserData()
             context?.hideKeyboard(materialButton_register)
+        }
+    }
+
+    private fun setupDropDownGradeStatus() {
+        context?.let { itContext ->
+            val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
+                itContext,
+                R.array.grade_status,
+                android.R.layout.simple_spinner_item
+            )
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner_drop_down_grade_selector.adapter = adapter
+            spinner_drop_down_grade_selector.onItemSelectedListener = this
         }
     }
 
@@ -92,7 +108,7 @@ class RegisterFragment : Fragment() {
 
         dialog.setDialogParameters(
             title = "Erro ao cadastrar",
-            description = "Tivemos um problema com o seu registro. Por favor, certifique-se que seus dados estão corretos e válidos.",
+            description = "Tivemos um problema com o seu registro. Por favor, verifique se seus dados estão corretos e válidos.",
             confirmText = "Ok",
             cancelText = null
         )
@@ -175,6 +191,15 @@ class RegisterFragment : Fragment() {
             listener = context
         }
     }
+
+    override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        registerViewModel.userGradeStatus = adapterView?.getItemAtPosition(position).toString()
+    }
+
+    override fun onNothingSelected(adapterView: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+
 
     interface OnFragmentInteractionListener {
         fun onRegisterCompleted()

@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@id/view"
         app:layout_constraintVertical_bias="0.400" />
 
     <View
@@ -45,10 +45,10 @@
         android:fontFamily="@font/rubik_medium"
         android:text="Registrar"
         android:textSize="@dimen/font_xlarge"
-        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintBottom_toBottomOf="@id/backButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/backButton" />
+        app:layout_constraintStart_toStartOf="@id/view"
+        app:layout_constraintTop_toTopOf="@id/backButton" />
 
     <ImageView
         android:id="@+id/backButton"
@@ -89,6 +89,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName" />
 
+    <TextView
+        android:id="@+id/textView_register_grade_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Como você se encontra no curso?"
+        android:textSize="@dimen/font_large"
+        app:layout_constraintStart_toStartOf="@id/spinner_drop_down_grade_selector"
+        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonAge" />
+
+    <Spinner
+        android:id="@+id/spinner_drop_down_grade_selector"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:entries="@array/grade_status"
+        app:layout_constraintEnd_toEndOf="@id/editTextTextPersonAge"
+        app:layout_constraintStart_toStartOf="@id/editTextTextPersonAge"
+        app:layout_constraintTop_toBottomOf="@id/textView_register_grade_status" />
+
     <EditText
         android:id="@+id/editTextTextEmail"
         android:layout_width="300dp"
@@ -97,8 +116,9 @@
         android:hint="E-mail / Login"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonAge" />
+        app:layout_constraintTop_toBottomOf="@id/spinner_drop_down_grade_selector" />
 
     <EditText
         android:id="@+id/editTextTextPassword"

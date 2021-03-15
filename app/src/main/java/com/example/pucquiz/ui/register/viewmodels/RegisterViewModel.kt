@@ -27,14 +27,14 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     val registrationLiveData: LiveData<Resource<Boolean>>
         get() = _registrationLiveData
 
+    var userGradeStatus = ""
+
     fun registerUser(userName: String, userAge: Int, userEmail: String, userPassword: String) {
         ioScope.launch {
             _registrationLiveData.postValue(Resource.loading())
             auth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { itTask ->
-                    Log.e("Register","chegou aqui!")
                     if (itTask.isSuccessful) {
-                        Log.e("Register","chegou aqui!")
                         val user = User(
                             name = userName,
                             age = userAge,
