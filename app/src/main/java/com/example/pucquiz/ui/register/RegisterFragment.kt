@@ -49,6 +49,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
         setupDropDownGradeStatus()
+//        generateRegularGradeOperation()
         initRecyclerView()
         setupViewModelObserver()
     }
@@ -62,6 +63,12 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             context?.hideKeyboard(materialButton_register)
         }
         textView_gradesHint.setOnClickListener {
+            validateRegularUser()
+        }
+    }
+
+    private fun validateRegularUser() {
+        if(!registerViewModel.isRegularUser) {
             openGradeSelector()
         }
     }
@@ -70,7 +77,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         gradeListAdapter.setAnnotationTagAdapterListener(object :
             GradeSelectedListAdapter.OnInteractionClickListener {
             override fun onRecyclerViewItemClicked() {
-                openGradeSelector()
+                validateRegularUser()
             }
         })
 
@@ -97,7 +104,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         // Check to see if it was a tap or a swipe
                         val yDelta = abs(it.y - event.y)
                         if (yDelta > 30) {
-                            openGradeSelector()
+                            validateRegularUser()
                         }
                     }
 
@@ -154,16 +161,16 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             })
 
         registerViewModel.selectedGrades
-            .observe(viewLifecycleOwner, Observer { selectedTagsList ->
-                selectedTagsList ?: return@Observer
+            .observe(viewLifecycleOwner, Observer { selectedGrades ->
+                selectedGrades ?: return@Observer
 
-                if (selectedTagsList.isNotEmpty()) {
+                if (selectedGrades.isNotEmpty()) {
                     textView_gradesHint.visibility = View.INVISIBLE
                 } else {
                     textView_gradesHint.visibility = View.VISIBLE
                 }
 
-                gradeListAdapter.replaceTags(selectedTagsList)
+                gradeListAdapter.replaceTags(selectedGrades)
             })
     }
 
@@ -269,13 +276,37 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         position: Int,
         id: Long
     ) {
-        registerViewModel.userGradeStatus = adapterView?.getItemAtPosition(position).toString()
+        val currentGradeStatus = adapterView?.getItemAtPosition(position).toString()
+        if (currentGradeStatus != registerViewModel.userGradeStatus) {
+            if (currentGradeStatus == "Regular") {
+                registerViewModel.isRegularUser = true
+                generateRegularGradeOperation()
+            } else {
+                registerViewModel.isRegularUser = false
+                resetSelectedGrades()
+            }
+            registerViewModel.userGradeStatus = currentGradeStatus
+        }
+    }
+
+    private fun generateRegularGradeOperation() {
+        registerViewModel.generateRegularGrade()
+        registerViewModel.generatedRegularGrades.observe(
+            viewLifecycleOwner,
+            Observer { regularGeneratedGrade ->
+                regularGeneratedGrade ?: return@Observer
+                registerViewModel.setSelectedGrades(regularGeneratedGrade)
+            })
+    }
+
+    private fun resetSelectedGrades() {
+        registerViewModel.resetSelectedList()
+        gradeListAdapter.replaceTags(emptyList())
     }
 
     override fun onNothingSelected(adapterView: AdapterView<*>?) {
         TODO("Not yet implemented")
     }
-
 
     interface OnFragmentInteractionListener {
         fun onRegisterCompleted()

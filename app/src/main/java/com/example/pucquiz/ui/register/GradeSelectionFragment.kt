@@ -45,9 +45,8 @@ class GradeSelectionFragment : Fragment() {
 
     private fun fetchValidGrades() {
         //TODO: Make "grade -> grade status" validations here
-        registerViewModel.selectedGrades.value?.let {
-//            gradesListAdapter.replaceGrades(it)
-            gradesListAdapter.replaceGrades(listOf("teste", "teste_1", "teste_2", "teste_3", "teste_4", "teste_5", "teste_6", "teste_7", "teste_8", "teste_9", "teste_10", "teste_11"))
+        registerViewModel.generatedRegularGrades.value?.let {
+            gradesListAdapter.replaceGrades(it)
         }
     }
 
