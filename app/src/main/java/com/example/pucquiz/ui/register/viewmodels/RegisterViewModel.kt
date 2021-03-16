@@ -5,11 +5,8 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.pucquiz.models.QuestionItem
 import com.example.pucquiz.models.User
 import com.example.pucquiz.shared.Resource
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +24,19 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     val registrationLiveData: LiveData<Resource<Boolean>>
         get() = _registrationLiveData
 
+    private val _selectedGrades = MutableLiveData<List<String>>()
+    val selectedGrades: LiveData<List<String>>
+        get() = _selectedGrades
+
     var userGradeStatus = ""
+
+    init {
+        _selectedGrades.value = mutableListOf()
+    }
+
+    fun setSelectedGrades(selectedTags: List<String>) {
+        _selectedGrades.value = selectedTags.sorted()
+    }
 
     fun registerUser(userName: String, userAge: Int, userEmail: String, userPassword: String) {
         ioScope.launch {

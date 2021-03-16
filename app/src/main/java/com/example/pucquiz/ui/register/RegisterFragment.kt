@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -12,21 +13,27 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pucquiz.R
 import com.example.pucquiz.components.DialogSimple
 import com.example.pucquiz.extensios.hideKeyboard
 import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.login.viewmodels.LoginViewModel
+import com.example.pucquiz.ui.register.adapters.GradeSelectedListAdapter
 import com.example.pucquiz.ui.register.viewmodels.RegisterViewModel
 import kotlinx.android.synthetic.main.fragment_register.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.lang.Math.abs
 
 class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
-    private var listener: OnFragmentInteractionListener? = null
-    private val registerViewModel by inject<RegisterViewModel>()
+    private val registerViewModel by sharedViewModel<RegisterViewModel>()
     private val loginViewModel by sharedViewModel<LoginViewModel>()
+    private var listener: OnFragmentInteractionListener? = null
+    private var lastRecyclerViewDownTouchEvent: MotionEvent? = null
+    private var gradeListAdapter = GradeSelectedListAdapter(emptyList())
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +49,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
         setupDropDownGradeStatus()
+        initRecyclerView()
         setupViewModelObserver()
     }
 
@@ -53,6 +61,56 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             checkUserData()
             context?.hideKeyboard(materialButton_register)
         }
+        textView_gradesHint.setOnClickListener {
+            openGradeSelector()
+        }
+    }
+
+    private fun initRecyclerView() {
+        gradeListAdapter.setAnnotationTagAdapterListener(object :
+            GradeSelectedListAdapter.OnInteractionClickListener {
+            override fun onRecyclerViewItemClicked() {
+                openGradeSelector()
+            }
+        })
+
+        with(recyclerView_selectedGrades) {
+            adapter = gradeListAdapter
+            layoutManager = GridLayoutManager(activity, 2)
+//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+
+            setOnTouchListener { _, event ->
+                if (event?.action == MotionEvent.ACTION_DOWN && findChildViewUnder(
+                        event.x,
+                        event.y
+                    ) == null
+                ) {
+                    lastRecyclerViewDownTouchEvent = event
+                } else if (event?.action == MotionEvent.ACTION_UP && findChildViewUnder(
+                        event.x,
+                        event.y
+                    ) == null
+                    && lastRecyclerViewDownTouchEvent != null
+                ) {
+                    lastRecyclerViewDownTouchEvent?.let {
+                        // Check to see if it was a tap or a swipe
+                        val yDelta = abs(it.y - event.y)
+                        if (yDelta > 30) {
+                            openGradeSelector()
+                        }
+                    }
+
+                    lastRecyclerViewDownTouchEvent = null
+                }
+
+                false
+            }
+        }
+    }
+
+    private fun openGradeSelector() {
+        listener?.onGradeSelectorClicked()
     }
 
     private fun setupDropDownGradeStatus() {
@@ -93,6 +151,19 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         showRegisteringOperationViewState()
                     }
                 }
+            })
+
+        registerViewModel.selectedGrades
+            .observe(viewLifecycleOwner, Observer { selectedTagsList ->
+                selectedTagsList ?: return@Observer
+
+                if (selectedTagsList.isNotEmpty()) {
+                    textView_gradesHint.visibility = View.INVISIBLE
+                } else {
+                    textView_gradesHint.visibility = View.VISIBLE
+                }
+
+                gradeListAdapter.replaceTags(selectedTagsList)
             })
     }
 
@@ -192,7 +263,12 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    override fun onItemSelected(
+        adapterView: AdapterView<*>?,
+        view: View?,
+        position: Int,
+        id: Long
+    ) {
         registerViewModel.userGradeStatus = adapterView?.getItemAtPosition(position).toString()
     }
 
@@ -203,5 +279,6 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     interface OnFragmentInteractionListener {
         fun onRegisterCompleted()
+        fun onGradeSelectorClicked()
     }
 }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.login.LoginFragment
+import com.example.pucquiz.ui.register.GradeSelectionFragment
 import com.example.pucquiz.ui.register.RegisterFragment
 
 class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener {
@@ -45,6 +46,10 @@ class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionLi
 
     override fun onRegisterCompleted() {
         replaceFragment(LoginFragment(), false)
+    }
+
+    override fun onGradeSelectorClicked() {
+        replaceFragment(GradeSelectionFragment(), true)
     }
 
 }

@@ -1,148 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group_register_form"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="editTextTextPersonName, editTextTextPersonAge,
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_register_form"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="editTextTextPersonName, editTextTextPersonAge,
         editTextTextEmail, editTextTextPassword" />
 
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="150dp"
-        android:layout_height="300dp"
-        android:paddingStart="30dp"
-        android:paddingTop="30dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="30dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.500"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/view"
-        app:layout_constraintVertical_bias="0.400" />
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="150dp"
+            android:layout_height="300dp"
+            android:paddingStart="30dp"
+            android:paddingTop="30dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="30dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/view"
+            app:layout_constraintVertical_bias="0.400" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="96dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="96dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/rubik_medium"
-        android:text="Registrar"
-        android:textSize="@dimen/font_xlarge"
-        app:layout_constraintBottom_toBottomOf="@id/backButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/view"
-        app:layout_constraintTop_toTopOf="@id/backButton" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_medium"
+            android:text="Registrar"
+            android:textSize="@dimen/font_xlarge"
+            app:layout_constraintBottom_toBottomOf="@id/backButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/view"
+            app:layout_constraintTop_toTopOf="@id/backButton" />
 
-    <ImageView
-        android:id="@+id/backButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="@dimen/margin_default"
-        android:layout_marginTop="@dimen/margin_xxlarge"
-        android:background="@drawable/circular_button_background"
-        android:paddingStart="@dimen/paddingStart_medium"
-        android:paddingTop="@dimen/paddingTop_medium"
-        android:paddingEnd="@dimen/paddingStart_medium"
-        android:paddingBottom="@dimen/paddingTop_medium"
-        android:tint="#198746"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrow_left"
-        tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_xxlarge"
+            android:background="@drawable/circular_button_background"
+            android:paddingStart="@dimen/paddingStart_medium"
+            android:paddingTop="@dimen/paddingTop_medium"
+            android:paddingEnd="@dimen/paddingStart_medium"
+            android:paddingBottom="@dimen/paddingTop_medium"
+            android:tint="#198746"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_left"
+            tools:ignore="ContentDescription" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:hint="Nome Completo"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="300dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/input_text_basic_background"
+            android:elevation="10dp"
+            android:hint="Nome Completo"
+            android:inputType="textPersonName"
+            android:paddingStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonAge"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="Idade"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName" />
+        <EditText
+            android:id="@+id/editTextTextPersonAge"
+            android:layout_width="300dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/input_text_basic_background"
+            android:elevation="10dp"
+            android:hint="Idade"
+            android:inputType="number"
+            android:paddingStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName" />
 
-    <TextView
-        android:id="@+id/textView_register_grade_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Como você se encontra no curso?"
-        android:textSize="@dimen/font_large"
-        app:layout_constraintStart_toStartOf="@id/spinner_drop_down_grade_selector"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonAge" />
+        <TextView
+            android:id="@+id/textView_register_grade_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Como você se encontra no curso?"
+            android:textSize="@dimen/font_large"
+            app:layout_constraintStart_toStartOf="@id/spinner_drop_down_grade_selector"
+            app:layout_constraintTop_toBottomOf="@id/editTextTextPersonAge" />
 
-    <Spinner
-        android:id="@+id/spinner_drop_down_grade_selector"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:entries="@array/grade_status"
-        app:layout_constraintEnd_toEndOf="@id/editTextTextPersonAge"
-        app:layout_constraintStart_toStartOf="@id/editTextTextPersonAge"
-        app:layout_constraintTop_toBottomOf="@id/textView_register_grade_status" />
+        <Spinner
+            android:id="@+id/spinner_drop_down_grade_selector"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/input_text_basic_background"
+            android:entries="@array/grade_status"
+            android:paddingEnd="12dp"
+            android:paddingBottom="12dp"
+            app:layout_constraintEnd_toEndOf="@id/editTextTextPersonAge"
+            app:layout_constraintStart_toStartOf="@id/editTextTextPersonAge"
+            app:layout_constraintTop_toBottomOf="@id/textView_register_grade_status" />
 
-    <EditText
-        android:id="@+id/editTextTextEmail"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="E-mail / Login"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_drop_down_grade_selector" />
+        <TextView
+            android:id="@+id/textView_register_grade_selector_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/rubik_medium"
+            android:text="Selecione suas matérias:"
+            android:textSize="@dimen/font_large"
+            app:layout_constraintStart_toStartOf="@id/spinner_drop_down_grade_selector"
+            app:layout_constraintTop_toBottomOf="@id/spinner_drop_down_grade_selector" />
 
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextEmail" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_selectedGrades"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/input_text_basic_background"
+            android:clipToPadding="false"
+            android:elevation="1dp"
+            android:nestedScrollingEnabled="true"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/spinner_drop_down_grade_selector"
+            app:layout_constraintStart_toStartOf="@id/spinner_drop_down_grade_selector"
+            app:layout_constraintTop_toBottomOf="@id/textView_register_grade_selector_title"
+            tools:itemCount="3"
+            tools:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton_register"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Registrar"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/editTextTextPassword"
-        app:layout_constraintStart_toStartOf="@id/editTextTextPassword"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPassword" />
+        <TextView
+            android:id="@+id/textView_gradesHint"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/input_text_basic_background"
+            android:clickable="true"
+            android:elevation="1dp"
+            android:focusable="true"
+            android:fontFamily="@font/rubik"
+            android:gravity="center_vertical"
+            android:hint="Clique para adicionar suas materias "
+            android:paddingStart="@dimen/margin_default"
+            android:textColorHint="@color/primaryTextHint"
+            android:textSize="@dimen/font_large"
+            android:visibility="visible"
+            android:fadingEdgeLength="50dp"
+            android:requiresFadingEdge="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerView_selectedGrades"
+            app:layout_constraintEnd_toEndOf="@id/recyclerView_selectedGrades"
+            app:layout_constraintStart_toStartOf="@id/recyclerView_selectedGrades"
+            app:layout_constraintTop_toTopOf="@+id/recyclerView_selectedGrades" />
 
+        <EditText
+            android:id="@+id/editTextTextEmail"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/input_text_basic_background"
+            android:hint="E-mail / Login"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView_selectedGrades" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/input_text_basic_background"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextTextEmail" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/materialButton_register"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="Registrar"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/editTextTextPassword"
+            app:layout_constraintStart_toStartOf="@id/editTextTextPassword"
+            app:layout_constraintTop_toBottomOf="@id/editTextTextPassword" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
