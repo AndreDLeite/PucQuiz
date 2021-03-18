@@ -14,7 +14,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="editTextTextPersonName, editTextTextPersonAge,
-        editTextTextEmail, editTextTextPassword" />
+            textView_register_grade_status,
+            textView_register_grade_selector_title,
+            editTextTextEmail, editTextTextPassword" />
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progress_bar"
