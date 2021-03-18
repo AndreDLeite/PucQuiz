@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/cardview_light_background"
     android:minWidth="312dp"
     android:minHeight="158dp"
@@ -17,12 +17,12 @@
         android:layout_marginTop="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_default"
         android:fontFamily="@font/rubik_medium"
-        tools:text="teste"
-        android:textColor="@color/cardview_shadow_start_color"
+        android:textColor="@color/primaryText"
         android:textSize="@dimen/font_xlarge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="teste" />
 
     <TextView
         android:id="@+id/textView_dialogSimple_description"
@@ -31,12 +31,12 @@
         android:layout_marginTop="@dimen/margin_default"
         android:layout_marginEnd="@dimen/margin_default"
         android:fontFamily="@font/rubik"
-        tools:text="teste"
-        android:textColor="@color/cardview_shadow_start_color"
+        android:textColor="@color/primaryText"
         android:textSize="@dimen/font_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/textView_dialogSimple_title"
-        app:layout_constraintTop_toBottomOf="@id/textView_dialogSimple_title" />
+        app:layout_constraintTop_toBottomOf="@id/textView_dialogSimple_title"
+        tools:text="teste" />
 
     <TextView
         android:id="@+id/textView_dialog_warning"
@@ -45,7 +45,6 @@
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_default"
         android:fontFamily="@font/rubik"
-        tools:text="teste"
         android:textColor="@color/cardview_shadow_start_color"
         android:textSize="@dimen/font_xsmall"
         android:textStyle="italic"
@@ -53,7 +52,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/textView_dialogSimple_title"
-        app:layout_constraintTop_toBottomOf="@id/textView_dialogSimple_description" />
+        app:layout_constraintTop_toBottomOf="@id/textView_dialogSimple_description"
+        tools:text="teste" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_dialog_confirmButton"
@@ -64,14 +64,14 @@
         android:layout_marginBottom="@dimen/margin_medium"
         android:fontFamily="@font/rubik"
         android:letterSpacing="0"
-        tools:text="teste"
-        android:textColor="@color/cardview_shadow_start_color"
         android:textAllCaps="false"
+        android:textColor="@color/primaryText"
         android:textSize="@dimen/font_large"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_dialog_warning" />
+        app:layout_constraintTop_toBottomOf="@id/textView_dialog_warning"
+        tools:text="teste" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_dialog_cancelButton"
@@ -80,13 +80,13 @@
         android:layout_marginEnd="@dimen/margin_small"
         android:fontFamily="@font/rubik"
         android:letterSpacing="0"
-        tools:text="teste"
-        android:textColor="@color/cardview_shadow_start_color"
         android:textAllCaps="false"
+        android:textColor="@color/primaryText"
         android:textSize="@dimen/font_large"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@id/button_dialog_confirmButton"
         app:layout_constraintEnd_toStartOf="@id/button_dialog_confirmButton"
-        app:layout_constraintTop_toTopOf="@id/button_dialog_confirmButton" />
+        app:layout_constraintTop_toTopOf="@id/button_dialog_confirmButton"
+        tools:text="teste" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

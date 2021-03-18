@@ -82,7 +82,6 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         with(recyclerView_selectedGrades) {
             adapter = gradeListAdapter
             layoutManager = GridLayoutManager(activity, 2)
-//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
 
             setOnTouchListener { _, event ->
@@ -138,6 +137,8 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val userEmail = editTextTextEmail.text.toString().trim()
             val userPassword = editTextTextPassword.text.toString().trim()
             registerViewModel.registerUser(username, userAge, userEmail, userPassword)
+        } else {
+            showRegistrationErrorDialog()
         }
     }
 
@@ -150,7 +151,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         showSuccessState()
                     }
                     Resource.Status.ERROR -> {
-                        showRegistrationDialog()
+                        showRegistrationErrorDialog()
                     }
                     Resource.Status.LOADING -> {
                         showRegisteringOperationViewState()
@@ -179,7 +180,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         materialButton_register.isEnabled = true
     }
 
-    private fun showRegistrationDialog() {
+    private fun showRegistrationErrorDialog() {
         val dialog = DialogSimple()
 
         dialog.setDialogParameters(
@@ -243,8 +244,12 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         ) {
             setComponentErrorMessage(
                 editTextTextPassword,
-                "Senha invalida ou muito curta (menor que 6 digitos)!"
+                "Senha invalida ou muito curta (menor que 6 caractéres)!"
             )
+            result = false
+        }
+        if(registerViewModel.selectedGrades.value.isNullOrEmpty()) {
+            textView_gradesHint.hint = "Voce deve selecionar ao menos uma matéria!"
             result = false
         }
         return result
@@ -252,13 +257,6 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun setComponentErrorMessage(component: EditText, message: String) {
         component.error = message
-    }
-
-    private fun setErrorMessages(components: List<EditText>) {
-        components.forEach { itComponent ->
-            //TODO: Add validation for password to me at least 6 length
-            itComponent.error = "Este campo é obrigatório"
-        }
     }
 
     override fun onAttach(context: Context) {
@@ -275,10 +273,8 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         id: Long
     ) {
         val currentPeriod = adapterView?.getItemAtPosition(position).toString().toInt()
-
         if (currentPeriod != registerViewModel.userPeriod.value) {
             registerViewModel.setUserPeriod(currentPeriod)
-            //TODO: validate here the grades based on the user periods
             registerViewModel.generateGradesBasedOnPeriod(currentPeriod)
             resetSelectedGrades()
         }
