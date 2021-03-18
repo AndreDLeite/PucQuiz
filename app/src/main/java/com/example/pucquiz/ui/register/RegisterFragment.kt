@@ -47,8 +47,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         //TODO: Add 'eye' to show password
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
-        setupDropDownGradeStatus()
-//        generateRegularGradeOperation()
+        setupDropDownUserPeriod()
         initRecyclerView()
         setupViewModelObserver()
     }
@@ -119,7 +118,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         listener?.onGradeSelectorClicked()
     }
 
-    private fun setupDropDownGradeStatus() {
+    private fun setupDropDownUserPeriod() {
         context?.let { itContext ->
             val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
                 itContext,

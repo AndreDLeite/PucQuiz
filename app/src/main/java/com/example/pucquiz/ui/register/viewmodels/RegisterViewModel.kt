@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pucquiz.controllers.GradeController
 import com.example.pucquiz.models.Grade
-import com.example.pucquiz.models.GradeStatus
 import com.example.pucquiz.models.User
 import com.example.pucquiz.shared.Resource
 import com.google.firebase.auth.FirebaseAuth
@@ -72,8 +71,7 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
                             name = userName,
                             age = userAge,
                             email = userEmail,
-                            gradeStatus = GradeStatus.REGULAR,
-                            registeredGrades = emptyList()
+                            registeredGrades = generatedGrades.value ?: emptyList()
                         )
                         FirebaseAuth.getInstance().currentUser?.uid?.let { userId ->
                             FirebaseDatabase.getInstance().getReference("Users")
