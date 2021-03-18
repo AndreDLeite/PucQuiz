@@ -14,7 +14,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pucquiz.R
 import com.example.pucquiz.components.DialogSimple
 import com.example.pucquiz.extensios.hideKeyboard
@@ -68,7 +67,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun validateRegularUser() {
-        if(!registerViewModel.isRegularUser) {
+        if (!registerViewModel.isRegularUser) {
             openGradeSelector()
         }
     }
@@ -124,10 +123,10 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         context?.let { itContext ->
             val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
                 itContext,
-                R.array.grade_status,
+                R.array.grade_period,
                 android.R.layout.simple_spinner_item
             )
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.spinner_grade_item)
             spinner_drop_down_grade_selector.adapter = adapter
             spinner_drop_down_grade_selector.onItemSelectedListener = this
         }
@@ -276,27 +275,14 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         position: Int,
         id: Long
     ) {
-        val currentGradeStatus = adapterView?.getItemAtPosition(position).toString()
-        if (currentGradeStatus != registerViewModel.userGradeStatus) {
-            if (currentGradeStatus == "Regular") {
-                registerViewModel.isRegularUser = true
-                generateRegularGradeOperation()
-            } else {
-                registerViewModel.isRegularUser = false
-                resetSelectedGrades()
-            }
-            registerViewModel.userGradeStatus = currentGradeStatus
-        }
-    }
+        val currentPeriod = adapterView?.getItemAtPosition(position).toString().toInt()
 
-    private fun generateRegularGradeOperation() {
-        registerViewModel.generateRegularGrade()
-        registerViewModel.generatedRegularGrades.observe(
-            viewLifecycleOwner,
-            Observer { regularGeneratedGrade ->
-                regularGeneratedGrade ?: return@Observer
-                registerViewModel.setSelectedGrades(regularGeneratedGrade)
-            })
+        if (currentPeriod != registerViewModel.userPeriod.value) {
+            registerViewModel.setUserPeriod(currentPeriod)
+            //TODO: validate here the grades based on the user periods
+            registerViewModel.generateGradesBasedOnPeriod(currentPeriod)
+            resetSelectedGrades()
+        }
     }
 
     private fun resetSelectedGrades() {

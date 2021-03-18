@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pucquiz.controllers.GradeController
+import com.example.pucquiz.models.Grade
 import com.example.pucquiz.models.GradeStatus
 import com.example.pucquiz.models.User
 import com.example.pucquiz.shared.Resource
@@ -26,27 +27,27 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     val registrationLiveData: LiveData<Resource<Boolean>>
         get() = _registrationLiveData
 
-    private val _selectedGrades = MutableLiveData<List<String>>()
-    val selectedGrades: LiveData<List<String>>
+    private val _selectedGrades = MutableLiveData<List<Grade>>()
+    val selectedGrades: LiveData<List<Grade>>
         get() = _selectedGrades
 
-    private val _generatedRegularGrades = MutableLiveData<List<String>>()
-    val generatedRegularGrades: LiveData<List<String>>
-        get() = _generatedRegularGrades
+    private val _generatedGrades = MutableLiveData<List<Grade>>()
+    val generatedGrades: LiveData<List<Grade>>
+        get() = _generatedGrades
 
     private val _userPeriod = MutableLiveData<Int>()
     val userPeriod: LiveData<Int>
         get() = _userPeriod
 
-    var userGradeStatus = ""
     var isRegularUser = false
 
     init {
         _selectedGrades.value = mutableListOf()
+        _userPeriod.value = -1
     }
 
-    fun setSelectedGrades(selectedGrades: List<String>) {
-        _selectedGrades.value = selectedGrades.sorted()
+    fun setSelectedGrades(selectedGrades: List<Grade>) {
+        _selectedGrades.value = selectedGrades
     }
 
     fun resetSelectedList() {
@@ -57,10 +58,8 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
         _userPeriod.value = userPeriod
     }
 
-    fun generateRegularGrade() {
-        _generatedRegularGrades.value = GradeController().generateGradesByStatusAndPeriod(GradeStatus.REGULAR, 1)
-        _selectedGrades.value = GradeController().generateGradesByStatusAndPeriod(GradeStatus.REGULAR, 1)
-        _generatedRegularGrades.value = GradeController().generateGradesByStatusAndPeriod(GradeStatus.REGULAR, 1)
+    fun generateGradesBasedOnPeriod(userPeriod: Int) {
+        _generatedGrades.value = GradeController().generateBasedOnPeriodGrades(userPeriod)
     }
 
     fun registerUser(userName: String, userAge: Int, userEmail: String, userPassword: String) {

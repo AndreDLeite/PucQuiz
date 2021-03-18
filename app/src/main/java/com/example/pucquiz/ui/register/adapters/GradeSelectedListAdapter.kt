@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pucquiz.R
+import com.example.pucquiz.models.Grade
 import kotlinx.android.synthetic.main.card_grade_registration.view.*
 
-class GradeSelectedListAdapter(private var gradesList: List<String>) :
+class GradeSelectedListAdapter(private var gradesList: List<Grade>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mListener: OnInteractionClickListener? = null
@@ -26,7 +27,7 @@ class GradeSelectedListAdapter(private var gradesList: List<String>) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
             with(holder as AnnotationSelectedTagViewHolder) {
-                holder.gradeName.text = gradesList[position]
+                holder.gradeName.text = gradesList[position].gradeType
                 this.itemView.setOnClickListener { mListener?.onRecyclerViewItemClicked() }
             }
 
@@ -44,7 +45,7 @@ class GradeSelectedListAdapter(private var gradesList: List<String>) :
         return gradesList.size
     }
 
-    fun replaceTags(gradeNames: List<String>) {
+    fun replaceTags(gradeNames: List<Grade>) {
         gradesList = gradeNames
         notifyDataSetChanged()
     }

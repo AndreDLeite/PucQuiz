@@ -8,20 +8,22 @@
     android:layout_marginTop="4dp"
     android:layout_marginEnd="4dp"
     android:layout_marginBottom="4dp"
-    android:backgroundTint="@color/colorPrimary"
-    android:background="@drawable/rounded_corners">
+    android:background="@drawable/rounded_corners"
+    android:backgroundTint="@color/colorPrimary">
 
     <TextView
         android:id="@+id/textView_register_grade_selected_name"
         android:layout_width="137dp"
         android:layout_height="40dp"
+        android:ellipsize="end"
         android:gravity="center"
-        android:text="Redes II"
+        android:maxLines="1"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="Mussum Ipsumcacilds vidis litro abertis. Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis. Sapien in monti palavris qui num significa nadis i pareci latim. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi. "
         android:textAlignment="center"
         android:textColor="@color/thirdText"
         android:textSize="@dimen/font_large"
-        android:maxLines="1"
-        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

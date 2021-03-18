@@ -2,44 +2,80 @@ package com.example.pucquiz.controllers
 
 import com.example.pucquiz.models.Grade
 import com.example.pucquiz.models.GradeEnum
-import com.example.pucquiz.models.GradeStatus
 
 class GradeController {
-    fun generateGradesByStatusAndPeriod(gradeStatus: GradeStatus, period: Int): List<String> {
-        return when(gradeStatus) {
-            GradeStatus.REGULAR -> {
-                generateGradesByPeriod(period)
+
+    fun generateBasedOnPeriodGrades(userPeriod: Int): List<Grade> {
+        val gradeList = mutableListOf<Grade>()
+        GradeEnum.values().forEach {
+            val grade = gradeToPeriod(it)
+            gradeList.add(
+                Grade(
+                    gradeType = gradeToString(it),
+                    period = grade,
+                    isAvailable = grade <= userPeriod
+                )
+            )
+        }
+        return gradeList
+    }
+
+    fun gradeToPeriod(enum: GradeEnum): Int {
+        return when (enum) {
+            GradeEnum.AEDI -> {
+                1
             }
-            GradeStatus.IRREGULAR -> {
-                emptyList()
+            GradeEnum.AEDII -> {
+                2
+            }
+            GradeEnum.DISPOSITIVOS_MOVEIS -> {
+                2
+            }
+            GradeEnum.REDESI -> {
+                3
+            }
+            GradeEnum.REDESII -> {
+                3
+            }
+            GradeEnum.COMPUTACAO_PARALELA -> {
+                4
+            }
+            GradeEnum.OTIMIZACAO -> {
+                4
+            }
+            GradeEnum.GRAFOS -> {
+                5
             }
         }
     }
 
-    private fun generateGradesByPeriod(period: Int): List<String> {
-        return when(period) {
-            1 -> {
-                generateFistGradeClasses()
+    fun gradeToString(enum: GradeEnum): String {
+        return when (enum) {
+            GradeEnum.AEDI -> {
+                "AEDS I"
             }
-            2 -> {
-                generateSecondGradeClasses()
+            GradeEnum.AEDII -> {
+                "AEDS II"
             }
-            else -> {
-                emptyList()
+            GradeEnum.DISPOSITIVOS_MOVEIS -> {
+                "Dispositivos Móveis"
+            }
+            GradeEnum.REDESI -> {
+                "Redes I"
+            }
+            GradeEnum.REDESII -> {
+                "Redes II"
+            }
+            GradeEnum.COMPUTACAO_PARALELA -> {
+                "Computação Paralela"
+            }
+            GradeEnum.OTIMIZACAO -> {
+                "Otmização"
+            }
+            GradeEnum.GRAFOS -> {
+                "Gráfos"
             }
         }
     }
 
-    private fun generateFistGradeClasses(): List<String> {
-        return listOf(
-            Grade().gradeToString(GradeEnum.AEDI),
-            Grade().gradeToString(GradeEnum.REDESI)
-        )
-    }
-
-    private fun generateSecondGradeClasses(): List<String> {
-        return listOf(
-            Grade().gradeToString(GradeEnum.AEDII)
-        )
-    }
 }

@@ -1,21 +1,27 @@
 package com.example.pucquiz.ui.register.adapters
 
+import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pucquiz.R
+import com.example.pucquiz.models.Grade
+import com.example.pucquiz.shared.Resource
 import kotlinx.android.synthetic.main.item_grade_selection.view.*
 
 class GradeListAdapter(
-    @NonNull private var gradeList: List<String>,
-    @NonNull private var selectedGrades: MutableList<String>
+    @NonNull private var gradeList: List<Grade>,
+    @NonNull private var selectedGrades: MutableList<Grade>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var mSelectedTypeface: Typeface? = null
-    private var mUnselectedTypeface: Typeface? = null
+    private var selectedTypeface: Typeface? = null
+    private var unselectedTypeface: Typeface? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return GradeItemViewHolder(
@@ -29,39 +35,50 @@ class GradeListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         with(holder as GradeItemViewHolder) {
-            val tagName = gradeList[position]
-            gradeCheckBox.text = tagName
-            if (selectedGrades.contains(tagName)) {
-                mSelectedTypeface?.let { holder.gradeCheckBox.typeface = it }
+            val currentGrade = gradeList[position]
+            val gradeName = currentGrade.gradeType
+            gradeCheckBox.text = gradeName
+            if (currentGrade.isAvailable) {
 
+                if (selectedGrades.contains(currentGrade)) {
+                    selectedTypeface?.let { holder.gradeCheckBox.typeface = it }
+                } else {
+                    unselectedTypeface?.let { holder.gradeCheckBox.typeface = it }
+                }
+                gradeCheckBox.isChecked = selectedGrades.contains(currentGrade)
+                gradeCheckBox.setOnClickListener {
+                    toggleTag(currentGrade)
+                }
             } else {
-                mUnselectedTypeface?.let { holder.gradeCheckBox.typeface = it }
-            }
-            gradeCheckBox.isChecked = selectedGrades.contains(tagName)
-            gradeCheckBox.setOnClickListener {
-                toggleTag(tagName)
+                holder.gradeCheckBox.isEnabled = false
+//                val disabledColor =
+//                    ContextCompat.getColor(holder.gradeCheckBox.context, R.color.primaryTextHint)
+//                disabledselectedTypeface?.let { holder.gradeCheckBox.setTextColor(disabledColor) }
             }
         }
 
 
     }
 
-    fun setTypeFaces(selectedTypeface: Typeface?, unselectedTypeface: Typeface?) {
-        mSelectedTypeface = selectedTypeface
-        mUnselectedTypeface = unselectedTypeface
+    fun setTypeFaces(
+        selectedTypeface: Typeface?,
+        unselectedTypeface: Typeface?
+    ) {
+        this.selectedTypeface = selectedTypeface
+        this.unselectedTypeface = unselectedTypeface
     }
 
-    fun setSelectedGrades(selectedTags: List<String>) {
+    fun setSelectedGrades(selectedTags: List<Grade>) {
         selectedGrades.clear()
         selectedGrades.addAll(selectedTags)
         notifyDataSetChanged()
     }
 
-    fun toggleTag(tag: String) {
-        if (selectedGrades.contains(tag)) {
-            selectedGrades.remove(tag)
+    private fun toggleTag(grade: Grade) {
+        if (selectedGrades.contains(grade)) {
+            selectedGrades.remove(grade)
         } else {
-            selectedGrades.add(tag)
+            selectedGrades.add(grade)
         }
         notifyDataSetChanged()
     }
@@ -72,7 +89,7 @@ class GradeListAdapter(
 
     fun getSelectedGrades() = selectedGrades
 
-    fun replaceGrades(grades: List<String>) {
+    fun replaceGrades(grades: List<Grade>) {
         gradeList = grades
         notifyDataSetChanged()
     }

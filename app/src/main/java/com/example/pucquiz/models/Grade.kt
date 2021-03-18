@@ -1,7 +1,11 @@
 package com.example.pucquiz.models
 
 
-data class Grade(val gradeType: String = "") {
+data class Grade(
+    val gradeType: String = "",
+    val period: Int,
+    var isAvailable: Boolean
+) {
     fun gradeToString(enum: GradeEnum): String {
         return when(enum) {
             GradeEnum.AEDI -> {

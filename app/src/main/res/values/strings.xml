@@ -8,9 +8,15 @@
     <string name="welcome_puc_quiz_hibridas">Hibridas</string>
     <string name="welcome_puc_quiz_distribuidas">Distribuidas</string>
     <string name="title_activity_onboarding">OnboardingActivity</string>
-    <string-array name="grade_status">
-        <item>Regular</item>
-        <item>Irregular</item>
+    <string-array name="grade_period">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
     </string-array>
     <!--
     This string is used for square devices and overridden by hello_world in

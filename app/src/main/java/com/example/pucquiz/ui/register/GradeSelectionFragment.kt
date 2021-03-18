@@ -18,7 +18,7 @@ class GradeSelectionFragment : Fragment() {
 
     private val registerViewModel by sharedViewModel<RegisterViewModel>()
 
-    private val gradesListAdapter = GradeListAdapter(emptyList<String>(), mutableListOf<String>())
+    private val gradesListAdapter = GradeListAdapter(emptyList(), mutableListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,9 +31,9 @@ class GradeSelectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fetchValidGrades()
         loadSelectedTagsList()
         setupListeners()
-        fetchValidGrades()
         initRecyclerView()
     }
 
@@ -45,7 +45,7 @@ class GradeSelectionFragment : Fragment() {
 
     private fun fetchValidGrades() {
         //TODO: Make "grade -> grade status" validations here
-        registerViewModel.generatedRegularGrades.value?.let {
+        registerViewModel.generatedGrades.value?.let {
             gradesListAdapter.replaceGrades(it)
         }
     }
@@ -59,7 +59,7 @@ class GradeSelectionFragment : Fragment() {
         }
     }
 
-    private fun setupAnnotationTagListAdapter() {
+    private fun setupGradesListAdapter() {
         context?.let {
             gradesListAdapter.setTypeFaces(
                 ResourcesCompat.getFont(it, R.font.rubik_medium),
@@ -70,7 +70,7 @@ class GradeSelectionFragment : Fragment() {
 
     private fun initRecyclerView() {
         val mLayoutManager = LinearLayoutManager(activity)
-        setupAnnotationTagListAdapter()
+        setupGradesListAdapter()
         with(recyclerView_grade_list) {
             adapter = gradesListAdapter
             layoutManager = mLayoutManager
