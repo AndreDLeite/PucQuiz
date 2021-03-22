@@ -209,15 +209,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButton_register"
-            android:layout_width="0dp"
-            android:layout_height="54dp"
+            style="@style/PucQuizNormalButton"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
-            android:backgroundTint="@color/colorSecondary"
-            android:elevation="5dp"
             android:text="Registrar"
-            android:textAllCaps="false"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/editTextTextPassword"
             app:layout_constraintStart_toStartOf="@id/editTextTextPassword"

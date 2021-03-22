@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="1000dp"
+        android:alpha="0.3"
+        android:background="@drawable/img_start_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyle"
         android:layout_width="150dp"
         android:layout_height="300dp"
+        android:indeterminateTint="@color/colorSecondary"
         android:paddingStart="30dp"
         android:paddingTop="30dp"
         android:paddingEnd="30dp"
@@ -21,12 +38,42 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.350" />
 
+    <TextView
+        android:id="@+id/title_first"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="PUC"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorSecondary"
+        android:textSize="@dimen/font_title"
+        app:layout_constraintBottom_toTopOf="@id/editTextTextPersonEmail"
+        app:layout_constraintEnd_toStartOf="@id/title_second"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title_second"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Quiz"
+        android:textColor="@color/secondaryText"
+        android:textSize="@dimen/font_title"
+        app:layout_constraintBottom_toTopOf="@id/editTextTextPersonEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/title_first"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/editTextTextPersonEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:background="@drawable/input_text_basic_background"
         android:hint="E-mail / Login"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,6 +89,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
+        android:background="@drawable/input_text_basic_background"
         android:hint="Senha"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,12 +98,9 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialButton_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/PucQuizNormalButton"
         android:layout_marginTop="32dp"
         android:text="Fazer login"
-        android:textAllCaps="false"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/editTextTextPassword"
         app:layout_constraintStart_toStartOf="@id/editTextTextPassword"
         app:layout_constraintTop_toBottomOf="@id/editTextTextPassword" />
@@ -66,9 +111,12 @@
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="2dp"
-        android:text="Esqueci minha senha"
+        android:fontFamily="@font/rubik_medium"
+        android:gravity="center"
+        android:text="Esqueci minha \n senha"
         android:textAlignment="center"
         android:textAllCaps="false"
+        android:textColor="@color/primaryText"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/textView_register"
         app:layout_constraintStart_toStartOf="@id/editTextTextPassword"
@@ -80,9 +128,12 @@
         android:layout_height="50dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/rubik_medium"
+        android:gravity="center"
         android:text="Criar conta"
         android:textAlignment="center"
         android:textAllCaps="false"
+        android:textColor="@color/primaryText"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/editTextTextPassword"
         app:layout_constraintStart_toEndOf="@id/textView_forgot_password"

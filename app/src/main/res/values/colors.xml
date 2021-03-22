@@ -10,9 +10,10 @@
 
     <!-- region Text -->
     <color name="primaryTextHint">#c1c5c8</color>
-    <color name="thirdText">#FFFFFF</color>
     <color name="lineDivider">#EBECF0</color>
     <color name="primaryText">#2F3031</color>
+    <color name="secondaryText">#777D82</color>
+    <color name="thirdText">#FFFFFF</color>
     <!-- endregion -->
 
     <!-- region  Backgrounds -->
