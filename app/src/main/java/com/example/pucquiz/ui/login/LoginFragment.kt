@@ -11,11 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.pucquiz.R
 import com.example.pucquiz.components.DialogSimple
+import com.example.pucquiz.extensios.hideKeyboard
 import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.login.viewmodels.LoginViewModel
-import com.example.pucquiz.ui.register.RegisterFragment
 import kotlinx.android.synthetic.main.fragment_login.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class LoginFragment : Fragment() {
@@ -45,6 +44,7 @@ class LoginFragment : Fragment() {
         }
 
         materialButton_login.setOnClickListener {
+            activity?.hideKeyboard(materialButton_login)
             loginUser()
         }
     }
@@ -53,10 +53,10 @@ class LoginFragment : Fragment() {
         loginViewModel.loginLiveData.observe(viewLifecycleOwner, Observer { itLoginOperation ->
             when (itLoginOperation.status) {
                 Resource.Status.SUCCESS -> {
-                    listener?.onSuccessfulLogin()
+                    listener?.onSuccessfullLogin()
                 }
                 Resource.Status.ERROR -> {
-
+                    showLoginErrorDialog()
                 }
                 Resource.Status.LOADING -> {
                     showLoadingViewState()
@@ -89,6 +89,15 @@ class LoginFragment : Fragment() {
         textView_register.isEnabled = false
     }
 
+    private fun showDefaultViewState() {
+        progress_bar.visibility = View.GONE
+        editTextTextPersonEmail.visibility = View.VISIBLE
+        editTextTextPassword.visibility = View.VISIBLE
+        materialButton_login.isEnabled = true
+        textView_forgot_password.isEnabled = true
+        textView_register.isEnabled = true
+    }
+
     private fun showRegistrationDialog() {
         val dialog = DialogSimple()
 
@@ -101,6 +110,32 @@ class LoginFragment : Fragment() {
 
         dialog.setDialogListener(object : DialogSimple.SimpleDialogListener {
             override fun onDialogPositiveClick(dialog: DialogFragment) {
+                dialog.dismiss()
+            }
+
+            override fun onDialogNegativeClick(dialog: DialogFragment) {
+                dialog.dismiss()
+            }
+        })
+
+        activity?.run {
+            dialog.show(supportFragmentManager, DialogSimple::class.java.simpleName)
+        }
+    }
+
+    private fun showLoginErrorDialog() {
+        val dialog = DialogSimple()
+
+        dialog.setDialogParameters(
+            title = "Ops, tivemos um problema!",
+            description = "Não foi possível efetuar o login com suas credenciais, certifique-se que seus dados estão corretos e que já possui um cadastro.",
+            confirmText = "Ok",
+            cancelText = null
+        )
+
+        dialog.setDialogListener(object : DialogSimple.SimpleDialogListener {
+            override fun onDialogPositiveClick(dialog: DialogFragment) {
+                showDefaultViewState()
                 dialog.dismiss()
             }
 
@@ -158,7 +193,7 @@ class LoginFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun onRegisterClicked()
-        fun onSuccessfulLogin()
+        fun onSuccessfullLogin()
 
     }
 

@@ -1,6 +1,7 @@
 package com.example.pucquiz.di
 
 import com.example.pucquiz.ui.login.viewmodels.LoginViewModel
+import com.example.pucquiz.ui.onboarding.viewmodels.OnBoardingViewModel
 import com.example.pucquiz.ui.redes.viewmodels.RedesQuizViewModel
 import com.example.pucquiz.ui.register.viewmodels.RegisterViewModel
 import com.example.pucquiz.ui.welcome.viewmodels.WelcomeViewModel
@@ -11,6 +12,8 @@ import org.koin.core.module.Module
 fun Module.viewModelInjections() {
     viewModel { LoginViewModel(androidApplication()) }
     viewModel { RegisterViewModel(androidApplication()) }
-    viewModel { WelcomeViewModel(androidApplication()) }
-    viewModel { RedesQuizViewModel(androidApplication()) }
+    viewModel { OnBoardingViewModel(androidApplication()) }
+
+//    viewModel { WelcomeViewModel(androidApplication()) }
+//    viewModel { RedesQuizViewModel(androidApplication()) }
 }

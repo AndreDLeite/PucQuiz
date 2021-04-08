@@ -74,6 +74,7 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
                             period = userPeriod.value ?: 1,
                             registered_grades = selectedGrades.value ?: emptyList()
                         )
+
                         FirebaseAuth.getInstance().currentUser?.uid?.let { userId ->
                             FirebaseDatabase.getInstance().getReference("Users")
                                 .child(userId)

@@ -3,8 +3,8 @@ package com.example.pucquiz.models
 
 data class Grade(
     val gradeType: String = "",
-    val period: Int,
-    var isAvailable: Boolean
+    val period: Int = -1,
+    var isAvailable: Boolean = false
 ) {
     fun gradeToString(enum: GradeEnum): String {
         return when(enum) {

@@ -3,28 +3,51 @@ package com.example.pucquiz
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.pucquiz.ui.onboarding.OnBoardingFragment
+import kotlinx.android.synthetic.main.activity_onboarding.*
 
 class OnBoardingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
-//        replaceFragment()
+        setupNavigation()
+
     }
 
-    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean) {
-        val fragmentTransaction = supportFragmentManager
-            .beginTransaction()
-            .setCustomAnimations(
-                R.anim.enter_from_right,
-                R.anim.exit_to_left,
-                R.anim.enter_from_left,
-                R.anim.exit_to_right
-            )
-        if (addToBackStack) {
-            fragmentTransaction.addToBackStack(null)
+    private fun setupNavigation() {
+        val onboarding = OnBoardingFragment()
+
+        makeCurrentFragment(onboarding)
+
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.icon_results -> {
+                    makeCurrentFragment(onboarding)
+                }
+
+                R.id.icon_setting -> {
+
+                }
+
+                R.id.ic_ranking -> {
+
+                }
+
+                else -> {
+
+                }
+            }
+            true
+
         }
-
-        fragmentTransaction.replace(R.id.frame_on_boarding, fragment).commit()
     }
+
+    private fun makeCurrentFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.main_frame, fragment)
+            commit()
+        }
+    }
+
 }

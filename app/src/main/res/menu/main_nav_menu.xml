@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/icon_results"
+        android:icon="@drawable/ic_results"
+        android:title="Resultados"/>
+
+    <item
+        android:id="@+id/ic_ranking"
+        android:icon="@drawable/ic_star_empty_center"
+        android:title="Classificação"/>
+
+    <item
+        android:id="@+id/ic_quiz"
+        android:icon="@drawable/ic_star_empty_center"
+        android:title="Fazer Quiz"/>
+
+    <item
+        android:id="@+id/ic_medalhas"
+        android:icon="@drawable/ic_star_empty_center"
+        android:title="Medalhas"/>
+
+    <item
+        android:id="@+id/icon_setting"
+        android:icon="@drawable/ic_settings"
+        android:title="Configurações"/>
+
+</menu>

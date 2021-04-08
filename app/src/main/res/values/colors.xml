@@ -18,6 +18,7 @@
 
     <!-- region  Backgrounds -->
     <color name="baseBackground">#FEFEFE</color>
+    <color name="secondaryBackground">#61FEFEFE</color>
     <!-- endregion -->
 
 </resources>

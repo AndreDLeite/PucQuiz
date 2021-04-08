@@ -8,6 +8,7 @@
     <string name="welcome_puc_quiz_hibridas">Hibridas</string>
     <string name="welcome_puc_quiz_distribuidas">Distribuidas</string>
     <string name="title_activity_onboarding">OnboardingActivity</string>
+    <string name="onboarding_greetings">Olá, %s você esta no</string>
     <string-array name="grade_period">
         <item>1</item>
         <item>2</item>
