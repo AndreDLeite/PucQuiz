@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OnBoardingActivity">
+    tools:context=".MainBoardActivity">
 
     <FrameLayout
         android:id="@+id/main_frame"
@@ -21,6 +21,7 @@
         app:itemBackground="@color/colorSecondary"
         app:itemIconTint="@color/primaryTextHint"
         app:itemTextColor="@color/baseBackground"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/main_nav_menu" />
 
 </RelativeLayout>

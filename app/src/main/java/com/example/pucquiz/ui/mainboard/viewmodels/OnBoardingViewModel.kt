@@ -1,4 +1,4 @@
-package com.example.pucquiz.ui.onboarding.viewmodels
+package com.example.pucquiz.ui.mainboard.viewmodels
 
 import android.app.Application
 import android.util.Log

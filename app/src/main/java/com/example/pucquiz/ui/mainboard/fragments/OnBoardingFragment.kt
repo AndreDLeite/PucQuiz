@@ -1,4 +1,4 @@
-package com.example.pucquiz.ui.onboarding
+package com.example.pucquiz.ui.mainboard.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.pucquiz.R
 import com.example.pucquiz.extensios.fadInAnimation
+import com.example.pucquiz.extensios.overrideOnBackPressed
 import com.example.pucquiz.models.User
 import com.example.pucquiz.shared.Resource
-import com.example.pucquiz.ui.onboarding.viewmodels.OnBoardingViewModel
+import com.example.pucquiz.ui.mainboard.viewmodels.OnBoardingViewModel
 import kotlinx.android.synthetic.main.fragment_onboarding.*
 import org.koin.android.ext.android.inject
 
@@ -74,13 +75,8 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun overrideOnBackPressed() {
-        activity?.onBackPressedDispatcher?.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    //TODO: Lead to Logout
-                }
-            }
-        )
+        activity?.overrideOnBackPressed(viewLifecycleOwner) {
+            //TODO: Make logic of back pressed here.
+        }
     }
 }

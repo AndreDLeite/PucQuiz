@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".OnBoardingActivity"
+            android:name=".MainBoardActivity"
             android:label="@string/title_activity_onboarding">
             <intent-filter>
                 <category android:name="android.intent.action.DEFAULT" />

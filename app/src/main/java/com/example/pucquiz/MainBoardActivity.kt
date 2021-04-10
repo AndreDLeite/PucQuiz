@@ -3,10 +3,11 @@ package com.example.pucquiz
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.pucquiz.ui.onboarding.OnBoardingFragment
+import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
+import com.example.pucquiz.ui.mainboard.fragments.RankingFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
-class OnBoardingActivity : AppCompatActivity() {
+class MainBoardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,14 +17,15 @@ class OnBoardingActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        val onboarding = OnBoardingFragment()
+        val obBoardingFragment = OnBoardingFragment()
+        val rankingFragment = RankingFragment()
 
-        makeCurrentFragment(onboarding)
+        makeCurrentFragment(obBoardingFragment)
 
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.icon_results -> {
-                    makeCurrentFragment(onboarding)
+                    makeCurrentFragment(obBoardingFragment)
                 }
 
                 R.id.icon_setting -> {
@@ -31,14 +33,14 @@ class OnBoardingActivity : AppCompatActivity() {
                 }
 
                 R.id.ic_ranking -> {
-
+                    makeCurrentFragment(rankingFragment)
                 }
 
                 else -> {
 
                 }
             }
-            true
+            false
 
         }
     }
