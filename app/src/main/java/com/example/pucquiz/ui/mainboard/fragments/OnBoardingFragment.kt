@@ -4,22 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.pucquiz.R
-import com.example.pucquiz.extensios.fadInAnimation
+import com.example.pucquiz.extensios.fadeInAnimation
 import com.example.pucquiz.extensios.overrideOnBackPressed
 import com.example.pucquiz.models.User
 import com.example.pucquiz.shared.Resource
-import com.example.pucquiz.ui.mainboard.viewmodels.OnBoardingViewModel
+import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoVewModel
 import kotlinx.android.synthetic.main.fragment_onboarding.*
 import org.koin.android.ext.android.inject
 
 class OnBoardingFragment : Fragment() {
 
-    private val onBoardingViewModel by inject<OnBoardingViewModel>()
+    private val onBoardingViewModel by inject<UserInfoVewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +41,7 @@ class OnBoardingFragment : Fragment() {
 
             when (it.status) {
                 Resource.Status.SUCCESS -> {
-                    setUserNameTextView(it.data)
+                    setGreetingsAnimations(it.data)
                 }
                 Resource.Status.ERROR -> {
 
@@ -60,16 +58,20 @@ class OnBoardingFragment : Fragment() {
 
     }
 
-    private fun setUserNameTextView(user: User?) {
-        context?.let { itContext ->
-            val fadeInAnimation = AnimationUtils.loadAnimation(itContext, R.anim.fade_in)
-            user?.let { itUser ->
-                textView_greetings.text = String.format(
-                    getString(R.string.onboarding_greetings),
-                    itUser.name
-                )
-                textView_greetings.fadInAnimation(2000)
-            }
+    private fun setGreetingsAnimations(user: User?) {
+        user?.let { itUser ->
+            textView_greetings.text = String.format(
+                getString(R.string.onboarding_greetings),
+                itUser.name
+            )
+            textView_greetings.fadeInAnimation(2000)
+        }
+
+        with(textView_instructions) {
+            this.fadeInAnimation(5000)
+        }
+        with(imageView_warning) {
+            this.fadeInAnimation(5000)
         }
 
     }

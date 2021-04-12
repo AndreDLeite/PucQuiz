@@ -19,7 +19,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 
-class OnBoardingViewModel(application: Application) : AndroidViewModel(application), KoinComponent {
+class UserInfoVewModel(application: Application) : AndroidViewModel(application), KoinComponent {
 
     private val ioScope = CoroutineScope(Dispatchers.IO + Job())
 

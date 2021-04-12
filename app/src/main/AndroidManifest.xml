@@ -25,6 +25,13 @@
         </activity>
         <activity
             android:name=".LoginActivity"
+            android:label="@string/title_activity_onboarding">
+            <intent-filter>
+                <category android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SplashActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -15,6 +15,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionLi
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_login)
+
         replaceFragment(LoginFragment(), false)
 
     }
