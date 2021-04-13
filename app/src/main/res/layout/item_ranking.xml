@@ -4,15 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:elevation="10dp"
-    android:background="@drawable/rounded_corners">
+    android:layout_margin="8dp"
+    android:background="@drawable/rounded_corners"
+    android:elevation="10dp">
+
+    <TextView
+        android:id="@+id/textView_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/alfa_slab_one_regular"
+        android:text="1."
+        android:textAlignment="center"
+        android:textSize="@dimen/font_xxxlarge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView_grade_back"
         android:layout_width="54dp"
         android:layout_height="54dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/circular_button_background"
@@ -22,58 +36,50 @@
         android:paddingEnd="14dp"
         android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView_position"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textView_user_initials"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/rubik_medium"
-        android:text="FT"
+        android:maxLines="1"
+        android:textAlignment="center"
         android:textColor="@color/baseBackground"
         android:textSize="@dimen/font_large"
         app:layout_constraintBottom_toBottomOf="@id/imageView_grade_back"
         app:layout_constraintEnd_toEndOf="@id/imageView_grade_back"
         app:layout_constraintStart_toStartOf="@id/imageView_grade_back"
-        app:layout_constraintTop_toTopOf="@id/imageView_grade_back" />
+        app:layout_constraintTop_toTopOf="@id/imageView_grade_back"
+        tools:text="TESTE" />
 
     <TextView
         android:id="@+id/textView_user_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="12dp"
-        android:fontFamily="@font/arvo_bold"
+        android:fontFamily="@font/rubik_medium"
         android:singleLine="true"
-        android:text="Fulano de tal pereiro da silva junin de papai"
         android:textSize="@dimen/font_xlarge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageView_grade_back"
-        app:layout_constraintTop_toTopOf="@id/imageView_grade_back" />
+        app:layout_constraintTop_toTopOf="@id/imageView_grade_back"
+        tools:text="Fulano de tal pereiro da silva junin de papai" />
 
     <TextView
         android:id="@+id/textView_user_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/rubik_lightitalic"
-        android:text="30000 pontos"
-        android:textSize="@dimen/font_large"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="@font/arvo_bold"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/imageView_grade_back"
-        app:layout_constraintEnd_toStartOf="@id/textView_user_grade"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/imageView_grade_back" />
+        app:layout_constraintStart_toEndOf="@id/imageView_grade_back"
+        tools:text="@string/ranking_user_points" />
 
-    <TextView
-        android:id="@+id/textView_user_grade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/rubik_lightitalic"
-        android:text="quinto periodo"
-        android:textSize="@dimen/font_large"
-        app:layout_constraintBottom_toBottomOf="@id/textView_user_score"
-        app:layout_constraintEnd_toEndOf="@id/textView_user_name"
-        app:layout_constraintStart_toEndOf="@id/textView_user_score"
-        app:layout_constraintTop_toTopOf="@id/textView_user_score" />
 </androidx.constraintlayout.widget.ConstraintLayout>

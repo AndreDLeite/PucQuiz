@@ -2,7 +2,7 @@ package com.example.pucquiz.di
 
 import com.example.pucquiz.ui.login.viewmodels.LoginViewModel
 import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoVewModel
-import com.example.pucquiz.ui.mainboard.viewmodels.RankingViewModel
+import com.example.pucquiz.ui.ranking.viewmodels.RankingViewModel
 import com.example.pucquiz.ui.register.viewmodels.RegisterViewModel
 import com.example.pucquiz.ui.settings.viewmodels.SettingsViewModel
 import com.example.pucquiz.ui.splash.SplashViewModel
@@ -16,7 +16,7 @@ fun Module.viewModelInjections() {
     viewModel { RegisterViewModel(androidApplication()) }
     viewModel { SettingsViewModel(androidApplication()) }
     viewModel { UserInfoVewModel(androidApplication()) }
-    viewModel { RankingViewModel(androidApplication()) }
+    viewModel { RankingViewModel(androidApplication(), get()) }
 
 //    viewModel { WelcomeViewModel(androidApplication()) }
 //    viewModel { RedesQuizViewModel(androidApplication()) }

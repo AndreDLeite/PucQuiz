@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
-import com.example.pucquiz.ui.mainboard.fragments.RankingFragment
+import com.example.pucquiz.ui.ranking.fragments.RankingFragment
 import com.example.pucquiz.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
 

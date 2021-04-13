@@ -59,6 +59,9 @@ class UserAdditionalInfoController {
                         )
                     )
                 }
+                MedalsType.UNKNOWN -> {
+                    //ignore
+                }
             }
         }
         return medalList
