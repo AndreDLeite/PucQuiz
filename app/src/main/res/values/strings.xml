@@ -9,7 +9,7 @@
     <string name="welcome_puc_quiz_distribuidas">Distribuidas</string>
     <string name="title_activity_onboarding">OnboardingActivity</string>
     <string name="onboarding_greetings">Olá, %s você esta no</string>
-    <string name="onboarding_instructions">Utilize o menu abaixo para navegar pelo app.</string>
+    <string name="onboarding_instructions">Utilize o menu abaixo para navegar pelo App!</string>
     <string name="login_fragment_login_button_text">Fazer login</string>
     <string name="login_fragment_login_forgot_password_text">Esqueci minha \n senha</string>
     <string name="login_fragment_login_create_account_text">Criar conta</string>

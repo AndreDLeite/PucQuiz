@@ -3,8 +3,118 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/secondaryBackground">
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout_grade_header"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_topbar"
+        android:background="@color/colorSecondary"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView_grade_headerTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_medium"
+            android:text="Seu Perfil"
+            android:textAlignment="center"
+            android:textColor="@color/baseBackground"
+            android:textSize="@dimen/font_xxlarge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/textView_user_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="50dp"
+        android:elevation="10dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Nome:"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/font_xlarge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout_grade_header" />
+
+
+    <TextView
+        android:id="@+id/textView_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="10dp"
+        android:fontFamily="@font/rubik_medium"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/font_xlarge"
+        app:layout_constraintStart_toStartOf="@id/textView_user_name_title"
+        app:layout_constraintTop_toBottomOf="@id/textView_user_name_title"
+        tools:text="Fulano de tal" />
+
+    <TextView
+        android:id="@+id/textView_user_email_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:elevation="10dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Email:"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/font_xlarge"
+        app:layout_constraintStart_toStartOf="@id/textView_user_name_title"
+        app:layout_constraintTop_toBottomOf="@id/textView_user_name" />
+
+    <TextView
+        android:id="@+id/textView_user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="10dp"
+        android:fontFamily="@font/rubik_medium"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/font_xlarge"
+        app:layout_constraintStart_toStartOf="@id/textView_user_email_title"
+        app:layout_constraintTop_toBottomOf="@id/textView_user_email_title"
+        tools:text="Fulano de tal@gmailzin.com" />
+
+    <TextView
+        android:id="@+id/textView_user_score_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:elevation="10dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Pontuação:"
+        android:textColor="@color/primaryText"
+
+        android:textSize="@dimen/font_xlarge"
+        app:layout_constraintStart_toStartOf="@id/textView_user_email_title"
+        app:layout_constraintTop_toBottomOf="@id/textView_user_email" />
+
+    <TextView
+        android:id="@+id/textView_user_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:elevation="10dp"
+        android:fontFamily="@font/rubik_medium"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/font_xlarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_user_score_title"
+        tools:text="Fulano de tal@gmailzin.com" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialButton_logout"
@@ -20,112 +130,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/title_first"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/rubik_medium"
-        android:paddingStart="20dp"
-        android:text="Seu"
-        android:textAlignment="center"
-        android:textColor="@color/colorSecondary"
-        android:textSize="@dimen/font_title"
-        app:layout_constraintEnd_toStartOf="@id/title_second"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/title_second"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:fontFamily="@font/rubik_medium"
-        android:text="Perfil"
-        android:textColor="@color/secondaryText"
-        android:textSize="@dimen/font_title"
-        app:layout_constraintBottom_toBottomOf="@id/title_first"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/title_first"
-        app:layout_constraintTop_toTopOf="@id/title_first" />
-
-    <TextView
-        android:id="@+id/textView_user_name_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/rubik_medium"
-        android:text="Nome:"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/font_xlarge"
-        app:layout_constraintStart_toStartOf="@id/title_first"
-        app:layout_constraintTop_toBottomOf="@id/title_first" />
-
-
-    <TextView
-        android:id="@+id/textView_user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/rubik_medium"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/font_xlarge"
-        app:layout_constraintStart_toStartOf="@id/textView_user_name_title"
-        app:layout_constraintTop_toBottomOf="@id/textView_user_name_title"
-        tools:text="Fulano de tal" />
-
-    <TextView
-        android:id="@+id/textView_user_email_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/rubik_medium"
-        android:text="Email:"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/font_xlarge"
-        app:layout_constraintStart_toStartOf="@id/textView_user_name_title"
-        app:layout_constraintTop_toBottomOf="@id/textView_user_name" />
-
-    <TextView
-        android:id="@+id/textView_user_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/rubik_medium"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/font_xlarge"
-        app:layout_constraintStart_toStartOf="@id/textView_user_email_title"
-        app:layout_constraintTop_toBottomOf="@id/textView_user_email_title"
-        tools:text="Fulano de tal@gmailzin.com" />
-
-    <TextView
-        android:id="@+id/textView_user_score_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/rubik_medium"
-        android:text="Pontuação:"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/font_xlarge"
-        app:layout_constraintStart_toStartOf="@id/textView_user_email_title"
-        app:layout_constraintTop_toBottomOf="@id/textView_user_email" />
-
-    <TextView
-        android:id="@+id/textView_user_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/rubik_medium"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/font_xlarge"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_user_score_title"
-        tools:text="Fulano de tal@gmailzin.com" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

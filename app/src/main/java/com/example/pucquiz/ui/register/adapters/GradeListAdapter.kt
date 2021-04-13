@@ -1,23 +1,17 @@
 package com.example.pucquiz.ui.register.adapters
 
-import android.content.res.Resources
-import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pucquiz.R
 import com.example.pucquiz.models.Grade
-import com.example.pucquiz.shared.Resource
 import kotlinx.android.synthetic.main.item_grade_selection.view.*
 
 class GradeListAdapter(
-    @NonNull private var gradeList: List<Grade>,
-    @NonNull private var selectedGrades: MutableList<Grade>
+    private var gradeList: List<Grade>,
+    private var selectedGrades: MutableList<Grade>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var selectedTypeface: Typeface? = null
@@ -51,9 +45,6 @@ class GradeListAdapter(
                 }
             } else {
                 holder.gradeCheckBox.isEnabled = false
-//                val disabledColor =
-//                    ContextCompat.getColor(holder.gradeCheckBox.context, R.color.primaryTextHint)
-//                disabledselectedTypeface?.let { holder.gradeCheckBox.setTextColor(disabledColor) }
             }
         }
 

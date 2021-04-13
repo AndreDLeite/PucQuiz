@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:elevation="10dp"
+    android:background="@drawable/rounded_corners">
+
+    <ImageView
+        android:id="@+id/imageView_grade_back"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/circular_button_background"
+        android:backgroundTint="@color/colorPrimary"
+        android:paddingStart="14dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/textView_user_initials"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rubik_medium"
+        android:text="FT"
+        android:textColor="@color/baseBackground"
+        android:textSize="@dimen/font_large"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_grade_back"
+        app:layout_constraintEnd_toEndOf="@id/imageView_grade_back"
+        app:layout_constraintStart_toStartOf="@id/imageView_grade_back"
+        app:layout_constraintTop_toTopOf="@id/imageView_grade_back" />
+
+    <TextView
+        android:id="@+id/textView_user_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="@font/arvo_bold"
+        android:singleLine="true"
+        android:text="Fulano de tal pereiro da silva junin de papai"
+        android:textSize="@dimen/font_xlarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageView_grade_back"
+        app:layout_constraintTop_toTopOf="@id/imageView_grade_back" />
+
+    <TextView
+        android:id="@+id/textView_user_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rubik_lightitalic"
+        android:text="30000 pontos"
+        android:textSize="@dimen/font_large"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_grade_back"
+        app:layout_constraintEnd_toStartOf="@id/textView_user_grade"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/imageView_grade_back" />
+
+    <TextView
+        android:id="@+id/textView_user_grade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rubik_lightitalic"
+        android:text="quinto periodo"
+        android:textSize="@dimen/font_large"
+        app:layout_constraintBottom_toBottomOf="@id/textView_user_score"
+        app:layout_constraintEnd_toEndOf="@id/textView_user_name"
+        app:layout_constraintStart_toEndOf="@id/textView_user_score"
+        app:layout_constraintTop_toTopOf="@id/textView_user_score" />
+</androidx.constraintlayout.widget.ConstraintLayout>
