@@ -25,7 +25,8 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_onboarding">
+            android:label="@string/title_activity_onboarding"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <category android:name="android.intent.action.DEFAULT" />
             </intent-filter>

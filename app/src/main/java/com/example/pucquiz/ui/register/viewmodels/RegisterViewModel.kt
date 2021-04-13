@@ -6,8 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pucquiz.controllers.GradeController
+import com.example.pucquiz.controllers.UserAdditionalInfoController
 import com.example.pucquiz.models.Grade
 import com.example.pucquiz.models.User
+import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_BUCKET
+import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_INFO_BUCKET
+import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_MEDALS_BUCKET
 import com.example.pucquiz.shared.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -45,6 +49,10 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
         _userPeriod.value = -1
     }
 
+    fun resetRegistrationOperation() {
+        _registrationLiveData.value = null
+    }
+
     fun setSelectedGrades(selectedGrades: List<Grade>) {
         _selectedGrades.value = selectedGrades
     }
@@ -74,30 +82,101 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
                             period = userPeriod.value ?: 1,
                             registered_grades = selectedGrades.value ?: emptyList()
                         )
+                        createUserInstance(user)
+                        createUserAdditionalInfoInstance(user)
+                        createUserMedalsInstance(user)
+                        _registrationLiveData.postValue(Resource.success(true))
+//                        if (operationStatus) {
+//
+//                        } else {
+//                            _registrationLiveData.postValue(
+//                                Resource.error(
+//                                    "creating user data",
+//                                    null
+//                                )
+//                            )
+//                        }
 
-                        FirebaseAuth.getInstance().currentUser?.uid?.let { userId ->
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                .child(userId)
-                                .setValue(user)
-                                .addOnCompleteListener { itRTDBTask ->
-                                    when {
-                                        itRTDBTask.isSuccessful -> {
-                                            _registrationLiveData.postValue(Resource.success(true))
-                                        }
-
-                                        else -> {
-                                            _registrationLiveData.postValue(Resource.error("Error registering user", null))
-                                        }
-                                    }
-                                }
-                        }
                     } else {
-                        _registrationLiveData.postValue(Resource.error("Error registering user", null))
+                        _registrationLiveData.postValue(
+                            Resource.error(
+                                "Error registering user",
+                                null
+                            )
+                        )
                         Log.d("task resonse", "${itTask.exception}")
                     }
                 }
         }
 
+    }
+
+    private fun createUserInstance(user: User): Boolean {
+        var operationResult = false
+        FirebaseAuth.getInstance().currentUser?.uid?.let { userId ->
+            FirebaseDatabase.getInstance().getReference(FIREBASE_USER_BUCKET)
+                .child(userId)
+                .setValue(user)
+                .addOnCompleteListener { itRTDBTask ->
+                    operationResult = when {
+                        itRTDBTask.isSuccessful -> {
+                            true
+                        }
+
+                        else -> {
+                            false
+                        }
+                    }
+                }
+        }
+        return operationResult
+    }
+
+    private fun createUserAdditionalInfoInstance(user: User): Boolean {
+        var operationResult = false
+        FirebaseAuth.getInstance().currentUser?.uid?.let { userId ->
+            val currentUserAdditionalInfo =
+                UserAdditionalInfoController().createUserAdditionalInfo(user)
+            FirebaseDatabase.getInstance().getReference(FIREBASE_USER_INFO_BUCKET)
+                .child(userId)
+                .setValue(currentUserAdditionalInfo)
+                .addOnCompleteListener { itRTDBTask ->
+                    operationResult = when {
+                        itRTDBTask.isSuccessful -> {
+                            true
+                        }
+
+                        else -> {
+                            false
+                        }
+                    }
+                }
+        }
+        return operationResult
+
+    }
+
+    private fun createUserMedalsInstance(user: User): Boolean {
+        var operationResult = false
+        FirebaseAuth.getInstance().currentUser?.uid?.let { userId ->
+            val currentUserAdditionalInfo =
+                UserAdditionalInfoController().createUserMedals(user)
+            FirebaseDatabase.getInstance().getReference(FIREBASE_USER_MEDALS_BUCKET)
+                .child(userId)
+                .setValue(currentUserAdditionalInfo)
+                .addOnCompleteListener { itRTDBTask ->
+                    operationResult = when {
+                        itRTDBTask.isSuccessful -> {
+                            true
+                        }
+
+                        else -> {
+                            false
+                        }
+                    }
+                }
+        }
+        return operationResult
     }
 
 }

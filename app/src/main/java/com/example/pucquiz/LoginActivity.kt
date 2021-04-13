@@ -43,6 +43,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionLi
     override fun onSuccessfullLogin() {
         val intent = Intent(this, MainBoardActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     override fun onRegisterCompleted() {

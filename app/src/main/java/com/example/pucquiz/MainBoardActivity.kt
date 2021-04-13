@@ -1,13 +1,15 @@
 package com.example.pucquiz
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
 import com.example.pucquiz.ui.mainboard.fragments.RankingFragment
+import com.example.pucquiz.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
-class MainBoardActivity : AppCompatActivity() {
+class MainBoardActivity : AppCompatActivity(), SettingsFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +21,7 @@ class MainBoardActivity : AppCompatActivity() {
     private fun setupNavigation() {
         val obBoardingFragment = OnBoardingFragment()
         val rankingFragment = RankingFragment()
+        val settingsFragment = SettingsFragment()
 
         makeCurrentFragment(obBoardingFragment)
 
@@ -29,7 +32,7 @@ class MainBoardActivity : AppCompatActivity() {
                 }
 
                 R.id.icon_setting -> {
-
+                    makeCurrentFragment(settingsFragment)
                 }
 
                 R.id.ic_ranking -> {
@@ -50,6 +53,12 @@ class MainBoardActivity : AppCompatActivity() {
             replace(R.id.main_frame, fragment)
             commit()
         }
+    }
+
+    override fun onLogout() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }

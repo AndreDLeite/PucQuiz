@@ -146,6 +146,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         registerViewModel.registrationLiveData.observe(
             viewLifecycleOwner,
             Observer { itRegisterOperation ->
+                itRegisterOperation ?: return@Observer
                 when (itRegisterOperation.status) {
                     Resource.Status.SUCCESS -> {
                         showSuccessState()
@@ -193,6 +194,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         dialog.setDialogListener(object : DialogSimple.SimpleDialogListener {
             override fun onDialogPositiveClick(dialog: DialogFragment) {
                 showDefaultViewState()
+                registerViewModel.resetRegistrationOperation()
                 dialog.dismiss()
             }
 
@@ -248,7 +250,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             )
             result = false
         }
-        if(registerViewModel.selectedGrades.value.isNullOrEmpty()) {
+        if (registerViewModel.selectedGrades.value.isNullOrEmpty()) {
             textView_gradesHint.hint = "Voce deve selecionar ao menos uma matéria!"
             result = false
         }
