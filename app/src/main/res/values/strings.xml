@@ -14,6 +14,11 @@
     <string name="login_fragment_login_forgot_password_text">Esqueci minha \n senha</string>
     <string name="login_fragment_login_create_account_text">Criar conta</string>
     <string name="all_exit">Sair</string>
+    <string name="all_yes">Sim</string>
+    <string name="all_no">Não</string>
+    <string name="all_atention">Atenção!</string>
+    <string name="all_configurations">Configurações</string>
+    <string name="logout_warning">Você está prestes a sair da aplicação! Deseja realmente sair da plataforma?</string>
     <string-array name="grade_period">
         <item>1</item>
         <item>2</item>

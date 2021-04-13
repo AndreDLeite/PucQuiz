@@ -14,10 +14,11 @@ import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoVewModel
 import kotlinx.android.synthetic.main.fragment_onboarding.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class OnBoardingFragment : Fragment() {
 
-    private val onBoardingViewModel by inject<UserInfoVewModel>()
+    private val userInfoViewModel by sharedViewModel<UserInfoVewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,11 +33,10 @@ class OnBoardingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         overrideOnBackPressed()
         setupViewModelObservers()
-        setupListeners()
     }
 
     private fun setupViewModelObservers() {
-        onBoardingViewModel.currentLoggedUser.observe(viewLifecycleOwner, Observer {
+        userInfoViewModel.currentUserInfo.observe(viewLifecycleOwner, Observer {
             it ?: return@Observer
 
             when (it.status) {
@@ -52,10 +52,6 @@ class OnBoardingFragment : Fragment() {
             }
 
         })
-    }
-
-    private fun setupListeners() {
-
     }
 
     private fun setGreetingsAnimations(user: User?) {

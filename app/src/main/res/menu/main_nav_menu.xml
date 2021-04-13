@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/ic_ranking"
-        android:icon="@drawable/ic_star_empty_center"
-        android:title="Classificação"/>
+        android:icon="@drawable/ic_ranking"
+        android:title="Ranking"/>
 
     <item
         android:id="@+id/ic_quiz"
@@ -18,12 +18,12 @@
 
     <item
         android:id="@+id/ic_medalhas"
-        android:icon="@drawable/ic_star_empty_center"
+        android:icon="@drawable/ic_badge"
         android:title="Medalhas"/>
 
     <item
         android:id="@+id/icon_setting"
         android:icon="@drawable/ic_settings"
-        android:title="Configurações"/>
+        android:title="Perfil"/>
 
 </menu>

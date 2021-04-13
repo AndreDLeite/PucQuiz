@@ -6,7 +6,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pucquiz.models.User
+import com.example.pucquiz.models.UserAdditionalInfo
+import com.example.pucquiz.models.UserMedals
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_BUCKET
+import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_INFO_BUCKET
+import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_MEDALS_BUCKET
 import com.example.pucquiz.shared.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -23,17 +27,27 @@ class UserInfoVewModel(application: Application) : AndroidViewModel(application)
 
     private val ioScope = CoroutineScope(Dispatchers.IO + Job())
 
-    private val _currentLoggedUser = MutableLiveData<Resource<User>>()
-    val currentLoggedUser: LiveData<Resource<User>>
-        get() = _currentLoggedUser
+    private val _currentUserInfo = MutableLiveData<Resource<User>>()
+    val currentUserInfo: LiveData<Resource<User>>
+        get() = _currentUserInfo
+
+    private val _currentUserAdditionalInfo = MutableLiveData<Resource<UserAdditionalInfo>>()
+    val currentUserAdditionalInfo: LiveData<Resource<UserAdditionalInfo>>
+        get() = _currentUserAdditionalInfo
+
+    private val _currentUserMedals = MutableLiveData<Resource<UserMedals>>()
+    val currentUserMedals: LiveData<Resource<UserMedals>>
+        get() = _currentUserMedals
 
     init {
         fetchUserData()
+        fetchUserAdditionalData()
+        fetchUserMedalsData()
     }
 
     private fun fetchUserData() {
         ioScope.launch {
-            _currentLoggedUser.postValue(Resource.loading())
+            _currentUserInfo.postValue(Resource.loading())
             val user = FirebaseAuth.getInstance().currentUser
             val reference = FirebaseDatabase.getInstance().getReference(FIREBASE_USER_BUCKET)
             val userId = user?.uid ?: ""
@@ -44,9 +58,9 @@ class UserInfoVewModel(application: Application) : AndroidViewModel(application)
                         val userProfile = snapshot.getValue(User::class.java)
                         Log.d("user", "$userProfile")
                         userProfile?.let {
-                            _currentLoggedUser.postValue(Resource.success(userProfile))
+                            _currentUserInfo.postValue(Resource.success(userProfile))
                         } ?: run {
-                            _currentLoggedUser.postValue(
+                            _currentUserInfo.postValue(
                                 Resource.error(
                                     "error casting user from firebase",
                                     null
@@ -56,7 +70,83 @@ class UserInfoVewModel(application: Application) : AndroidViewModel(application)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        _currentLoggedUser.postValue(
+                        _currentUserInfo.postValue(
+                            Resource.error(
+                                "error loading user data",
+                                null
+                            )
+                        )
+                    }
+
+                }
+            )
+        }
+    }
+
+    private fun fetchUserAdditionalData() {
+        ioScope.launch {
+            _currentUserInfo.postValue(Resource.loading())
+            val user = FirebaseAuth.getInstance().currentUser
+            val reference = FirebaseDatabase.getInstance().getReference(FIREBASE_USER_INFO_BUCKET)
+            val userId = user?.uid ?: ""
+
+            reference.child(userId).addListenerForSingleValueEvent(
+                object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val userAdditionalInfo = snapshot.getValue(UserAdditionalInfo::class.java)
+                        Log.d("user addinfo", "$userAdditionalInfo")
+                        userAdditionalInfo?.let {
+                            _currentUserAdditionalInfo.postValue(Resource.success(userAdditionalInfo))
+                        } ?: run {
+                            _currentUserAdditionalInfo.postValue(
+                                Resource.error(
+                                    "error casting user from firebase",
+                                    null
+                                )
+                            )
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _currentUserAdditionalInfo.postValue(
+                            Resource.error(
+                                "error loading user data",
+                                null
+                            )
+                        )
+                    }
+
+                }
+            )
+        }
+    }
+
+    private fun fetchUserMedalsData() {
+        ioScope.launch {
+            _currentUserInfo.postValue(Resource.loading())
+            val user = FirebaseAuth.getInstance().currentUser
+            val reference = FirebaseDatabase.getInstance().getReference(FIREBASE_USER_MEDALS_BUCKET)
+            val userId = user?.uid ?: ""
+
+            reference.child(userId).addListenerForSingleValueEvent(
+                object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val userMedals = snapshot.getValue(UserMedals::class.java)
+                        Log.d("user medals", "$userMedals")
+                        userMedals?.let {
+                            _currentUserMedals.postValue(Resource.success(userMedals))
+                        } ?: run {
+                            _currentUserMedals.postValue(
+                                Resource.error(
+                                    "error casting user from firebase",
+                                    null
+                                )
+                            )
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _currentUserMedals.postValue(
                             Resource.error(
                                 "error loading user data",
                                 null
