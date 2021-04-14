@@ -1,9 +1,16 @@
 package com.example.pucquiz.repositories.firebasertdb
 
-import com.example.pucquiz.FirebaseCallback
-import com.example.pucquiz.models.UserAdditionalInfo
+import com.example.pucquiz.callbacks.FirebaseUserAddInfoCallback
+import com.example.pucquiz.callbacks.FirebaseUserCallback
+import com.example.pucquiz.callbacks.FirebaseUserMedalsCallback
 
 interface IFirebaseRTDBRepository {
 
-    fun fetchAllUsersAdditionalInfo(callback: FirebaseCallback)
+    suspend fun fetchAllUsersAdditionalInfo(callback: FirebaseUserAddInfoCallback)
+
+    suspend fun fetchUserInfoByUserId(userId: String, callback: FirebaseUserCallback)
+
+    suspend fun fetchUserAdditionalInfoByUserId(userId: String, callback: FirebaseUserAddInfoCallback)
+
+    suspend fun fetchUserMedalsByUserId(userId: String, callback: FirebaseUserMedalsCallback)
 }

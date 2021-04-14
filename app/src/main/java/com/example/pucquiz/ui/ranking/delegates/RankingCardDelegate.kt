@@ -25,11 +25,12 @@ class RankingCardDelegate {
         position: Int
     ) {
         with(holder as RankingCardViewHolder) {
+            val realPosition = position+1
             val userScoreString = holder.itemView.context.getString(R.string.ranking_user_points)
-            userPosition.text = "$position."
+            userPosition.text = "$realPosition."
             userName.text = userInfo.userName
             userInitials.text = userInfo.getUserInitials()
-            userScore.text = String.format(userScoreString, position)
+            userScore.text = String.format(userScoreString, userInfo.userScore)
         }
     }
 

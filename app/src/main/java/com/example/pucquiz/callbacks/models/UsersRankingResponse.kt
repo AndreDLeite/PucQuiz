@@ -1,4 +1,4 @@
-package com.example.pucquiz
+package com.example.pucquiz.callbacks.models
 
 import com.example.pucquiz.models.UserAdditionalInfo
 
