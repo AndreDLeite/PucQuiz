@@ -20,7 +20,7 @@ import org.koin.core.KoinComponent
 class RankingViewModel(
     application: Application,
     private val firebaseRepo: IFirebaseRTDBRepository
-    ): AndroidViewModel(application), KoinComponent {
+) : AndroidViewModel(application), KoinComponent {
 
     private val ioScope = CoroutineScope(Dispatchers.IO + Job())
 
@@ -35,11 +35,16 @@ class RankingViewModel(
                 override fun onResponse(response: UsersRankingResponse) {
                     val resultList = response.usersAdditionalInfoList
                     Log.e("user add info", resultList.toString())
-                    if(!resultList.isNullOrEmpty()) {
+                    if (!resultList.isNullOrEmpty()) {
                         val orderedList = RankingController().orderUsersRanking(resultList)
                         _usersRanking.postValue(Resource.success(orderedList))
                     } else {
-                        _usersRanking.postValue(Resource.error("Unable to fetch data from the server", null))
+                        _usersRanking.postValue(
+                            Resource.error(
+                                "Unable to fetch data from the server",
+                                null
+                            )
+                        )
                     }
                 }
             })

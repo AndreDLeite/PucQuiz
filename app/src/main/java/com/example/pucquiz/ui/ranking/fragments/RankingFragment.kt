@@ -15,7 +15,7 @@ import com.example.pucquiz.ui.ranking.viewmodels.RankingViewModel
 import kotlinx.android.synthetic.main.fragment_ranking.*
 import org.koin.android.ext.android.inject
 
-class RankingFragment: Fragment() {
+class RankingFragment : Fragment() {
 
     private val rankingViewModel by inject<RankingViewModel>()
 
@@ -51,7 +51,7 @@ class RankingFragment: Fragment() {
     private fun setupViewModelObservers() {
         rankingViewModel.usersRanking.observe(viewLifecycleOwner, Observer { itResource ->
             itResource ?: return@Observer
-            when(itResource.status) {
+            when (itResource.status) {
                 Resource.Status.SUCCESS -> {
                     itResource.data?.let {
                         rankingListAdapter.updateUserInfoList(it)

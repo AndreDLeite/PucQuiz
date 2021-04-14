@@ -1,7 +1,6 @@
 package com.example.pucquiz.ui.mainboard.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,14 +12,8 @@ import com.example.pucquiz.models.User
 import com.example.pucquiz.models.UserAdditionalInfo
 import com.example.pucquiz.models.UserMedals
 import com.example.pucquiz.repositories.firebasertdb.IFirebaseRTDBRepository
-import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_INFO_BUCKET
-import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_MEDALS_BUCKET
 import com.example.pucquiz.shared.Resource
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -64,7 +57,12 @@ class UserInfoVewModel(
                     response?.let {
                         _currentUserInfo.postValue(Resource.success(it))
                     } ?: run {
-                        _currentUserInfo.postValue(Resource.error("unable to fetch user data from server", null))
+                        _currentUserInfo.postValue(
+                            Resource.error(
+                                "unable to fetch user data from server",
+                                null
+                            )
+                        )
                     }
                 }
             })
@@ -77,15 +75,22 @@ class UserInfoVewModel(
             val user = FirebaseAuth.getInstance().currentUser
             val userId = user?.uid ?: ""
 
-            firebaseRepo.fetchUserAdditionalInfoByUserId(userId, object: FirebaseUserAddInfoCallback {
-                override fun onResponse(response: UsersRankingResponse) {
-                    response.usersAdditionalInfoList?.first()?.let {
-                        _currentUserAdditionalInfo.postValue(Resource.success(it))
-                    } ?: run {
-                        _currentUserAdditionalInfo.postValue(Resource.error("unable to fetch user data from server", null))
+            firebaseRepo.fetchUserAdditionalInfoByUserId(
+                userId,
+                object : FirebaseUserAddInfoCallback {
+                    override fun onResponse(response: UsersRankingResponse) {
+                        response.usersAdditionalInfoList?.first()?.let {
+                            _currentUserAdditionalInfo.postValue(Resource.success(it))
+                        } ?: run {
+                            _currentUserAdditionalInfo.postValue(
+                                Resource.error(
+                                    "unable to fetch user data from server",
+                                    null
+                                )
+                            )
+                        }
                     }
-                }
-            })
+                })
         }
     }
 
@@ -100,7 +105,12 @@ class UserInfoVewModel(
                     userMedals?.let {
                         _currentUserMedals.postValue(Resource.success(userMedals))
                     } ?: run {
-                        _currentUserMedals.postValue(Resource.error("unable to fetch user medals from server", null))
+                        _currentUserMedals.postValue(
+                            Resource.error(
+                                "unable to fetch user medals from server",
+                                null
+                            )
+                        )
                     }
                 }
 

@@ -11,7 +11,6 @@ import com.example.pucquiz.models.UserMedals
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_INFO_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_MEDALS_BUCKET
-import com.example.pucquiz.shared.Resource
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -62,22 +61,23 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
         userId: String,
         callback: FirebaseUserAddInfoCallback
     ) {
-        firebaseRTDBInstance.getReference(FIREBASE_USER_INFO_BUCKET).child(userId).addListenerForSingleValueEvent(
-            object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val userAdditionalInfo = snapshot.getValue(UserAdditionalInfo::class.java)
-                    Log.d("user addinfo", "$userAdditionalInfo")
-                    userAdditionalInfo?.let {
-                        callback.onResponse(UsersRankingResponse(listOf(userAdditionalInfo)))
+        firebaseRTDBInstance.getReference(FIREBASE_USER_INFO_BUCKET).child(userId)
+            .addListenerForSingleValueEvent(
+                object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val userAdditionalInfo = snapshot.getValue(UserAdditionalInfo::class.java)
+                        Log.d("user addinfo", "$userAdditionalInfo")
+                        userAdditionalInfo?.let {
+                            callback.onResponse(UsersRankingResponse(listOf(userAdditionalInfo)))
+                        }
                     }
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    callback.onResponse(UsersRankingResponse(listOf()))
-                }
+                    override fun onCancelled(error: DatabaseError) {
+                        callback.onResponse(UsersRankingResponse(listOf()))
+                    }
 
-            }
-        )
+                }
+            )
     }
 
     override suspend fun fetchUserMedalsByUserId(
@@ -86,18 +86,18 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
     ) {
         firebaseRTDBInstance.getReference(FIREBASE_USER_MEDALS_BUCKET)
             .child(userId).addListenerForSingleValueEvent(
-            object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val userMedals = snapshot.getValue(UserMedals::class.java)
-                    Log.d("user medals", "$userMedals")
-                    callback.onResponse(userMedals)
-                }
+                object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val userMedals = snapshot.getValue(UserMedals::class.java)
+                        Log.d("user medals", "$userMedals")
+                        callback.onResponse(userMedals)
+                    }
 
-                override fun onCancelled(error: DatabaseError) {
-                    callback.onResponse(null)
-                }
+                    override fun onCancelled(error: DatabaseError) {
+                        callback.onResponse(null)
+                    }
 
-            }
-        )
+                }
+            )
     }
 }
