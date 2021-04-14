@@ -1,5 +1,6 @@
 package com.example.pucquiz.controllers
 
+import com.example.pucquiz.models.GradesAnswers
 import com.example.pucquiz.models.Medals
 import com.example.pucquiz.models.MedalsType
 import com.example.pucquiz.models.User
@@ -11,9 +12,24 @@ class UserAdditionalInfoController {
     fun createUserAdditionalInfo(user: User): UserAdditionalInfo {
         return UserAdditionalInfo(
             userName = user.name,
-            questionsAnswered = 0,
+            questionsAnswered = generateUserGradeAnswers(user),
             userScore = 0
         )
+    }
+
+    private fun generateUserGradeAnswers(user: User): List<GradesAnswers> {
+        val resultList = mutableListOf<GradesAnswers>()
+        user.registered_grades.forEach {
+            resultList.add(
+                GradesAnswers(
+                    userName = user.name,
+                    correctQuantity = 0,
+                    totalAnswered = 0,
+                    gradeType = it.gradeType
+                )
+            )
+        }
+        return resultList
     }
 
     fun createUserMedals(user: User): UserMedals {

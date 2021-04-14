@@ -20,7 +20,7 @@ class GradeController {
         return gradeList
     }
 
-    fun gradeToPeriod(enum: GradeEnum): Int {
+    private fun gradeToPeriod(enum: GradeEnum): Int {
         return when (enum) {
             GradeEnum.AEDI -> {
                 1
@@ -46,10 +46,13 @@ class GradeController {
             GradeEnum.GRAFOS -> {
                 5
             }
+            else -> {
+                0
+            }
         }
     }
 
-    fun gradeToString(enum: GradeEnum): String {
+    private fun gradeToString(enum: GradeEnum): String {
         return when (enum) {
             GradeEnum.AEDI -> {
                 "AEDS I"
@@ -74,6 +77,9 @@ class GradeController {
             }
             GradeEnum.GRAFOS -> {
                 "Gráfos"
+            }
+            else -> {
+                ""
             }
         }
     }
