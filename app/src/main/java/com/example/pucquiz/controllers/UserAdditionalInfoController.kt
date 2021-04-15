@@ -43,34 +43,58 @@ class UserAdditionalInfoController {
         val medalList = mutableListOf<Medals>()
         MedalsType.values().forEach {
             when (it) {
-                MedalsType.QUESTIONS_ANSWERED -> {
+                MedalsType.ONE_QUIZ_ANSWERED -> {
                     medalList.add(
                         Medals(
-                            name = "X Questionarios repondidos!",
+                            name = "Primeiros Passos",
                             type = it
                         )
                     )
                 }
-                MedalsType.SCORE_REACHED -> {
+                MedalsType.FIVE_QUIZ_ANSWERED -> {
                     medalList.add(
                         Medals(
-                            name = "Pontuação X atingida!",
+                            name = "Médios Passos",
                             type = it
                         )
                     )
                 }
-                MedalsType.RANKING_POSITION -> {
+                MedalsType.TEN_QUIZ_ANSWERED -> {
                     medalList.add(
                         Medals(
-                            name = "Ranking X atingido!",
+                            name = "Passo Largo",
                             type = it
                         )
                     )
                 }
-                MedalsType.DAYS_IN_A_ROW -> {
+                MedalsType.HND_SCORE_REACHED -> {
                     medalList.add(
                         Medals(
-                            name = "X Dias seguidos atingido!",
+                            name = "Pequeno Progresso",
+                            type = it
+                        )
+                    )
+                }
+                MedalsType.THF_SCORE_REACHED -> {
+                    medalList.add(
+                        Medals(
+                            name = "Médio Progresso",
+                            type = it
+                        )
+                    )
+                }
+                MedalsType.FH_SCORE_REACHED -> {
+                    medalList.add(
+                        Medals(
+                            name = "Grande Progresso",
+                            type = it
+                        )
+                    )
+                }
+                MedalsType.FIRST_RANKING_POSITION -> {
+                    medalList.add(
+                        Medals(
+                            name = "Maioral",
                             type = it
                         )
                     )
