@@ -21,4 +21,16 @@
     <color name="secondaryBackground">#61FEFEFE</color>
     <!-- endregion -->
 
+    <!-- region Medals Colors -->
+    <color name="oneQuizAnswered">#4daecf</color>
+    <color name="fiveQuizAnswered">#4592ca</color>
+    <color name="tenQuizAnswered">#3f77c4</color>
+
+    <color name="oneHundredScore">#f6c137</color>
+    <color name="twoHundredFiftyScore">#f4aa2f</color>
+    <color name="fiveHundredScore">#f69537</color>
+
+    <color name="firstRanking">#ffff2d</color>
+    <!-- endregion -->
+
 </resources>

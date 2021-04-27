@@ -29,9 +29,9 @@ class MainBoardActivity : AppCompatActivity(), SettingsFragment.OnFragmentIntera
 
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.icon_results -> {
-                    makeCurrentFragment(obBoardingFragment)
-                }
+//                R.id.icon_results -> {
+//                    makeCurrentFragment(obBoardingFragment)
+//                }
 
                 R.id.icon_setting -> {
                     makeCurrentFragment(settingsFragment)

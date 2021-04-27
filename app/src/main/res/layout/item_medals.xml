@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout_grade_selected_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,14 +19,14 @@
         android:maxWidth="300dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="Grande Progresso"
-        android:textAlignment="center"
         android:singleLine="true"
+        android:textAlignment="center"
         android:textColor="@color/thirdText"
         android:textSize="@dimen/font_xxlarge"
         app:layout_constraintEnd_toStartOf="@id/imageView2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Grande Progresso" />
 
     <TextView
         android:id="@+id/textView_medal_descritption"
@@ -39,14 +40,14 @@
         android:maxWidth="300dp"
         android:paddingStart="15dp"
         android:paddingEnd="20dp"
-        android:text="Esta medalha é adquirida quando voce completa mais de três questionarios, vamos la que voce consegue!"
         android:textAlignment="center"
         android:textColor="@color/thirdText"
         android:textSize="@dimen/font_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imageView2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_medal_title" />
+        app:layout_constraintTop_toBottomOf="@id/textView_medal_title"
+        tools:text="Esta medalha é adquirida quando voce completa mais de três questionarios, vamos la que voce consegue!" />
 
     <ImageView
         android:id="@+id/imageView2"

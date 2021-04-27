@@ -7,7 +7,7 @@ import com.example.pucquiz.R
 import com.example.pucquiz.models.UserAdditionalInfo
 import com.example.pucquiz.ui.ranking.delegates.RankingCardDelegate
 import com.example.pucquiz.ui.ranking.delegates.RankingCardDelegate.Companion.VIEW_USER_RANKING_CARD
-import com.example.pucquiz.ui.ranking.delegates.StatusAdapterDelegate
+import com.example.pucquiz.ui.shared.delegates.StatusAdapterDelegate
 
 class RankingListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

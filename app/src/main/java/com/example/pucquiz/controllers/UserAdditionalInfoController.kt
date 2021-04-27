@@ -48,7 +48,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Primeiros Passos",
-                            description = "", // TODO: Add description to each medal
+                            description = "Parabéns! Você respondeu o seu primeiro Quiz!",
                             type = it
                         )
                     )
@@ -57,7 +57,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Médios Passos",
-                            description = "", // TODO: Add description to each medal
+                            description = "Incrível! Você respondeu 5 Quiz!",
                             type = it
                         )
                     )
@@ -66,7 +66,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Passo Largo",
-                            description = "", // TODO: Add description to each medal
+                            description = "Sensacional! Você respondeu 10 Quiz!",
                             type = it
                         )
                     )
@@ -75,7 +75,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Pequeno Progresso",
-                            description = "", // TODO: Add description to each medal
+                            description = "Parabéns! Você atingiu 100 pontos acumulados!",
                             type = it
                         )
                     )
@@ -84,7 +84,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Médio Progresso",
-                            description = "", // TODO: Add description to each medal
+                            description = "Incrível! Você atingiu 250 pontos acumulados!",
                             type = it
                         )
                     )
@@ -93,7 +93,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Grande Progresso",
-                            description = "", // TODO: Add description to each medal
+                            description = "Sensacional! Você atingiu 500 pontos acumulados!",
                             type = it
                         )
                     )
@@ -102,7 +102,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Maioral",
-                            description = "", // TODO: Add description to each medal
+                            description = "Imparável!! Você ocupou o primeiro lugar no ranking!",
                             type = it
                         )
                     )

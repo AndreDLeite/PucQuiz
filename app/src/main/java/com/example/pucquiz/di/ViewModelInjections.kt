@@ -16,7 +16,7 @@ fun Module.viewModelInjections() {
     viewModel { LoginViewModel(androidApplication()) }
     viewModel { RegisterViewModel(androidApplication()) }
     viewModel { SettingsViewModel(androidApplication()) }
-    viewModel { MedalsViewModel(androidApplication()) }
+    viewModel { MedalsViewModel(androidApplication(), get()) }
     viewModel { UserInfoVewModel(androidApplication(), get()) }
     viewModel { RankingViewModel(androidApplication(), get()) }
 

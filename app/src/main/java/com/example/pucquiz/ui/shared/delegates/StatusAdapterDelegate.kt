@@ -1,4 +1,4 @@
-package com.example.pucquiz.ui.ranking.delegates
+package com.example.pucquiz.ui.shared.delegates
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
