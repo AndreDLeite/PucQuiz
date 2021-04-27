@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener
 class FirebaseRTDBRepository : IFirebaseRTDBRepository {
     private val firebaseRTDBInstance = FirebaseDatabase.getInstance()
 
+    //region UserAdditionalInfo
     override suspend fun fetchAllUsersAdditionalInfo(callback: FirebaseUserAddInfoCallback) {
         firebaseRTDBInstance.getReference(FIREBASE_USER_INFO_BUCKET).get()
             .addOnCompleteListener { task ->
@@ -79,7 +80,9 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
                 }
             )
     }
+    //endregion
 
+    //region UserMedals
     override suspend fun fetchUserMedalsByUserId(
         userId: String,
         callback: FirebaseUserMedalsCallback
@@ -100,4 +103,5 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
                 }
             )
     }
+    //endregion
 }

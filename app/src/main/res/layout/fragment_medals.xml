@@ -7,7 +7,7 @@
     android:background="@color/secondaryBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout_ranking_header"
+        android:id="@+id/constraintLayout_medals_header"
         android:layout_width="0dp"
         android:layout_height="@dimen/height_topbar"
         android:background="@color/colorSecondary"
@@ -21,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/rubik_medium"
-            android:text="Classificação"
+            android:text="Medalhas"
             android:textAlignment="center"
             android:textColor="@color/baseBackground"
             android:textSize="@dimen/font_xxlarge"
@@ -39,8 +39,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout_ranking_header"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout_medals_header"
         tools:itemCount="5"
-        tools:listitem="@layout/item_ranking" />
+        tools:listitem="@layout/item_medals" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

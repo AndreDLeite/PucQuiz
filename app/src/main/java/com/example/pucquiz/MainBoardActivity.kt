@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
+import com.example.pucquiz.ui.medals.fragments.MedalsFragment
 import com.example.pucquiz.ui.ranking.fragments.RankingFragment
 import com.example.pucquiz.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
@@ -22,6 +23,7 @@ class MainBoardActivity : AppCompatActivity(), SettingsFragment.OnFragmentIntera
         val obBoardingFragment = OnBoardingFragment()
         val rankingFragment = RankingFragment()
         val settingsFragment = SettingsFragment()
+        val medalsFragment = MedalsFragment()
 
         makeCurrentFragment(obBoardingFragment)
 
@@ -39,6 +41,9 @@ class MainBoardActivity : AppCompatActivity(), SettingsFragment.OnFragmentIntera
                     makeCurrentFragment(rankingFragment)
                 }
 
+                R.id.ic_medalhas -> {
+                    makeCurrentFragment(medalsFragment)
+                }
                 else -> {
 
                 }

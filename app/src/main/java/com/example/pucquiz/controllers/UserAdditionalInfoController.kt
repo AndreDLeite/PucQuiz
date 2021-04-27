@@ -39,6 +39,7 @@ class UserAdditionalInfoController {
         )
     }
 
+    //TODO: Change it to be a factory of medals
     private fun generateAllMedals(): List<Medals> {
         val medalList = mutableListOf<Medals>()
         MedalsType.values().forEach {
@@ -47,6 +48,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Primeiros Passos",
+                            description = "", // TODO: Add description to each medal
                             type = it
                         )
                     )
@@ -55,6 +57,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Médios Passos",
+                            description = "", // TODO: Add description to each medal
                             type = it
                         )
                     )
@@ -63,6 +66,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Passo Largo",
+                            description = "", // TODO: Add description to each medal
                             type = it
                         )
                     )
@@ -71,6 +75,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Pequeno Progresso",
+                            description = "", // TODO: Add description to each medal
                             type = it
                         )
                     )
@@ -79,6 +84,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Médio Progresso",
+                            description = "", // TODO: Add description to each medal
                             type = it
                         )
                     )
@@ -87,6 +93,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Grande Progresso",
+                            description = "", // TODO: Add description to each medal
                             type = it
                         )
                     )
@@ -95,6 +102,7 @@ class UserAdditionalInfoController {
                     medalList.add(
                         Medals(
                             name = "Maioral",
+                            description = "", // TODO: Add description to each medal
                             type = it
                         )
                     )
