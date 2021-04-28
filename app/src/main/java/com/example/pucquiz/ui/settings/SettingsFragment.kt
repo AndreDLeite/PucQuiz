@@ -14,7 +14,7 @@ import com.example.pucquiz.extensios.overrideOnBackPressed
 import com.example.pucquiz.models.User
 import com.example.pucquiz.models.UserAdditionalInfo
 import com.example.pucquiz.shared.Resource
-import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoVewModel
+import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoViewModel
 import com.example.pucquiz.ui.settings.viewmodels.SettingsViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
@@ -23,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class SettingsFragment : Fragment() {
 
     private val settingsViewModel by inject<SettingsViewModel>()
-    private val userInfoViewModel by sharedViewModel<UserInfoVewModel>()
+    private val userInfoViewModel by sharedViewModel<UserInfoViewModel>()
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreateView(
@@ -37,9 +37,15 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fetchInitialData()
         overrideOnBackPressed()
         setupListeners()
         setupViewModelObservers()
+    }
+
+    private fun fetchInitialData() {
+        userInfoViewModel.fetchUserData()
+        userInfoViewModel.fetchUserAdditionalData()
     }
 
     private fun setupListeners() {

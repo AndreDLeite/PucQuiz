@@ -20,7 +20,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 
-class UserInfoVewModel(
+class UserInfoViewModel(
     application: Application,
     private val firebaseRepo: IFirebaseRTDBRepository
 ) : AndroidViewModel(application), KoinComponent {
@@ -41,12 +41,12 @@ class UserInfoVewModel(
 
     init {
         //TODO: Change this logic, since the data can always change, send help
-        fetchUserData()
-        fetchUserAdditionalData()
-        fetchUserMedalsData()
+//        fetchUserData()
+//        fetchUserAdditionalData()
+//        fetchUserMedalsData()
     }
 
-    private fun fetchUserData() {
+    fun fetchUserData() {
         ioScope.launch {
             _currentUserInfo.postValue(Resource.loading())
             val user = FirebaseAuth.getInstance().currentUser
@@ -69,7 +69,7 @@ class UserInfoVewModel(
         }
     }
 
-    private fun fetchUserAdditionalData() {
+    fun fetchUserAdditionalData() {
         ioScope.launch {
             _currentUserInfo.postValue(Resource.loading())
             val user = FirebaseAuth.getInstance().currentUser

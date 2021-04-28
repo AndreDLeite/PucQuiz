@@ -17,12 +17,21 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".MainBoardActivity"
+            android:name=".MainBoardStudentActivity"
             android:label="@string/title_activity_onboarding">
             <intent-filter>
                 <category android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MainBoardTeacherActivity"
+            android:label="@string/title_activity_onboarding">
+            <intent-filter>
+                <category android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_onboarding"
@@ -40,10 +49,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.DEFAULT" />
-            </intent-filter>
+
+        <activity android:name=".ConfigurationActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.DEFAULT" />
+        </intent-filter>
         </activity>
     </application>
 

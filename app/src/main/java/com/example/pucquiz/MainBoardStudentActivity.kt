@@ -10,7 +10,7 @@ import com.example.pucquiz.ui.ranking.fragments.RankingFragment
 import com.example.pucquiz.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
-class MainBoardActivity : AppCompatActivity(), SettingsFragment.OnFragmentInteractionListener {
+class MainBoardStudentActivity : AppCompatActivity(), SettingsFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

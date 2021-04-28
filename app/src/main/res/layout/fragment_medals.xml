@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_medals_header"
         android:layout_width="0dp"
-        android:layout_height="@dimen/height_topbar"
+        android:layout_height="@dimen/height_topbar_notch"
         android:background="@color/colorSecondary"
         android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"

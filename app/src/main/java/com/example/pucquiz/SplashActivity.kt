@@ -46,7 +46,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun goto(result: Boolean) {
         if (result) {
-            gotoOnBoarding()
+            gotoConfigurationActivity()
         } else {
             gotoLogin()
         }
@@ -60,9 +60,9 @@ class SplashActivity : AppCompatActivity() {
         }, 1500)
     }
 
-    private fun gotoOnBoarding() {
+    private fun gotoConfigurationActivity() {
         Handler().postDelayed({
-            val intent = Intent(this, MainBoardActivity::class.java)
+            val intent = Intent(this, ConfigurationActivity::class.java)
             startActivity(intent)
             finish()
         }, 1500)

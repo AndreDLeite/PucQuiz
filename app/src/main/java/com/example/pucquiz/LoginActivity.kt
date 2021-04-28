@@ -9,7 +9,8 @@ import com.example.pucquiz.ui.login.LoginFragment
 import com.example.pucquiz.ui.register.GradeSelectionFragment
 import com.example.pucquiz.ui.register.RegisterFragment
 
-class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener {
+class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionListener,
+    RegisterFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +42,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionLi
     }
 
     override fun onSuccessfullLogin() {
-        val intent = Intent(this, MainBoardActivity::class.java)
+        val intent = Intent(this, ConfigurationActivity::class.java)
         startActivity(intent)
         finish()
     }

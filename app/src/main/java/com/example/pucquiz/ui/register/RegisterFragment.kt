@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.pucquiz.R
 import com.example.pucquiz.components.DialogSimple
 import com.example.pucquiz.extensios.hideKeyboard
+import com.example.pucquiz.models.UserRole
 import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.login.viewmodels.LoginViewModel
 import com.example.pucquiz.ui.register.adapters.GradeSelectedListAdapter
@@ -53,6 +54,30 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setupListeners() {
+        when(registerViewModel.currentUserRole) {
+            UserRole.STUDENT -> {
+                radioGroup.check(radioButton_student.id)
+            }
+            UserRole.TEACHER -> {
+                radioGroup.check(radioButton_teacher.id)
+            }
+        }
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                radioButton_student.id -> {
+                    registerViewModel.currentUserRole = UserRole.STUDENT
+                    registerViewModel.userPeriod.value?.let {
+                        generateGrades(it)
+                    }
+                    resetSelectedGrades()
+                }
+                radioButton_teacher.id -> {
+                    registerViewModel.currentUserRole = UserRole.TEACHER
+                    generateGrades(5)
+                }
+            }
+
+        }
         backButton.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -61,21 +86,29 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             context?.hideKeyboard(materialButton_register)
         }
         textView_gradesHint.setOnClickListener {
-            validateRegularUser()
+            validateUserRole()
         }
     }
 
-    private fun validateRegularUser() {
-        if (!registerViewModel.isRegularUser) {
-            openGradeSelector()
-        }
+//    private fun showStudentRegisterForm() {
+//        textView_register_grade_status.visibility = View.VISIBLE
+//        spinner_drop_down_grade_selector.visibility = View.VISIBLE
+//    }
+//
+//    private fun showTeacherRegisterForm() {
+//        textView_register_grade_status.visibility = View.GONE
+//        spinner_drop_down_grade_selector.visibility = View.GONE
+//    }
+
+    private fun validateUserRole() {
+        openGradeSelector()
     }
 
     private fun initRecyclerView() {
         gradeListAdapter.setAnnotationTagAdapterListener(object :
             GradeSelectedListAdapter.OnInteractionClickListener {
             override fun onRecyclerViewItemClicked() {
-                validateRegularUser()
+                validateUserRole()
             }
         })
 
@@ -101,7 +134,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         // Check to see if it was a tap or a swipe
                         val yDelta = abs(it.y - event.y)
                         if (yDelta > 30) {
-                            validateRegularUser()
+                            validateUserRole()
                         }
                     }
 
@@ -179,6 +212,8 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         group_register_form.visibility = View.VISIBLE
         backButton.isEnabled = true
         materialButton_register.isEnabled = true
+        textView_register_grade_ocupation.visibility = View.VISIBLE
+        radioGroup.visibility = View.VISIBLE
     }
 
     private fun showRegistrationErrorDialog() {
@@ -218,6 +253,8 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         backButton.isEnabled = false
         materialButton_register.isEnabled = false
         progress_bar.visibility = View.VISIBLE
+        textView_register_grade_ocupation.visibility = View.GONE
+        radioGroup.visibility = View.GONE
     }
 
     private fun checkRegisterFields(): Boolean {
@@ -277,9 +314,13 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val currentPeriod = adapterView?.getItemAtPosition(position).toString().toInt()
         if (currentPeriod != registerViewModel.userPeriod.value) {
             registerViewModel.setUserPeriod(currentPeriod)
-            registerViewModel.generateGradesBasedOnPeriod(currentPeriod)
+            generateGrades(currentPeriod)
             resetSelectedGrades()
         }
+    }
+
+    private fun generateGrades(currentPeriod: Int) {
+        registerViewModel.generateGradesBasedOnPeriod(currentPeriod)
     }
 
     private fun resetSelectedGrades() {

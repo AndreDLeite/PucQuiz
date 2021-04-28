@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_grade_header"
         android:layout_width="0dp"
-        android:layout_height="@dimen/height_topbar"
+        android:layout_height="@dimen/height_topbar_notch"
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@id/recyclerView_grade_list"
         app:layout_constraintEnd_toEndOf="parent"

@@ -11,14 +11,13 @@ import com.example.pucquiz.extensios.fadeInAnimation
 import com.example.pucquiz.extensios.overrideOnBackPressed
 import com.example.pucquiz.models.User
 import com.example.pucquiz.shared.Resource
-import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoVewModel
+import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoViewModel
 import kotlinx.android.synthetic.main.fragment_onboarding.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class OnBoardingFragment : Fragment() {
 
-    private val userInfoViewModel by sharedViewModel<UserInfoVewModel>()
+    private val userInfoViewModel by sharedViewModel<UserInfoViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

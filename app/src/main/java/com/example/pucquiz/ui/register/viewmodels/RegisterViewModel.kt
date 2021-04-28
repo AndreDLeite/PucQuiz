@@ -9,6 +9,7 @@ import com.example.pucquiz.controllers.GradeController
 import com.example.pucquiz.controllers.UserAdditionalInfoController
 import com.example.pucquiz.models.Grade
 import com.example.pucquiz.models.User
+import com.example.pucquiz.models.UserRole
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_INFO_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_MEDALS_BUCKET
@@ -42,7 +43,7 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     val userPeriod: LiveData<Int>
         get() = _userPeriod
 
-    var isRegularUser = false
+    var currentUserRole = UserRole.STUDENT
 
     init {
         _selectedGrades.value = mutableListOf()
@@ -66,7 +67,15 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun generateGradesBasedOnPeriod(userPeriod: Int) {
-        _generatedGrades.value = GradeController().generateBasedOnPeriodGrades(userPeriod)
+        when(currentUserRole) {
+            UserRole.STUDENT -> {
+                _generatedGrades.value = GradeController().generateBasedOnPeriodGrades(userPeriod)
+            }
+            UserRole.TEACHER -> {
+                _generatedGrades.value = GradeController().generateBasedOnPeriodGrades(5)
+            }
+        }
+
     }
 
     fun registerUser(userName: String, userAge: Int, userEmail: String, userPassword: String) {
@@ -80,22 +89,15 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
                             age = userAge,
                             email = userEmail,
                             period = userPeriod.value ?: 1,
-                            registered_grades = selectedGrades.value ?: emptyList()
+                            registered_grades = selectedGrades.value ?: emptyList(),
+                            role = currentUserRole
                         )
                         createUserInstance(user)
-                        createUserAdditionalInfoInstance(user)
-                        createUserMedalsInstance(user)
+                        if(currentUserRole == UserRole.STUDENT) {
+                            createUserAdditionalInfoInstance(user)
+                            createUserMedalsInstance(user)
+                        }
                         _registrationLiveData.postValue(Resource.success(true))
-//                        if (operationStatus) {
-//
-//                        } else {
-//                            _registrationLiveData.postValue(
-//                                Resource.error(
-//                                    "creating user data",
-//                                    null
-//                                )
-//                            )
-//                        }
 
                     } else {
                         _registrationLiveData.postValue(

@@ -7,22 +7,17 @@
 <!--        android:title="Resultados"/>-->
 
     <item
-        android:id="@+id/ic_quiz"
-        android:icon="@drawable/ic_star_empty_center"
-        android:title="Quiz"/>
-
-    <item
-        android:id="@+id/ic_ranking"
+        android:id="@+id/ic_students_result"
         android:icon="@drawable/ic_ranking"
-        android:title="Ranking"/>
+        android:title="Resultados"/>
 
     <item
-        android:id="@+id/ic_medalhas"
-        android:icon="@drawable/ic_badge"
-        android:title="Medalhas"/>
+        android:id="@+id/ic_create_quiz"
+        android:icon="@drawable/ic_star_empty_center"
+        android:title="Criar Quiz"/>
 
     <item
-        android:id="@+id/icon_setting"
+        android:id="@+id/icon_teacher_setting"
         android:icon="@drawable/ic_person"
         android:title="Perfil"/>
 
