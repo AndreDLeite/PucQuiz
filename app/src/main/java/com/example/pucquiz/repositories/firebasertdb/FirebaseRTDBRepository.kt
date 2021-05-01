@@ -1,13 +1,16 @@
 package com.example.pucquiz.repositories.firebasertdb
 
 import android.util.Log
+import com.example.pucquiz.callbacks.FirebaseTeacherQuestionsCallback
 import com.example.pucquiz.callbacks.FirebaseUserAddInfoCallback
 import com.example.pucquiz.callbacks.FirebaseUserCallback
 import com.example.pucquiz.callbacks.FirebaseUserMedalsCallback
 import com.example.pucquiz.callbacks.models.UsersRankingResponse
+import com.example.pucquiz.models.Question
 import com.example.pucquiz.models.User
 import com.example.pucquiz.models.UserAdditionalInfo
 import com.example.pucquiz.models.UserMedals
+import com.example.pucquiz.shared.AppConstants.FIREBASE_TEACHER_QUESTIONS_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_INFO_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_MEDALS_BUCKET
@@ -103,5 +106,52 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
                 }
             )
     }
+    //endregion
+
+    //region TeacherQuestions
+
+    override suspend fun fetchTeacherQuestions(
+        userId: String,
+        callback: FirebaseTeacherQuestionsCallback
+    ) {
+        val firebaseRTDBInstance =
+            firebaseRTDBInstance.getReference(FIREBASE_TEACHER_QUESTIONS_BUCKET)
+        val query = firebaseRTDBInstance
+            .orderByChild("teacherId")
+            .equalTo(userId)
+
+        query.addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val response = mutableListOf<Question>()
+                    val questionList = snapshot.children.map { snapShot ->
+                        snapShot.getValue(Question::class.java)!!
+                    }
+                    response.addAll(questionList)
+                    callback.onResponse(response)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback.onResponse(emptyList())
+                }
+            }
+        )
+
+//            .addOnCompleteListener { task ->
+//                //important: This call can return null if the bucket wasn't created yet
+//                val response = mutableListOf<Question>()
+//                if (task.isSuccessful) {
+//                    val result = task.result
+//                    result?.let {
+//                        val questionList = result.children.map { snapShot ->
+//                            snapShot.getValue(Question::class.java)!!
+//                        }
+//                        response.addAll(questionList)
+//                    }
+//                }
+//                callback.onResponse(response)
+//            }
+    }
+
     //endregion
 }

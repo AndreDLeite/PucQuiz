@@ -7,7 +7,7 @@ data class Grade(
     var isAvailable: Boolean = false
 ) {
     fun gradeToString(enum: GradeEnum): String {
-        return when(enum) {
+        return when (enum) {
             GradeEnum.AEDI -> {
                 "AEDS I"
             }
@@ -32,6 +32,9 @@ data class Grade(
             GradeEnum.GRAFOS -> {
                 "Gráfos"
             }
+            else -> {
+                ""
+            }
         }
     }
 }
@@ -44,5 +47,6 @@ enum class GradeEnum {
     REDESII,
     COMPUTACAO_PARALELA,
     OTIMIZACAO,
-    GRAFOS
+    GRAFOS,
+    UNKOWN
 }

@@ -11,14 +11,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/rubik_medium"
-        android:text="Olá fulano.de.tal voce esta no "
         android:textAlignment="center"
         android:textColor="@color/primaryText"
         android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@id/title_first"
         app:layout_constraintEnd_toEndOf="@id/title_second"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@id/title_first" />
+        app:layout_constraintStart_toStartOf="@id/title_first"
+        tools:text="Olá fulano.de.tal voce esta no " />
 
     <TextView
         android:id="@+id/title_first"

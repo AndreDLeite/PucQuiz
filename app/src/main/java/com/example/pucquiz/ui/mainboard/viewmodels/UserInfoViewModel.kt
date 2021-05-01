@@ -49,23 +49,29 @@ class UserInfoViewModel(
     fun fetchUserData() {
         ioScope.launch {
             _currentUserInfo.postValue(Resource.loading())
-            val user = FirebaseAuth.getInstance().currentUser
-            val userId = user?.uid ?: ""
-
-            firebaseRepo.fetchUserInfoByUserId(userId, object : FirebaseUserCallback {
-                override fun onResponse(response: User?) {
-                    response?.let {
-                        _currentUserInfo.postValue(Resource.success(it))
-                    } ?: run {
-                        _currentUserInfo.postValue(
-                            Resource.error(
-                                "unable to fetch user data from server",
-                                null
+            FirebaseAuth.getInstance().currentUser?.let {
+                firebaseRepo.fetchUserInfoByUserId(it.uid, object : FirebaseUserCallback {
+                    override fun onResponse(response: User?) {
+                        response?.let {
+                            _currentUserInfo.postValue(Resource.success(it))
+                        } ?: run {
+                            _currentUserInfo.postValue(
+                                Resource.error(
+                                    "unable to fetch user data from server",
+                                    null
+                                )
                             )
-                        )
+                        }
                     }
-                }
-            })
+                })
+            } ?: run {
+                _currentUserInfo.postValue(
+                    Resource.error(
+                        "Error getting userId",
+                        null
+                    )
+                )
+            }
         }
     }
 

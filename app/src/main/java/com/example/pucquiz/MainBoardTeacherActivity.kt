@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
+import com.example.pucquiz.ui.quizhall.fragments.QuizHallFragment
 import com.example.pucquiz.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
@@ -23,7 +24,7 @@ class MainBoardTeacherActivity : AppCompatActivity(),
 
     private fun setupNavigation() {
         val obBoardingFragment = OnBoardingFragment()
-//        val rankingFragment = RankingFragment()
+        val questionsFragment = QuizHallFragment()
         val settingsFragment = SettingsFragment()
 //        val medalsFragment = MedalsFragment()
 
@@ -33,7 +34,7 @@ class MainBoardTeacherActivity : AppCompatActivity(),
             when (it.itemId) {
 
                 R.id.ic_create_quiz -> {
-                    makeCurrentFragment(obBoardingFragment)
+                    makeCurrentFragment(questionsFragment)
                 }
 
                 R.id.ic_students_result -> {

@@ -19,12 +19,12 @@
             android:id="@+id/textView_grade_headerTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
             android:fontFamily="@font/rubik_medium"
             android:text="Seu Perfil"
             android:textAlignment="center"
             android:textColor="@color/baseBackground"
             android:textSize="@dimen/font_xxlarge"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
