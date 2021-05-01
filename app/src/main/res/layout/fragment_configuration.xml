@@ -29,9 +29,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/rubik_medium"
+        android:maxWidth="300dp"
+        android:textAlignment="center"
+        android:text="Carregando suas informações aguarde um instante..."
         android:textColor="@color/primaryText"
         android:textSize="@dimen/font_xlarge"
-        android:text="Configurando informações da conta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/progress_bar" />

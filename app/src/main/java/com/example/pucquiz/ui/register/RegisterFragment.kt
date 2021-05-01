@@ -245,6 +245,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun showSuccessState() {
         loginViewModel.setRegistrationValue(true)
+        registerViewModel.clearViewModel()
         listener?.onRegisterCompleted()
     }
 

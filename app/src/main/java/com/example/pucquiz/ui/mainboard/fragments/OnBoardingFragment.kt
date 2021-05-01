@@ -30,8 +30,13 @@ class OnBoardingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fetchUserData()
         overrideOnBackPressed()
         setupViewModelObservers()
+    }
+
+    private fun fetchUserData() {
+        userInfoViewModel.fetchUserData()
     }
 
     private fun setupViewModelObservers() {

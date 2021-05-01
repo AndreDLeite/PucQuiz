@@ -181,4 +181,12 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
         return operationResult
     }
 
+    fun clearViewModel() {
+        _registrationLiveData.postValue(null)
+        _selectedGrades.postValue(null)
+        _generatedGrades.postValue(null)
+        _userPeriod.postValue(null)
+        currentUserRole = UserRole.STUDENT
+    }
+
 }
