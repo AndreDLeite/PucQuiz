@@ -52,7 +52,7 @@ class GradeController {
         }
     }
 
-    private fun gradeToString(enum: GradeEnum): String {
+    fun gradeToString(enum: GradeEnum): String {
         return when (enum) {
             GradeEnum.AEDI -> {
                 "AEDS I"

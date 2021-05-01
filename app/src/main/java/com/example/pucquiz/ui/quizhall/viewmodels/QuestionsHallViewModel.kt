@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pucquiz.callbacks.FirebaseTeacherQuestionsCallback
 import com.example.pucquiz.models.Question
-import com.example.pucquiz.models.User
 import com.example.pucquiz.repositories.firebasertdb.IFirebaseRTDBRepository
 import com.example.pucquiz.shared.Resource
 import com.google.firebase.auth.FirebaseAuth

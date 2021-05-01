@@ -136,21 +136,6 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
                 }
             }
         )
-
-//            .addOnCompleteListener { task ->
-//                //important: This call can return null if the bucket wasn't created yet
-//                val response = mutableListOf<Question>()
-//                if (task.isSuccessful) {
-//                    val result = task.result
-//                    result?.let {
-//                        val questionList = result.children.map { snapShot ->
-//                            snapShot.getValue(Question::class.java)!!
-//                        }
-//                        response.addAll(questionList)
-//                    }
-//                }
-//                callback.onResponse(response)
-//            }
     }
 
     //endregion

@@ -1,6 +1,5 @@
 package com.example.pucquiz.ui.medals.delegates
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -27,9 +26,11 @@ class MedalCardDelegate {
         with(holder as MedalCardViewHolder) {
             medalCardName.text = userMedal.name
             medalCardDescription.text = userMedal.description
-            if(userMedal.medalIsActive) {
+            if (userMedal.medalIsActive) {
+                val resourceColor = userMedal.type.resourceColor()
                 val context = medalCardBackground.context
-                medalCardBackground.backgroundTintList = ContextCompat.getColorStateList(context, R.color.colorPrimary)
+                medalCardBackground.backgroundTintList =
+                    ContextCompat.getColorStateList(context, resourceColor)
             }
         }
     }

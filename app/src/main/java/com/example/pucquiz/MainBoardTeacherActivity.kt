@@ -6,30 +6,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
-import com.example.pucquiz.ui.quizhall.fragments.QuizHallFragment
+import com.example.pucquiz.ui.quizhall.fragments.QuestionHallFragment
 import com.example.pucquiz.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
 class MainBoardTeacherActivity : AppCompatActivity(),
-    SettingsFragment.OnFragmentInteractionListener {
+    SettingsFragment.OnFragmentInteractionListener,
+    QuestionHallFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_teacher_onboarding)
-
         setupNavigation()
-
     }
 
     private fun setupNavigation() {
         val obBoardingFragment = OnBoardingFragment()
-        val questionsFragment = QuizHallFragment()
+        val questionsFragment = QuestionHallFragment()
         val settingsFragment = SettingsFragment()
 //        val medalsFragment = MedalsFragment()
-
         makeCurrentFragment(obBoardingFragment)
-
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
 
@@ -61,10 +58,18 @@ class MainBoardTeacherActivity : AppCompatActivity(),
         }
     }
 
+    //region Settings_Interactions
     override fun onLogout() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }
+    //endregion
+
+    //region Questions_Interactions
+    override fun onAddQuestionClicked() {
+//        makeCurrentFragment(QuestionVisualizerFragment())
+    }
+    //endregion
 
 }

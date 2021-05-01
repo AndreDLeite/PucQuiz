@@ -5,39 +5,7 @@ data class Grade(
     val gradeType: String = "",
     val period: Int = -1,
     var isAvailable: Boolean = false
-) {
-    fun gradeToString(enum: GradeEnum): String {
-        return when (enum) {
-            GradeEnum.AEDI -> {
-                "AEDS I"
-            }
-            GradeEnum.AEDII -> {
-                "AEDS II"
-            }
-            GradeEnum.DISPOSITIVOS_MOVEIS -> {
-                "Dispositivos Móveis"
-            }
-            GradeEnum.REDESI -> {
-                "Redes I"
-            }
-            GradeEnum.REDESII -> {
-                "Redes II"
-            }
-            GradeEnum.COMPUTACAO_PARALELA -> {
-                "Computação Paralela"
-            }
-            GradeEnum.OTIMIZACAO -> {
-                "Otmização"
-            }
-            GradeEnum.GRAFOS -> {
-                "Gráfos"
-            }
-            else -> {
-                ""
-            }
-        }
-    }
-}
+)
 
 enum class GradeEnum {
     AEDI,
