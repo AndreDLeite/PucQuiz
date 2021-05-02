@@ -90,16 +90,6 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-//    private fun showStudentRegisterForm() {
-//        textView_register_grade_status.visibility = View.VISIBLE
-//        spinner_drop_down_grade_selector.visibility = View.VISIBLE
-//    }
-//
-//    private fun showTeacherRegisterForm() {
-//        textView_register_grade_status.visibility = View.GONE
-//        spinner_drop_down_grade_selector.visibility = View.GONE
-//    }
-
     private fun validateUserRole() {
         openGradeSelector()
     }

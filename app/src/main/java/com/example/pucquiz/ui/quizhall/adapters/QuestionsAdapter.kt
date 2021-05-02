@@ -12,6 +12,7 @@ class QuestionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var questionsList: MutableList<Question> = mutableListOf()
 
+    //interesting bug that if we start with "LOADING" state it wont change.... wut??
     private var currentStatus: QuestionsStatus =
         QuestionsStatus.DEFAULT_QUESTIONS_LIST
 

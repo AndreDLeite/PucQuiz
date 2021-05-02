@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class QuestionsHallViewModel(
@@ -27,28 +28,27 @@ class QuestionsHallViewModel(
 
     fun fetchTeacherQuestions() {
         ioScope.launch {
+            delay(1000)
+            _teacherQuestions.postValue(Resource.loading())
             FirebaseAuth.getInstance().currentUser?.let {
                 firebaseRepo.fetchTeacherQuestions(
                     it.uid,
                     object : FirebaseTeacherQuestionsCallback {
                         override fun onResponse(questions: List<Question>?) {
                             questions?.let {
-                                if (questions.isEmpty()) {
-                                    _teacherQuestions.postValue(
-                                        Resource.error(
-                                            "Empty question list",
-                                            questions
-                                        )
-                                    )
-                                } else {
-                                    _teacherQuestions.postValue(Resource.success(questions))
-                                }
+                                _teacherQuestions.postValue(Resource.success(questions))
                             } ?: run {
-                                _teacherQuestions.postValue(Resource.error("questions", questions))
+                                _teacherQuestions.postValue(Resource.error("error fetch questions", questions))
                             }
                         }
                     })
+            } ?: run {
+                _teacherQuestions.postValue(Resource.error("error fetch questions", null))
             }
         }
+    }
+
+    fun createQuestion() {
+
     }
 }

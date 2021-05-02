@@ -127,6 +127,7 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
                     val questionList = snapshot.children.map { snapShot ->
                         snapShot.getValue(Question::class.java)!!
                     }
+                    Log.e("firebase response", questionList.toString())
                     response.addAll(questionList)
                     callback.onResponse(response)
                 }

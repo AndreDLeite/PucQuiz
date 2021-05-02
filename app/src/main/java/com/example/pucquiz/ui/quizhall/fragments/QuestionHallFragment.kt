@@ -1,5 +1,6 @@
 package com.example.pucquiz.ui.quizhall.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,16 +15,18 @@ import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.quizhall.adapters.QuestionsAdapter
 import com.example.pucquiz.ui.quizhall.delegate.QuestionCardDelegate
 import com.example.pucquiz.ui.quizhall.viewmodels.QuestionsHallViewModel
+import com.example.pucquiz.ui.welcome.WelcomeFragment
 import kotlinx.android.synthetic.main.fragment_question_hall.*
 import org.koin.android.ext.android.inject
 
 class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClicked {
 
+    private var listener: OnFragmentInteractionListener? = null
+
     private val questionsHallViewModel by inject<QuestionsHallViewModel>()
 
     private lateinit var questionsAdapter: QuestionsAdapter
 
-    //recyclerView_questions
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +43,15 @@ class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClic
         setupListeners()
         setupViewModelObservers()
         overrideOnBackPressed()
+        restoreNavigation()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        }
     }
 
     private fun callServices() {
@@ -56,7 +68,7 @@ class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClic
 
     private fun setupListeners() {
         add_question.setOnClickListener {
-
+            listener?.onAddQuestionClicked()
         }
     }
 
@@ -71,10 +83,12 @@ class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClic
                     }
                 }
                 Resource.Status.ERROR -> {
+                    constraint_questions_hint.visibility = View.GONE
                     questionsAdapter.updateStatus(QuestionsAdapter.QuestionsStatus.ERROR_QUESTIONS_LIST)
                 }
                 Resource.Status.LOADING -> {
-                    questionsAdapter.updateStatus(QuestionsAdapter.QuestionsStatus.LOADING_QUESTIONS_LIST)
+                    constraint_questions_hint.visibility = View.GONE
+//                    questionsAdapter.updateStatus(QuestionsAdapter.QuestionsStatus.LOADING_QUESTIONS_LIST)
                 }
             }
         })
@@ -86,11 +100,16 @@ class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClic
         }
     }
 
+    private fun restoreNavigation() {
+        listener?.onFragmentCreated()
+    }
+
     override fun onQuestionCardClicked(question: Question) {
         //TODO: Open same screen as the "quiz" but with the option to delete the question...
     }
 
     interface OnFragmentInteractionListener {
         fun onAddQuestionClicked()
+        fun onFragmentCreated()
     }
 }
