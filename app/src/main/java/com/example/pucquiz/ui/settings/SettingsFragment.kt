@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.pucquiz.R
 import com.example.pucquiz.components.DialogSimple
+import com.example.pucquiz.controllers.GradeController
 import com.example.pucquiz.extensios.overrideOnBackPressed
 import com.example.pucquiz.models.User
 import com.example.pucquiz.models.UserAdditionalInfo
@@ -61,6 +62,7 @@ class SettingsFragment : Fragment() {
                 Resource.Status.SUCCESS -> {
                     it.data?.let {
                         setupUserInformationText(it)
+                        setupGradeList(it)
                     }
                 }
                 Resource.Status.ERROR -> {
@@ -88,6 +90,14 @@ class SettingsFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun setupGradeList(currentUser: User) {
+        if(textView_user_grades.text.toString().trim().isBlank()) {
+            currentUser.registered_grades.forEach {
+                textView_user_grades.append("${it.gradeType} ")
+            }
+        }
     }
 
     private fun setupLoadingUserInformationText() {

@@ -81,8 +81,8 @@ class QuestionCreationFragment : Fragment(), AdapterView.OnItemSelectedListener 
                 itResource ?: return@Observer
                 when (itResource.status) {
                     Resource.Status.SUCCESS -> {
+                        questionsHallViewModel.setRegistrationValue(true)
                         Handler().postDelayed({ onQuestionCreated() }, 1000)
-
                     }
                     Resource.Status.ERROR -> {
                         showDefaultState()
@@ -96,7 +96,6 @@ class QuestionCreationFragment : Fragment(), AdapterView.OnItemSelectedListener 
     }
 
     private fun onQuestionCreated() {
-        questionsHallViewModel.setRegistrationValue(true)
         listener?.backToQuestionsHall()
     }
 

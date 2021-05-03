@@ -18,15 +18,14 @@ import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.quizhall.adapters.QuestionsAdapter
 import com.example.pucquiz.ui.quizhall.delegate.QuestionCardDelegate
 import com.example.pucquiz.ui.quizhall.viewmodels.QuestionsHallViewModel
-import com.example.pucquiz.ui.welcome.WelcomeFragment
 import kotlinx.android.synthetic.main.fragment_question_hall.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClicked {
 
     private var listener: OnFragmentInteractionListener? = null
 
-    private val questionsHallViewModel by inject<QuestionsHallViewModel>()
+    private val questionsHallViewModel by sharedViewModel<QuestionsHallViewModel>()
 
     private lateinit var questionsAdapter: QuestionsAdapter
 
@@ -51,7 +50,7 @@ class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClic
     }
 
     private fun checkRegistrationStatus() {
-        if(questionsHallViewModel.getRegistrationValue()) {
+        if (questionsHallViewModel.getRegistrationValue()) {
             questionsHallViewModel.setRegistrationValue(false)
             showRegistrationDialog()
         }
@@ -101,8 +100,8 @@ class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClic
             when (itResource.status) {
                 Resource.Status.SUCCESS -> {
                     itResource.data?.let {
-                        Handler().postDelayed({questionsAdapter.updateQuestionsList(it)}, 1000)
-                        if(it.isEmpty()) {
+                        Handler().postDelayed({ questionsAdapter.updateQuestionsList(it) }, 1000)
+                        if (it.isEmpty()) {
                             constraint_questions_hint.visibility = View.GONE
                         } else {
                             constraint_questions_hint.visibility = View.VISIBLE
