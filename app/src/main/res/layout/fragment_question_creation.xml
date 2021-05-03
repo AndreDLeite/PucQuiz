@@ -9,6 +9,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_register_question_form"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="imageView_summary_hint, textView_summary_header,
+            editText_question_summary,
+            imageView_alternatives_hint,
+            textView_alternatives_header,
+            constraint_radiobutton_container,
+            imageView_grade_hint,
+            textView_grade_selection,
+            materialButton_register_question,
+            constraint_alternatives_container,
+            spinner_drop_down_grade_selector" />
+
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar_question_creaton"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="150dp"
+            android:layout_height="300dp"
+            android:indeterminateTint="@color/colorSecondary"
+            android:paddingStart="30dp"
+            android:paddingTop="30dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="30dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout_question_creation_header"
             android:layout_width="0dp"
@@ -137,6 +169,7 @@
                 app:layout_constraintTop_toBottomOf="@id/imageView_alternatives_hint">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_radiobutton_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -288,8 +321,45 @@
 
             </RadioGroup>
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/imageView_grade_hint"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constraint_alternatives_container"
+            app:srcCompat="@drawable/ic_error"
+            app:tint="@color/colorSecondary" />
+
+        <TextView
+            android:id="@+id/textView_grade_selection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_medium"
+            android:text="Matéria:"
+            android:textSize="@dimen/font_xlarge"
+            app:layout_constraintBottom_toBottomOf="@id/imageView_grade_hint"
+            app:layout_constraintStart_toEndOf="@id/imageView_grade_hint"
+            app:layout_constraintTop_toTopOf="@id/imageView_grade_hint" />
+
+        <Spinner
+            android:id="@+id/spinner_drop_down_grade_selector"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/input_text_basic_background"
+            android:elevation="5dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="12dp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@id/constraint_alternatives_container"
+            app:layout_constraintStart_toStartOf="@id/constraint_alternatives_container"
+            app:layout_constraintTop_toBottomOf="@id/imageView_grade_hint" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButton_register_question"
@@ -302,7 +372,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/constraint_alternatives_container"
+            app:layout_constraintTop_toBottomOf="@id/spinner_drop_down_grade_selector"
             app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,8 @@ class QuestionsHallViewModel(
     val teacherQuestions: LiveData<Resource<List<Question>?>>
         get() = _teacherQuestions
 
+    private var registerSuccess: Boolean = false
+
     fun fetchTeacherQuestions() {
         ioScope.launch {
             delay(1000)
@@ -48,7 +50,9 @@ class QuestionsHallViewModel(
         }
     }
 
-    fun createQuestion() {
-
+    fun setRegistrationValue(value: Boolean) {
+        registerSuccess = value
     }
+
+    fun getRegistrationValue() = registerSuccess
 }

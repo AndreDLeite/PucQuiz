@@ -52,6 +52,38 @@ class GradeController {
         }
     }
 
+    fun gradeFromString(gradeString: String): GradeEnum {
+        return when (gradeString) {
+            "AEDS I" -> {
+                GradeEnum.AEDI
+            }
+            "AEDS II" -> {
+                GradeEnum.AEDII
+            }
+            "Dispositivos Móveis" -> {
+                GradeEnum.DISPOSITIVOS_MOVEIS
+            }
+            "Redes I" -> {
+                GradeEnum.REDESI
+            }
+            "Redes II" -> {
+                GradeEnum.REDESII
+            }
+            "Computação Paralela" -> {
+                GradeEnum.COMPUTACAO_PARALELA
+            }
+            "Otmização" -> {
+                GradeEnum.OTIMIZACAO
+            }
+            "Gráfos" -> {
+                GradeEnum.GRAFOS
+            }
+            else -> {
+                GradeEnum.UNKOWN
+            }
+        }
+    }
+
     fun gradeToString(enum: GradeEnum): String {
         return when (enum) {
             GradeEnum.AEDI -> {

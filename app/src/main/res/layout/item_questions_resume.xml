@@ -42,6 +42,7 @@
         android:id="@+id/textView_question_grade"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
@@ -52,11 +53,11 @@
         android:paddingStart="5dp"
         android:paddingEnd="20dp"
         android:singleLine="true"
-        android:textAlignment="center"
         android:textColor="@color/primaryText"
         android:textSize="@dimen/font_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView_question_descritption"
         app:layout_constraintTop_toBottomOf="@id/view_line_divider"
         tools:text="Desenvolvimento de interfaces web para computadores super maneiros" />
 
@@ -64,13 +65,14 @@
         android:id="@+id/textView_question_descritption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:fontFamily="@font/rubik_medium"
         android:text="Matéria:"
         android:textAlignment="textStart"
         android:textColor="@color/primaryText"
         android:textSize="@dimen/font_large"
         app:layout_constraintBottom_toBottomOf="@id/textView_question_grade"
-        app:layout_constraintEnd_toStartOf="@id/textView_question_grade"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/textView_question_grade" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

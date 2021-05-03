@@ -2,13 +2,16 @@ package com.example.pucquiz.ui.quizhall.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pucquiz.R
+import com.example.pucquiz.components.DialogSimple
 import com.example.pucquiz.extensios.overrideOnBackPressed
 import com.example.pucquiz.models.Question
 import com.example.pucquiz.shared.Resource
@@ -44,6 +47,25 @@ class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClic
         setupViewModelObservers()
         overrideOnBackPressed()
         restoreNavigation()
+        checkRegistrationStatus()
+    }
+
+    private fun checkRegistrationStatus() {
+        if(questionsHallViewModel.getRegistrationValue()) {
+            questionsHallViewModel.setRegistrationValue(false)
+            showRegistrationDialog()
+        }
+    }
+
+    private fun showRegistrationDialog() {
+        showDialog(
+            title = "Pergunta cadastrada com sucesso.",
+            description = "Sua pergunta foi cadastrada com sucesso. Voce pode visualiza-la na sempre que quiser nesta tela!",
+            confirm = "Ok",
+            cancel = null
+        ) {
+            //ignore
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -79,7 +101,12 @@ class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClic
             when (itResource.status) {
                 Resource.Status.SUCCESS -> {
                     itResource.data?.let {
-                        questionsAdapter.updateQuestionsList(it)
+                        Handler().postDelayed({questionsAdapter.updateQuestionsList(it)}, 1000)
+                        if(it.isEmpty()) {
+                            constraint_questions_hint.visibility = View.GONE
+                        } else {
+                            constraint_questions_hint.visibility = View.VISIBLE
+                        }
                     }
                 }
                 Resource.Status.ERROR -> {
@@ -102,6 +129,38 @@ class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClic
 
     private fun restoreNavigation() {
         listener?.onFragmentCreated()
+    }
+
+    private fun showDialog(
+        title: String,
+        description: String,
+        confirm: String,
+        cancel: String?,
+        listener: () -> Unit
+    ) {
+        val dialog = DialogSimple()
+
+        dialog.setDialogParameters(
+            title = title,
+            description = description,
+            confirmText = confirm,
+            cancelText = cancel
+        )
+
+        dialog.setDialogListener(object : DialogSimple.SimpleDialogListener {
+            override fun onDialogPositiveClick(dialog: DialogFragment) {
+                dialog.dismiss()
+                Handler().postDelayed(listener, 500)
+            }
+
+            override fun onDialogNegativeClick(dialog: DialogFragment) {
+                dialog.dismiss()
+            }
+        })
+
+        activity?.run {
+            dialog.show(supportFragmentManager, DialogSimple::class.java.simpleName)
+        }
     }
 
     override fun onQuestionCardClicked(question: Question) {
