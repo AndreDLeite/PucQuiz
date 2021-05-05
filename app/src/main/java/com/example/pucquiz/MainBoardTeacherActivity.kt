@@ -28,7 +28,6 @@ class MainBoardTeacherActivity : AppCompatActivity(),
         val obBoardingFragment = OnBoardingFragment()
         val questionsFragment = QuestionHallFragment()
         val settingsFragment = SettingsFragment()
-//        val medalsFragment = MedalsFragment()
         makeCurrentFragment(obBoardingFragment)
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -60,8 +59,8 @@ class MainBoardTeacherActivity : AppCompatActivity(),
     private fun makeCurrentFragment(fragment: Fragment, ltr: Boolean = true) {
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(
-                if(ltr) R.anim.enter_from_right else  R.anim.enter_from_left,
-                if(ltr) R.anim.exit_to_left else  R.anim.exit_to_right,
+                if (ltr) R.anim.enter_from_right else R.anim.enter_from_left,
+                if (ltr) R.anim.exit_to_left else R.anim.exit_to_right,
                 R.anim.enter_from_left,
                 R.anim.exit_to_right
             ).addToBackStack(null)

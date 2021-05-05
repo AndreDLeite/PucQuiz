@@ -31,7 +31,7 @@ class QuestionCardDelegate {
             description.text = question.summary
             questionGrade.text = gradeType
             container.setOnClickListener {
-
+                //TODO: Call listener here
             }
         }
     }

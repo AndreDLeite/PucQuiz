@@ -6,11 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
 import com.example.pucquiz.ui.medals.fragments.MedalsFragment
+import com.example.pucquiz.ui.quizselector.fragments.QuizConfigurationFragment
+import com.example.pucquiz.ui.quizselector.fragments.QuizGradeSelectionFragment
+import com.example.pucquiz.ui.quizselector.fragments.QuizSelectionFragment
+import com.example.pucquiz.ui.quizselector.viewmodels.QuizConfigurationViewModel
 import com.example.pucquiz.ui.ranking.fragments.RankingFragment
 import com.example.pucquiz.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
-class MainBoardStudentActivity : AppCompatActivity(), SettingsFragment.OnFragmentInteractionListener {
+class MainBoardStudentActivity : AppCompatActivity(),
+    SettingsFragment.OnFragmentInteractionListener,
+    QuizSelectionFragment.OnFragmentInteractionListener,
+    QuizGradeSelectionFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +31,15 @@ class MainBoardStudentActivity : AppCompatActivity(), SettingsFragment.OnFragmen
         val rankingFragment = RankingFragment()
         val settingsFragment = SettingsFragment()
         val medalsFragment = MedalsFragment()
+        val quizFragment = QuizSelectionFragment()
 
         makeCurrentFragment(obBoardingFragment)
 
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-//                R.id.icon_results -> {
-//                    makeCurrentFragment(obBoardingFragment)
-//                }
+                R.id.ic_quiz -> {
+                    makeCurrentFragment(quizFragment)
+                }
 
                 R.id.icon_setting -> {
                     makeCurrentFragment(settingsFragment)
@@ -53,17 +61,32 @@ class MainBoardStudentActivity : AppCompatActivity(), SettingsFragment.OnFragmen
         }
     }
 
-    private fun makeCurrentFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.main_frame, fragment)
-            commit()
-        }
+    private fun makeCurrentFragment(fragment: Fragment, ltr: Boolean = true) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                if (ltr) R.anim.enter_from_right else R.anim.enter_from_left,
+                if (ltr) R.anim.exit_to_left else R.anim.exit_to_right,
+                R.anim.enter_from_left,
+                R.anim.exit_to_right
+            ).addToBackStack(null)
+            .apply {
+                replace(R.id.main_frame, fragment)
+                commit()
+            }
     }
 
     override fun onLogout() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onQuizTypeClicked() {
+        makeCurrentFragment(QuizGradeSelectionFragment())
+    }
+
+    override fun onQuizSetup() {
+        makeCurrentFragment(QuizConfigurationFragment())
     }
 
 }
