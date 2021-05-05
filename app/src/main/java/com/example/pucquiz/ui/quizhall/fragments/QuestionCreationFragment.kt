@@ -96,6 +96,7 @@ class QuestionCreationFragment : Fragment(), AdapterView.OnItemSelectedListener 
     }
 
     private fun onQuestionCreated() {
+        questionViewModel.clearViewModel()
         listener?.backToQuestionsHall()
     }
 

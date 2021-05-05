@@ -1,11 +1,13 @@
 package com.example.pucquiz.repositories.firebasertdb
 
 import android.util.Log
+import com.example.pucquiz.callbacks.FirebaseGradeQuestionsCallBack
 import com.example.pucquiz.callbacks.FirebaseTeacherQuestionsCallback
 import com.example.pucquiz.callbacks.FirebaseUserAddInfoCallback
 import com.example.pucquiz.callbacks.FirebaseUserCallback
 import com.example.pucquiz.callbacks.FirebaseUserMedalsCallback
 import com.example.pucquiz.callbacks.models.UsersRankingResponse
+import com.example.pucquiz.models.GradeEnum
 import com.example.pucquiz.models.Question
 import com.example.pucquiz.models.User
 import com.example.pucquiz.models.UserAdditionalInfo
@@ -119,6 +121,39 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
         val query = firebaseRTDBInstance
             .orderByChild("teacherId")
             .equalTo(userId)
+
+        query.addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val response = mutableListOf<Question>()
+                    val questionList = snapshot.children.map { snapShot ->
+                        snapShot.getValue(Question::class.java)!!
+                    }
+                    Log.e("firebase response", questionList.toString())
+                    response.addAll(questionList)
+                    callback.onResponse(response)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback.onResponse(emptyList())
+                }
+            }
+        )
+    }
+
+    //endregion
+
+    //region questions
+
+    override suspend fun fetchGradeQuestions(
+        grade: GradeEnum,
+        callback: FirebaseGradeQuestionsCallBack
+    ) {
+        val firebaseRTDBInstance =
+            firebaseRTDBInstance.getReference(FIREBASE_TEACHER_QUESTIONS_BUCKET)
+        val query = firebaseRTDBInstance
+            .orderByChild("questionType")
+            .equalTo(grade.toString())
 
         query.addListenerForSingleValueEvent(
             object : ValueEventListener {

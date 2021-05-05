@@ -35,13 +35,6 @@ class QuestionCreationViewModel(
     var questionSummary = ""
     var answers = HashMap<String, Boolean>()
 
-//    var firstOption = HashMap<String, Boolean>()
-//    var secondOption = HashMap<String, Boolean>()
-//    var thirdOption = HashMap<String, Boolean>()
-//    var forthOption = HashMap<String, Boolean>()
-//    var fifthOption = HashMap<String, Boolean>()
-
-
     fun createQuestion() {
         ioScope.launch {
             _questionRegistrationLiveData.postValue(Resource.loading())
@@ -84,6 +77,15 @@ class QuestionCreationViewModel(
                 }
             }
         return operationResult
+    }
+
+    fun clearViewModel() {
+        currentQuestionGrade = ""
+        questionSummary = ""
+        answers = hashMapOf()
+        ioScope.launch {
+            _questionRegistrationLiveData.postValue(null)
+        }
     }
 
 }
