@@ -14,7 +14,6 @@ import com.example.pucquiz.components.DialogSimple
 import com.example.pucquiz.extensios.overrideOnBackPressed
 import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.quizselector.viewmodels.QuizConfigurationViewModel
-import com.example.pucquiz.ui.welcome.WelcomeFragment
 import kotlinx.android.synthetic.main.fragment_question_configuration.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -36,6 +35,7 @@ class QuizConfigurationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         callServices()
+        setupListeners()
         setupInitialOnBackPressed()
         setupViewModelObservers()
     }
@@ -44,6 +44,11 @@ class QuizConfigurationFragment : Fragment() {
         quizConfigurationViewModel.fetchGradeQuestions()
     }
 
+    private fun setupListeners() {
+        material_button_start_quiz.setOnClickListener {
+            listener?.onStartQuiz()
+        }
+    }
 
     private fun setupInitialOnBackPressed() {
         activity?.overrideOnBackPressed(viewLifecycleOwner) {
@@ -136,5 +141,6 @@ class QuizConfigurationFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun onBackToQuestionsGradeSelection()
+        fun onStartQuiz()
     }
 }

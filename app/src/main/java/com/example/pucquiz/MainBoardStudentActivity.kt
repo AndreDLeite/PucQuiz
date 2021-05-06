@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
 import com.example.pucquiz.ui.medals.fragments.MedalsFragment
+import com.example.pucquiz.ui.quizprogress.fragments.QuizMainFragment
 import com.example.pucquiz.ui.quizselector.fragments.QuizConfigurationFragment
 import com.example.pucquiz.ui.quizselector.fragments.QuizGradeSelectionFragment
 import com.example.pucquiz.ui.quizselector.fragments.QuizSelectionFragment
@@ -95,6 +96,10 @@ class MainBoardStudentActivity : AppCompatActivity(),
     override fun onBackToQuestionsGradeSelection() {
         bottom_navigation.visibility = View.VISIBLE
         makeCurrentFragment(QuizSelectionFragment())
+    }
+
+    override fun onStartQuiz() {
+        makeCurrentFragment(QuizMainFragment())
     }
 
 }
