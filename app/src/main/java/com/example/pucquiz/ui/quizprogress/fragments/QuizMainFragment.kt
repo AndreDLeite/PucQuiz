@@ -93,8 +93,7 @@ class QuizMainFragment : Fragment() {
     }
 
     private fun setupLastQuestionViewState() {
-        materialButton_finish_quiz.visibility = View.VISIBLE
-        materialButton_next_question.visibility = View.GONE
+        materialButton_next_question.text = "Finalizar"
     }
 
     private fun setupViewModelObservers() {
@@ -123,9 +122,8 @@ class QuizMainFragment : Fragment() {
         quizConfigurationViewModel.isQuizOver.observe(viewLifecycleOwner, Observer { itBoolean ->
             itBoolean ?: return@Observer
             if (itBoolean) {
-
                 Handler().postDelayed({
-                    quizConfigurationViewModel.clearViewModel()
+//                    quizConfigurationViewModel.clearViewModel()
                     listener?.onQuizFinish()
                 }, 1000)
             }

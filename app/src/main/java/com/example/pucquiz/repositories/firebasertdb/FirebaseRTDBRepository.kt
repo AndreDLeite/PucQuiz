@@ -4,10 +4,13 @@ import android.util.Log
 import com.example.pucquiz.callbacks.FirebaseGradeQuestionsCallBack
 import com.example.pucquiz.callbacks.FirebaseTeacherQuestionsCallback
 import com.example.pucquiz.callbacks.FirebaseUserAddInfoCallback
+import com.example.pucquiz.callbacks.FirebaseUserAddInfoUpdateCallback
 import com.example.pucquiz.callbacks.FirebaseUserCallback
 import com.example.pucquiz.callbacks.FirebaseUserMedalsCallback
+import com.example.pucquiz.callbacks.models.UserAdditionalInfoResponse
 import com.example.pucquiz.callbacks.models.UsersRankingResponse
 import com.example.pucquiz.models.GradeEnum
+import com.example.pucquiz.models.GradesAnswers
 import com.example.pucquiz.models.Question
 import com.example.pucquiz.models.User
 import com.example.pucquiz.models.UserAdditionalInfo
@@ -174,5 +177,20 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
         )
     }
 
+    //endregion
+
+    override suspend fun updateUserQuestionsAnswered(userId: String, newUserAdditionalInfo: UserAdditionalInfo, callback: FirebaseUserAddInfoUpdateCallback) {
+        firebaseRTDBInstance.getReference(FIREBASE_USER_INFO_BUCKET)
+            .child(userId)
+            .setValue(newUserAdditionalInfo)
+            .addOnCompleteListener { itRTDBTask ->
+                if(itRTDBTask.isSuccessful) {
+                    callback.onResponse(UserAdditionalInfoResponse("", true))
+                    Log.e("PQP", "Funcionou a bagaça! :O")
+                } else {
+                    callback.onResponse(UserAdditionalInfoResponse("Erro de comunicação com o servidor,", false))
+                }
+            }
+    }
     //endregion
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
 import com.example.pucquiz.ui.medals.fragments.MedalsFragment
+import com.example.pucquiz.ui.quizprogress.fragments.QuizCalculationsFragment
 import com.example.pucquiz.ui.quizprogress.fragments.QuizMainFragment
 import com.example.pucquiz.ui.quizselector.fragments.QuizConfigurationFragment
 import com.example.pucquiz.ui.quizselector.fragments.QuizGradeSelectionFragment
@@ -20,7 +21,8 @@ class MainBoardStudentActivity : AppCompatActivity(),
     SettingsFragment.OnFragmentInteractionListener,
     QuizSelectionFragment.OnFragmentInteractionListener,
     QuizGradeSelectionFragment.OnFragmentInteractionListener,
-    QuizConfigurationFragment.OnFragmentInteractionListener {
+    QuizConfigurationFragment.OnFragmentInteractionListener,
+    QuizMainFragment.OnFragmentRoutinesListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +102,10 @@ class MainBoardStudentActivity : AppCompatActivity(),
 
     override fun onStartQuiz() {
         makeCurrentFragment(QuizMainFragment())
+    }
+
+    override fun onQuizFinish() {
+        makeCurrentFragment(QuizCalculationsFragment())
     }
 
 }

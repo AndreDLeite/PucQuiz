@@ -7,13 +7,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pucquiz.callbacks.FirebaseGradeQuestionsCallBack
 import com.example.pucquiz.callbacks.FirebaseTeacherQuestionsCallback
+import com.example.pucquiz.callbacks.FirebaseUserAddInfoCallback
+import com.example.pucquiz.callbacks.FirebaseUserAddInfoUpdateCallback
+import com.example.pucquiz.callbacks.models.UserAdditionalInfoResponse
+import com.example.pucquiz.callbacks.models.UsersRankingResponse
+import com.example.pucquiz.controllers.GradeController
 import com.example.pucquiz.models.Answer
 import com.example.pucquiz.models.GradeEnum
+import com.example.pucquiz.models.GradesAnswers
 import com.example.pucquiz.models.Medals
 import com.example.pucquiz.models.Question
+import com.example.pucquiz.models.UserAdditionalInfo
 import com.example.pucquiz.repositories.firebasertdb.IFirebaseRTDBRepository
 import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.shared.enums.QuizType
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -37,6 +45,10 @@ class QuizConfigurationViewModel(
     private val _isQuizOver = MutableLiveData<Boolean>()
     val isQuizOver: LiveData<Boolean>
         get() = _isQuizOver
+
+    private val _userScore = MutableLiveData<Int>()
+    val userScore: LiveData<Int>
+        get() = _userScore
 
     private var quizType = QuizType.UNKNOWN
 
@@ -133,6 +145,76 @@ class QuizConfigurationViewModel(
             answer?.let { itAnswer ->
                 answeredQuestions[itQuestion] = itAnswer
             }
+        }
+    }
+
+    fun calculateQuiz() {
+        var userScore = 0
+        var amountCorrect = 0
+        answeredQuestions.forEach {
+            if(it.value.correctAnswer) {
+                userScore += 100
+                amountCorrect++
+            }
+        }
+        updateUserQuestionsAnswered(amountCorrect, userScore)
+
+    }
+
+    private fun updateUserQuestionsAnswered(amountCorrect: Int, userScore: Int) {
+        ioScope.launch {
+            FirebaseAuth.getInstance().currentUser?.uid?.let { itUserId ->
+                firebaseRepo.fetchUserAdditionalInfoByUserId(itUserId, object : FirebaseUserAddInfoCallback {
+                    override fun onResponse(response: UsersRankingResponse) {
+                        response.usersAdditionalInfoList?.first()?.let {
+                            val newGradeAnswerList = mutableListOf<GradesAnswers>()
+
+                            val serverUserInfo = it
+                            var newTotalAnswered: Int
+                            val realQuizGrade = GradeController().gradeToString(quizGrade)
+                            val changedGradeAnswer = serverUserInfo.questionsAnswered.find { it.gradeType == realQuizGrade }
+
+                            newGradeAnswerList.addAll(serverUserInfo.questionsAnswered)
+                            newGradeAnswerList.remove(changedGradeAnswer)
+
+                            changedGradeAnswer?.let { itGradeAnswer ->
+                                newTotalAnswered = itGradeAnswer.totalAnswered + 5
+                                val newCorrectQuantity = itGradeAnswer.correctQuantity + amountCorrect
+                                val newUserScore = serverUserInfo.userScore + userScore
+                                val newGradesAnswered = GradesAnswers(
+                                    userName = serverUserInfo.userName,
+                                    correctQuantity = newCorrectQuantity,
+                                    totalAnswered = newTotalAnswered,
+                                    gradeType = changedGradeAnswer.gradeType
+                                )
+                                newGradeAnswerList.add(newGradesAnswered)
+                                val newValues = UserAdditionalInfo(
+                                    userName = serverUserInfo.userName,
+                                    questionsAnswered = newGradeAnswerList,
+                                    userScore = newUserScore
+                                )
+                                updateUserAdditionalInfo(itUserId, newValues)
+                            }
+                        }
+                    }
+                })
+
+            }
+        }
+    }
+
+    private fun updateUserAdditionalInfo(userId: String, questionsAnswered: UserAdditionalInfo) {
+        ioScope.launch {
+            firebaseRepo.updateUserQuestionsAnswered(userId, questionsAnswered, object :
+                FirebaseUserAddInfoUpdateCallback {
+                override fun onResponse(result: UserAdditionalInfoResponse) {
+                    if(result.operationResult) {
+                        //deu bom
+                    } else {
+                        // deu ruim
+                    }
+                }
+            })
         }
     }
 
