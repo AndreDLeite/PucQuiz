@@ -9,10 +9,10 @@ import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
 import com.example.pucquiz.ui.medals.fragments.MedalsFragment
 import com.example.pucquiz.ui.quizprogress.fragments.QuizCalculationsFragment
 import com.example.pucquiz.ui.quizprogress.fragments.QuizMainFragment
-import com.example.pucquiz.ui.quizselector.fragments.QuizConfigurationFragment
-import com.example.pucquiz.ui.quizselector.fragments.QuizGradeSelectionFragment
-import com.example.pucquiz.ui.quizselector.fragments.QuizSelectionFragment
-import com.example.pucquiz.ui.quizselector.viewmodels.QuizConfigurationViewModel
+import com.example.pucquiz.ui.quizprogress.fragments.QuizConfigurationFragment
+import com.example.pucquiz.ui.quizprogress.fragments.QuizFinishFragment
+import com.example.pucquiz.ui.quizprogress.fragments.QuizGradeSelectionFragment
+import com.example.pucquiz.ui.quizprogress.fragments.QuizSelectionFragment
 import com.example.pucquiz.ui.ranking.fragments.RankingFragment
 import com.example.pucquiz.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
@@ -22,7 +22,9 @@ class MainBoardStudentActivity : AppCompatActivity(),
     QuizSelectionFragment.OnFragmentInteractionListener,
     QuizGradeSelectionFragment.OnFragmentInteractionListener,
     QuizConfigurationFragment.OnFragmentInteractionListener,
-    QuizMainFragment.OnFragmentRoutinesListener {
+    QuizMainFragment.OnFragmentRoutinesListener,
+    QuizCalculationsFragment.OnFragmentOperationListener,
+    QuizFinishFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,6 +108,15 @@ class MainBoardStudentActivity : AppCompatActivity(),
 
     override fun onQuizFinish() {
         makeCurrentFragment(QuizCalculationsFragment())
+    }
+
+    override fun onUserDataUpdatesFinished() {
+        makeCurrentFragment(QuizFinishFragment())
+    }
+
+    override fun onBackToOnBoarding() {
+        bottom_navigation.visibility = View.VISIBLE
+        makeCurrentFragment(OnBoardingFragment())
     }
 
 }

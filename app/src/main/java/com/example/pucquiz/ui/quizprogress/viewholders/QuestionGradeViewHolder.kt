@@ -1,4 +1,4 @@
-package com.example.pucquiz.ui.quizselector.viewholders
+package com.example.pucquiz.ui.quizprogress.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

@@ -185,8 +185,8 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
             .setValue(newUserAdditionalInfo)
             .addOnCompleteListener { itRTDBTask ->
                 if(itRTDBTask.isSuccessful) {
-                    callback.onResponse(UserAdditionalInfoResponse("", true))
-                    Log.e("PQP", "Funcionou a bagaça! :O")
+                    callback.onResponse(UserAdditionalInfoResponse("Success", true))
+//                    Log.e("PQP", "Funcionou a bagaça! :O")
                 } else {
                     callback.onResponse(UserAdditionalInfoResponse("Erro de comunicação com o servidor,", false))
                 }

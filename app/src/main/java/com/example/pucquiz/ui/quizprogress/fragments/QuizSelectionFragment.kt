@@ -1,4 +1,4 @@
-package com.example.pucquiz.ui.quizselector.fragments
+package com.example.pucquiz.ui.quizprogress.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.R
 import com.example.pucquiz.extensios.overrideOnBackPressed
-import com.example.pucquiz.ui.quizselector.viewmodels.QuizConfigurationViewModel
+import com.example.pucquiz.ui.quizprogress.viewmodels.QuizMainViewModel
 import com.example.pucquiz.ui.shared.enums.QuizType
 import kotlinx.android.synthetic.main.fragment_question_selection.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class QuizSelectionFragment : Fragment() {
 
-    private val quizConfigurationViewModel by sharedViewModel<QuizConfigurationViewModel>()
+    private val quizConfigurationViewModel by sharedViewModel<QuizMainViewModel>()
 
     private var listener: OnFragmentInteractionListener? = null
 

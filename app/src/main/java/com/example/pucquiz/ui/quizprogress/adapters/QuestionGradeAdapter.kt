@@ -1,13 +1,11 @@
-package com.example.pucquiz.ui.quizselector.adapters
+package com.example.pucquiz.ui.quizprogress.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pucquiz.R
 import com.example.pucquiz.models.Grade
-import com.example.pucquiz.models.Question
-import com.example.pucquiz.ui.quizhall.adapters.QuestionsAdapter
-import com.example.pucquiz.ui.quizselector.delegates.QuestionGradeDelegate
+import com.example.pucquiz.ui.quizprogress.delegates.QuestionGradeDelegate
 import com.example.pucquiz.ui.shared.delegates.StatusAdapterDelegate
 
 class QuestionGradeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

@@ -1,4 +1,4 @@
-package com.example.pucquiz.ui.quizselector.fragments
+package com.example.pucquiz.ui.quizprogress.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -8,16 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.pucquiz.R
 import com.example.pucquiz.controllers.GradeController
 import com.example.pucquiz.models.Grade
 import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoViewModel
-import com.example.pucquiz.ui.quizhall.fragments.QuestionHallFragment
-import com.example.pucquiz.ui.quizselector.adapters.QuestionGradeAdapter
-import com.example.pucquiz.ui.quizselector.delegates.QuestionGradeDelegate
-import com.example.pucquiz.ui.quizselector.viewmodels.QuizConfigurationViewModel
+import com.example.pucquiz.ui.quizprogress.adapters.QuestionGradeAdapter
+import com.example.pucquiz.ui.quizprogress.delegates.QuestionGradeDelegate
+import com.example.pucquiz.ui.quizprogress.viewmodels.QuizMainViewModel
 import kotlinx.android.synthetic.main.fragment_question_grade_selection.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -25,7 +23,7 @@ class QuizGradeSelectionFragment : Fragment(), QuestionGradeDelegate.OnQuestionG
 
     private var listener: OnFragmentInteractionListener? = null
 
-    private val quizConfigurationViewModel by sharedViewModel<QuizConfigurationViewModel>()
+    private val quizConfigurationViewModel by sharedViewModel<QuizMainViewModel>()
     private val userInfoViewModel by sharedViewModel<UserInfoViewModel>()
 
     private lateinit var questionsGradeAdapter: QuestionGradeAdapter

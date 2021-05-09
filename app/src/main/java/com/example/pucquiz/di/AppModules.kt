@@ -7,6 +7,7 @@ class AppModules {
     fun createModules() = module {
         viewModelInjections()
         repositoryInjections()
+        controllersInjection()
     }
 
 }

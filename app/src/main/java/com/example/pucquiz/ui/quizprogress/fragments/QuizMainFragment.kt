@@ -16,14 +16,14 @@ import com.example.pucquiz.extensios.overrideOnBackPressed
 import com.example.pucquiz.models.Answer
 import com.example.pucquiz.models.Question
 import com.example.pucquiz.shared.Resource
-import com.example.pucquiz.ui.quizselector.viewmodels.QuizConfigurationViewModel
+import com.example.pucquiz.ui.quizprogress.viewmodels.QuizMainViewModel
 import kotlinx.android.synthetic.main.fragment_question_creation.*
 import kotlinx.android.synthetic.main.fragment_quiz_progress.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class QuizMainFragment : Fragment() {
 
-    private val quizConfigurationViewModel by sharedViewModel<QuizConfigurationViewModel>()
+    private val quizConfigurationViewModel by sharedViewModel<QuizMainViewModel>()
 
     private val answersHash = hashMapOf<RadioButton, Answer>()
 

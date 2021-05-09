@@ -1,4 +1,4 @@
-package com.example.pucquiz.ui.quizselector.fragments
+package com.example.pucquiz.ui.quizprogress.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -13,7 +13,7 @@ import com.example.pucquiz.R
 import com.example.pucquiz.components.DialogSimple
 import com.example.pucquiz.extensios.overrideOnBackPressed
 import com.example.pucquiz.shared.Resource
-import com.example.pucquiz.ui.quizselector.viewmodels.QuizConfigurationViewModel
+import com.example.pucquiz.ui.quizprogress.viewmodels.QuizMainViewModel
 import kotlinx.android.synthetic.main.fragment_question_configuration.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -21,7 +21,7 @@ class QuizConfigurationFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
 
-    private val quizConfigurationViewModel by sharedViewModel<QuizConfigurationViewModel>()
+    private val quizConfigurationViewModel by sharedViewModel<QuizMainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
