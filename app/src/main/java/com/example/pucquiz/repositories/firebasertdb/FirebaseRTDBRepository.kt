@@ -21,6 +21,7 @@ import com.example.pucquiz.shared.AppConstants.FIREBASE_TEACHER_QUESTIONS_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_INFO_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_MEDALS_BUCKET
+import com.example.pucquiz.ui.shared.enums.QuizType
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -150,14 +151,15 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
 
     //region questions
 
-    override suspend fun fetchGradeQuestions(
+    override suspend fun fetchGradeQuestionsByQuestionType(
         grade: GradeEnum,
+        questionType: QuizType,
         callback: FirebaseGradeQuestionsCallBack
     ) {
         val firebaseRTDBInstance =
             firebaseRTDBInstance.getReference(FIREBASE_TEACHER_QUESTIONS_BUCKET)
         val query = firebaseRTDBInstance
-            .orderByChild("questionType")
+            .orderByChild("questionGrade")
             .equalTo(grade.toString())
 
         query.addListenerForSingleValueEvent(
@@ -166,7 +168,7 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
                     val response = mutableListOf<Question>()
                     val questionList = snapshot.children.map { snapShot ->
                         snapShot.getValue(Question::class.java)!!
-                    }
+                    }.filter { it.questionType == questionType }
                     Log.e("firebase response", questionList.toString())
                     response.addAll(questionList)
                     callback.onResponse(response)

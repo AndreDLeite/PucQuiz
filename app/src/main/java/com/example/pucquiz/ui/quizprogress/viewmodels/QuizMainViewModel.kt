@@ -71,8 +71,9 @@ class QuizMainViewModel(
     fun fetchGradeQuestions() {
         ioScope.launch {
             _questions.postValue(Resource.loading())
-            firebaseRepo.fetchGradeQuestions(
+            firebaseRepo.fetchGradeQuestionsByQuestionType(
                 quizGrade,
+                quizType,
                 object : FirebaseGradeQuestionsCallBack {
                     override fun onResponse(questions: List<Question>?) {
                         questions?.let {
@@ -128,7 +129,7 @@ class QuizMainViewModel(
     fun getNextQuestion() {
         ioScope.launch {
             _currentQuestion.postValue(Resource.loading())
-            count.inc()
+            count++
             if (!currentQuestions.isNullOrEmpty()) {
                 val randomQuestion = currentQuestions.random()
                 currentQuestions.remove(randomQuestion)
@@ -154,7 +155,7 @@ class QuizMainViewModel(
             answeredQuestions.forEach {
                 if (it.value.correctAnswer) {
                     userScore += 20
-                    amountCorrect.inc()
+                    amountCorrect++
                 }
             }
             quizController.updateUserInfo(amountCorrect, userScore, quizGrade, object :
@@ -183,6 +184,8 @@ class QuizMainViewModel(
         userScore = 0
         amountCorrect = 0
         count = 0
+        currentQuestions = mutableListOf()
+        answeredQuestions = hashMapOf()
         ioScope.launch {
             _questions.postValue(null)
             _currentQuestion.postValue(null)

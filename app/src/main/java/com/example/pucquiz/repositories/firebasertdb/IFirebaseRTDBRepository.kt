@@ -11,6 +11,7 @@ import com.example.pucquiz.models.GradeEnum
 import com.example.pucquiz.models.GradesAnswers
 import com.example.pucquiz.models.UserAdditionalInfo
 import com.example.pucquiz.models.UserMedals
+import com.example.pucquiz.ui.shared.enums.QuizType
 
 interface IFirebaseRTDBRepository {
 
@@ -24,7 +25,7 @@ interface IFirebaseRTDBRepository {
 
     suspend fun fetchTeacherQuestions(userId: String, callback: FirebaseTeacherQuestionsCallback)
 
-    suspend fun fetchGradeQuestions(grade: GradeEnum, callback: FirebaseGradeQuestionsCallBack)
+    suspend fun fetchGradeQuestionsByQuestionType(grade: GradeEnum, questionType: QuizType, callback: FirebaseGradeQuestionsCallBack)
 
     suspend fun updateUserQuestionsAnswered(userId: String, newUserAdditionalInfo: UserAdditionalInfo, callback: FirebaseUserAddInfoUpdateCallback)
 

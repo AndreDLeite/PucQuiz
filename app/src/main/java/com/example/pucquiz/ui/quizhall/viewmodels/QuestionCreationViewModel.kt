@@ -11,6 +11,7 @@ import com.example.pucquiz.models.Question
 import com.example.pucquiz.repositories.firebasertdb.IFirebaseRTDBRepository
 import com.example.pucquiz.shared.AppConstants
 import com.example.pucquiz.shared.Resource
+import com.example.pucquiz.ui.shared.enums.QuizType
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -44,7 +45,9 @@ class QuestionCreationViewModel(
                     teacherId = itCurrentUser.uid,
                     summary = questionSummary,
                     answerList = answers,
-                    questionGrade = gradeEnum
+                    questionGrade = gradeEnum,
+                    questionType = QuizType.TEACHER
+
                 )
                 _questionRegistrationLiveData.postValue(
                     Resource.success(

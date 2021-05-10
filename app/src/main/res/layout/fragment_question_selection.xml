@@ -46,7 +46,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:fontFamily="@font/rubik_medium"
-            android:text="Selecione o tipo de Quiz"
+            android:text="Selecione o tipo de Quiz que deseja responder"
             android:textColor="@color/primaryText"
             android:textSize="@dimen/font_large"
             app:layout_constraintBottom_toBottomOf="parent"

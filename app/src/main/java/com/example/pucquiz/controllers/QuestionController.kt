@@ -3,6 +3,7 @@ package com.example.pucquiz.controllers
 import com.example.pucquiz.models.Answer
 import com.example.pucquiz.models.GradeEnum
 import com.example.pucquiz.models.Question
+import com.example.pucquiz.ui.shared.enums.QuizType
 
 class QuestionController {
 
@@ -10,7 +11,8 @@ class QuestionController {
         teacherId: String,
         summary: String,
         answerList: HashMap<String, Boolean>,
-        questionGrade: GradeEnum
+        questionGrade: GradeEnum,
+        questionType: QuizType
     ): Question {
         val realAnswerList = mutableListOf<Answer>()
         answerList.forEach {
@@ -25,7 +27,8 @@ class QuestionController {
             teacherId = teacherId,
             summary = summary,
             answers = realAnswerList,
-            questionType = questionGrade
+            questionGrade = questionGrade,
+            questionType = questionType
         )
     }
 

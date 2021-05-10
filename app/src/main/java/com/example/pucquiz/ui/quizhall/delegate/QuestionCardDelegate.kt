@@ -27,7 +27,7 @@ class QuestionCardDelegate {
         question: Question
     ) {
         with(holder as QuestionCardViewHolder) {
-            val gradeType = GradeController().gradeToString(question.questionType)
+            val gradeType = GradeController().gradeToString(question.questionGrade)
             description.text = question.summary
             questionGrade.text = gradeType
             container.setOnClickListener {

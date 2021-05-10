@@ -135,25 +135,37 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                     userMedals?.let {
                         generateNewUserMedalsValues(userId, it, newUserAdditionalInfo, callback)
                     } ?: run {
-                        callback.callbackResponse(GenericCallback("Erro ao atualizar suas medalhas. Por favor, tente mais tarde.", false))
+                        callback.callbackResponse(
+                            GenericCallback(
+                                "Erro ao atualizar suas medalhas. Por favor, tente mais tarde.",
+                                false
+                            )
+                        )
                     }
                 }
             })
         }
     }
 
-    private fun generateNewUserMedalsValues(userId: String, userMedals: UserMedals, newUserAdditionalInfo: UserAdditionalInfo, callback: OperationCallback) {
+    private fun generateNewUserMedalsValues(
+        userId: String,
+        userMedals: UserMedals,
+        newUserAdditionalInfo: UserAdditionalInfo,
+        callback: OperationCallback
+    ) {
         val localMedals = userMedals.medals
         val earnedMedals = mutableListOf<Medals>()
         val newUserMedals = mutableListOf<Medals>()
+        var hasUserDataChanged = false
         newUserMedals.addAll(localMedals)
-        if(localMedals.all { it.medalIsActive }) {
+        if (localMedals.all { it.medalIsActive }) {
             callback.callbackResponse(GenericCallback("Success", true))
         } else {
             localMedals.forEach {
-                if(!it.medalIsActive) {
-                    when(it.type) {
+                if (!it.medalIsActive) {
+                    when (it.type) {
                         MedalsType.ONE_QUIZ_ANSWERED -> {
+                            hasUserDataChanged = true
                             newUserMedals.remove(it)
                             earnedMedals.add(
                                 Medals(
@@ -163,9 +175,11 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                                     medalIsActive = true
                                 )
                             )
+                            newUserAdditionalInfo.userScore += 50
                         }
                         MedalsType.FIVE_QUIZ_ANSWERED -> {
-                            if(newUserAdditionalInfo.questionsAnswered.size >= 5) {
+                            if (newUserAdditionalInfo.questionsAnswered.size >= 5) {
+                                hasUserDataChanged = true
                                 newUserMedals.remove(it)
                                 earnedMedals.add(
                                     Medals(
@@ -175,10 +189,12 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                                         medalIsActive = true
                                     )
                                 )
+                                newUserAdditionalInfo.userScore += 50
                             }
                         }
                         MedalsType.TEN_QUIZ_ANSWERED -> {
-                            if(newUserAdditionalInfo.questionsAnswered.size >= 10) {
+                            if (newUserAdditionalInfo.questionsAnswered.size >= 10) {
+                                hasUserDataChanged = true
                                 newUserMedals.remove(it)
                                 earnedMedals.add(
                                     Medals(
@@ -188,10 +204,12 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                                         medalIsActive = true
                                     )
                                 )
+                                newUserAdditionalInfo.userScore += 50
                             }
                         }
                         MedalsType.HND_SCORE_REACHED -> {
-                            if(newUserAdditionalInfo.userScore >= 100) {
+                            if (newUserAdditionalInfo.userScore >= 100) {
+                                hasUserDataChanged = true
                                 newUserMedals.remove(it)
                                 earnedMedals.add(
                                     Medals(
@@ -201,10 +219,12 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                                         medalIsActive = true
                                     )
                                 )
+                                newUserAdditionalInfo.userScore += 50
                             }
                         }
                         MedalsType.THF_SCORE_REACHED -> {
-                            if(newUserAdditionalInfo.userScore >= 250) {
+                            if (newUserAdditionalInfo.userScore >= 250) {
+                                hasUserDataChanged = true
                                 newUserMedals.remove(it)
                                 earnedMedals.add(
                                     Medals(
@@ -214,10 +234,12 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                                         medalIsActive = true
                                     )
                                 )
+                                newUserAdditionalInfo.userScore += 50
                             }
                         }
                         MedalsType.FH_SCORE_REACHED -> {
-                            if(newUserAdditionalInfo.userScore >= 500) {
+                            if (newUserAdditionalInfo.userScore >= 500) {
+                                hasUserDataChanged = true
                                 newUserMedals.remove(it)
                                 earnedMedals.add(
                                     Medals(
@@ -227,6 +249,7 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                                         medalIsActive = true
                                     )
                                 )
+                                newUserAdditionalInfo.userScore += 50
                             }
                         }
                         MedalsType.UNKNOWN -> {
@@ -242,18 +265,24 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
             )
 
             updateUserMedals(userId, newUserMedalsInfo, callback)
-
+            if(hasUserDataChanged) {
+                updateUserAdditionalInfo(userId, newUserAdditionalInfo, callback)
+            }
         }
 
     }
 
-    private fun updateUserMedals(userId: String, newUserMedals: UserMedals, callback: OperationCallback) {
+    private fun updateUserMedals(
+        userId: String,
+        newUserMedals: UserMedals,
+        callback: OperationCallback
+    ) {
         ioScope.launch {
             firebaseRepo.updateUserMedals(userId, newUserMedals, object :
                 OperationCallback {
                 override fun callbackResponse(operation: GenericCallback) {
                     operation.status?.let {
-                        if(it) {
+                        if (it) {
                             callback.callbackResponse(GenericCallback(operation.message, true))
                         } else {
                             callback.callbackResponse(GenericCallback(operation.message, false))
