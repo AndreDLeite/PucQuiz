@@ -2,13 +2,17 @@ package com.example.pucquiz.controllers
 
 import com.example.pucquiz.callbacks.FirebaseUserAddInfoCallback
 import com.example.pucquiz.callbacks.FirebaseUserAddInfoUpdateCallback
+import com.example.pucquiz.callbacks.FirebaseUserMedalsCallback
 import com.example.pucquiz.callbacks.OperationCallback
 import com.example.pucquiz.callbacks.models.GenericCallback
 import com.example.pucquiz.callbacks.models.UserAdditionalInfoResponse
 import com.example.pucquiz.callbacks.models.UsersRankingResponse
 import com.example.pucquiz.models.GradeEnum
 import com.example.pucquiz.models.GradesAnswers
+import com.example.pucquiz.models.Medals
+import com.example.pucquiz.models.MedalsType
 import com.example.pucquiz.models.UserAdditionalInfo
+import com.example.pucquiz.models.UserMedals
 import com.example.pucquiz.repositories.firebasertdb.IFirebaseRTDBRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +24,13 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
 
     private val ioScope = CoroutineScope(Dispatchers.IO + Job())
 
-    fun updateUserInfo(amountCorrect: Int, userScore: Int, quizGrade: GradeEnum, callback: OperationCallback) {
+    //region UserAdditionalInfo
+    fun updateUserInfo(
+        amountCorrect: Int,
+        userScore: Int,
+        quizGrade: GradeEnum,
+        callback: OperationCallback
+    ) {
         ioScope.launch {
             FirebaseAuth.getInstance().currentUser?.uid?.let { itUserId ->
                 firebaseRepo.fetchUserAdditionalInfoByUserId(itUserId, object :
@@ -28,7 +38,6 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                     override fun onResponse(response: UsersRankingResponse) {
                         response.usersAdditionalInfoList?.first()?.let {
                             val serverUserInfo = it
-
                             generateNewUserData(
                                 itUserId,
                                 serverUserInfo,
@@ -81,10 +90,15 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                 userScore = newUserScore
             )
             updateUserAdditionalInfo(userId, newValues, callback)
+            fetchUserMedals(newValues, callback)
         }
     }
 
-    private fun updateUserAdditionalInfo(userId: String, questionsAnswered: UserAdditionalInfo, callback: OperationCallback) {
+    private fun updateUserAdditionalInfo(
+        userId: String,
+        questionsAnswered: UserAdditionalInfo,
+        callback: OperationCallback
+    ) {
         ioScope.launch {
             firebaseRepo.updateUserQuestionsAnswered(userId, questionsAnswered, object :
                 FirebaseUserAddInfoUpdateCallback {
@@ -92,10 +106,164 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                     if (result.operationResult) {
                         callback.callbackResponse(GenericCallback("Success", true))
                     } else {
-                        callback.callbackResponse(GenericCallback("Erro ao atualizar dados da conta. Por favor, tente mais tarde.", false))
+                        callback.callbackResponse(
+                            GenericCallback(
+                                "Erro ao atualizar dados da conta. Por favor, tente mais tarde.",
+                                false
+                            )
+                        )
                     }
                 }
             })
         }
     }
+
+    //endregion
+
+    //region UserMedals
+
+    private fun fetchUserMedals(
+        newUserAdditionalInfo: UserAdditionalInfo,
+        callback: OperationCallback
+    ) {
+        ioScope.launch {
+            val user = FirebaseAuth.getInstance().currentUser
+            val userId = user?.uid ?: ""
+
+            firebaseRepo.fetchUserMedalsByUserId(userId, object : FirebaseUserMedalsCallback {
+                override fun onResponse(userMedals: UserMedals?) {
+                    userMedals?.let {
+                        generateNewUserMedalsValues(userId, it, newUserAdditionalInfo, callback)
+                    } ?: run {
+                        callback.callbackResponse(GenericCallback("Erro ao atualizar suas medalhas. Por favor, tente mais tarde.", false))
+                    }
+                }
+            })
+        }
+    }
+
+    private fun generateNewUserMedalsValues(userId: String, userMedals: UserMedals, newUserAdditionalInfo: UserAdditionalInfo, callback: OperationCallback) {
+        val localMedals = userMedals.medals
+        val earnedMedals = mutableListOf<Medals>()
+        val newUserMedals = mutableListOf<Medals>()
+        newUserMedals.addAll(localMedals)
+        if(localMedals.all { it.medalIsActive }) {
+            callback.callbackResponse(GenericCallback("Success", true))
+        } else {
+            localMedals.forEach {
+                if(!it.medalIsActive) {
+                    when(it.type) {
+                        MedalsType.ONE_QUIZ_ANSWERED -> {
+                            newUserMedals.remove(it)
+                            earnedMedals.add(
+                                Medals(
+                                    name = it.name,
+                                    description = it.description,
+                                    type = it.type,
+                                    medalIsActive = true
+                                )
+                            )
+                        }
+                        MedalsType.FIVE_QUIZ_ANSWERED -> {
+                            if(newUserAdditionalInfo.questionsAnswered.size >= 5) {
+                                newUserMedals.remove(it)
+                                earnedMedals.add(
+                                    Medals(
+                                        name = it.name,
+                                        description = it.description,
+                                        type = it.type,
+                                        medalIsActive = true
+                                    )
+                                )
+                            }
+                        }
+                        MedalsType.TEN_QUIZ_ANSWERED -> {
+                            if(newUserAdditionalInfo.questionsAnswered.size >= 10) {
+                                newUserMedals.remove(it)
+                                earnedMedals.add(
+                                    Medals(
+                                        name = it.name,
+                                        description = it.description,
+                                        type = it.type,
+                                        medalIsActive = true
+                                    )
+                                )
+                            }
+                        }
+                        MedalsType.HND_SCORE_REACHED -> {
+                            if(newUserAdditionalInfo.userScore >= 100) {
+                                newUserMedals.remove(it)
+                                earnedMedals.add(
+                                    Medals(
+                                        name = it.name,
+                                        description = it.description,
+                                        type = it.type,
+                                        medalIsActive = true
+                                    )
+                                )
+                            }
+                        }
+                        MedalsType.THF_SCORE_REACHED -> {
+                            if(newUserAdditionalInfo.userScore >= 250) {
+                                newUserMedals.remove(it)
+                                earnedMedals.add(
+                                    Medals(
+                                        name = it.name,
+                                        description = it.description,
+                                        type = it.type,
+                                        medalIsActive = true
+                                    )
+                                )
+                            }
+                        }
+                        MedalsType.FH_SCORE_REACHED -> {
+                            if(newUserAdditionalInfo.userScore >= 500) {
+                                newUserMedals.remove(it)
+                                earnedMedals.add(
+                                    Medals(
+                                        name = it.name,
+                                        description = it.description,
+                                        type = it.type,
+                                        medalIsActive = true
+                                    )
+                                )
+                            }
+                        }
+                        MedalsType.UNKNOWN -> {
+                            //ignore
+                        }
+                    }
+                }
+            }
+            newUserMedals.addAll(earnedMedals)
+            val newUserMedalsInfo = UserMedals(
+                name = userMedals.name,
+                medals = newUserMedals
+            )
+
+            updateUserMedals(userId, newUserMedalsInfo, callback)
+
+        }
+
+    }
+
+    private fun updateUserMedals(userId: String, newUserMedals: UserMedals, callback: OperationCallback) {
+        ioScope.launch {
+            firebaseRepo.updateUserMedals(userId, newUserMedals, object :
+                OperationCallback {
+                override fun callbackResponse(operation: GenericCallback) {
+                    operation.status?.let {
+                        if(it) {
+                            callback.callbackResponse(GenericCallback(operation.message, true))
+                        } else {
+                            callback.callbackResponse(GenericCallback(operation.message, false))
+                        }
+                    } ?: run {
+                        callback.callbackResponse(GenericCallback(operation.message, false))
+                    }
+                }
+            })
+        }
+    }
+    //endregion
 }

@@ -98,15 +98,15 @@ class UserAdditionalInfoController {
                         )
                     )
                 }
-                MedalsType.FIRST_RANKING_POSITION -> {
-                    medalList.add(
-                        Medals(
-                            name = "Maioral",
-                            description = "Imparável!! Você ocupou o primeiro lugar no ranking!",
-                            type = it
-                        )
-                    )
-                }
+//                MedalsType.FIRST_RANKING_POSITION -> {
+//                    medalList.add(
+//                        Medals(
+//                            name = "Maioral",
+//                            description = "Imparável!! Você ocupou o primeiro lugar no ranking!",
+//                            type = it
+//                        )
+//                    )
+//                }
                 MedalsType.UNKNOWN -> {
                     //ignore
                 }

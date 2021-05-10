@@ -54,7 +54,7 @@ class QuizMainViewModel(
     private var count = 0
 
     private var userScore = 0
-    private  var amountCorrect = 0
+    private var amountCorrect = 0
 
     fun setQuizType(currentType: QuizType) {
         quizType = currentType
@@ -164,7 +164,12 @@ class QuizMainViewModel(
                         if (it) {
                             _quizUpdateOperations.postValue(Resource.success(true))
                         } else {
-                            _quizUpdateOperations.postValue(Resource.error(operation.message, false))
+                            _quizUpdateOperations.postValue(
+                                Resource.error(
+                                    operation.message,
+                                    false
+                                )
+                            )
                         }
                     }
                 }

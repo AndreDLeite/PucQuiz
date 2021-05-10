@@ -38,7 +38,7 @@ class MedalsViewModel(
                     val resultList = userMedals?.medals
                     Log.e("user add info", resultList.toString())
                     if (!resultList.isNullOrEmpty()) {
-                        _usersMedals.postValue(Resource.success(resultList))
+                        _usersMedals.postValue(Resource.success(resultList.sortedByDescending { it.medalIsActive }))
                     } else {
                         _usersMedals.postValue(
                             Resource.error(

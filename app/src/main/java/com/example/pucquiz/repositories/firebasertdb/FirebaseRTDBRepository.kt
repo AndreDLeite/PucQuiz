@@ -7,6 +7,8 @@ import com.example.pucquiz.callbacks.FirebaseUserAddInfoCallback
 import com.example.pucquiz.callbacks.FirebaseUserAddInfoUpdateCallback
 import com.example.pucquiz.callbacks.FirebaseUserCallback
 import com.example.pucquiz.callbacks.FirebaseUserMedalsCallback
+import com.example.pucquiz.callbacks.OperationCallback
+import com.example.pucquiz.callbacks.models.GenericCallback
 import com.example.pucquiz.callbacks.models.UserAdditionalInfoResponse
 import com.example.pucquiz.callbacks.models.UsersRankingResponse
 import com.example.pucquiz.models.GradeEnum
@@ -186,9 +188,27 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
             .addOnCompleteListener { itRTDBTask ->
                 if(itRTDBTask.isSuccessful) {
                     callback.onResponse(UserAdditionalInfoResponse("Success", true))
-//                    Log.e("PQP", "Funcionou a bagaça! :O")
+                    Log.e("PQP", "Funcionou a bagaça de questoes!! :O")
                 } else {
-                    callback.onResponse(UserAdditionalInfoResponse("Erro de comunicação com o servidor,", false))
+                    callback.onResponse(UserAdditionalInfoResponse("Erro de comunicação com o servidor. Por favor tente novamente mais tarde.", false))
+                }
+            }
+    }
+
+    override suspend fun updateUserMedals(
+        userId: String,
+        newUserMedals: UserMedals,
+        callback: OperationCallback
+    ) {
+        firebaseRTDBInstance.getReference(FIREBASE_USER_MEDALS_BUCKET)
+            .child(userId)
+            .setValue(newUserMedals)
+            .addOnCompleteListener { itRTDBTask ->
+                if(itRTDBTask.isSuccessful) {
+                    callback.callbackResponse(GenericCallback("Success", true))
+                    Log.e("PQP", "Funcionou a bagaça de medalhas!! :O")
+                } else {
+                    callback.callbackResponse(GenericCallback("Erro de comunicação com o servidor. Por favor tente novamente mais tarde.", false))
                 }
             }
     }
