@@ -105,11 +105,24 @@ class QuizMainViewModel(
 
     fun shuffleQuiz() {
         _questions.value?.data?.let { itQuestionList ->
-            itQuestionList.forEach {
+            val reducedQuestionList = generateQuestions(itQuestionList)
+            reducedQuestionList.forEach {
                 it.answers = it.answers.shuffled()
             }
-            currentQuestions.addAll(itQuestionList.shuffled())
+            currentQuestions.addAll(reducedQuestionList.shuffled())
         }
+    }
+
+    private fun generateQuestions(serverQuestionList: List<Question>): List<Question> {
+        val mutableList = mutableListOf<Question>()
+        val responseList = mutableListOf<Question>()
+        mutableList.addAll(serverQuestionList)
+        repeat(5) {
+            val question = mutableList.random()
+            responseList.add(question)
+            mutableList.remove(question)
+        }
+        return responseList
     }
 
     fun getNextQuestion() {

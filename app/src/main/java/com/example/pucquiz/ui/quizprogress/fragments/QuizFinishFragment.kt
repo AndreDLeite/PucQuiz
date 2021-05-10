@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.R
 import com.example.pucquiz.extensios.overrideOnBackPressed
+import com.example.pucquiz.ui.quizprogress.viewmodels.QuizMainViewModel
 import kotlinx.android.synthetic.main.fragment_quiz_finish.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class QuizFinishFragment : Fragment() {
 
+    private val quizConfigurationViewModel by sharedViewModel<QuizMainViewModel>()
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreateView(
@@ -31,6 +34,7 @@ class QuizFinishFragment : Fragment() {
 
     private fun setupListeners() {
         materialButton_go_back.setOnClickListener {
+            quizConfigurationViewModel.clearViewModel()
             listener?.onBackToOnBoarding()
         }
     }

@@ -5,7 +5,7 @@ import com.example.pucquiz.models.UserAdditionalInfo
 class RankingController {
 
     fun orderUsersRanking(list: List<UserAdditionalInfo>): List<UserAdditionalInfo> {
-        return list.sortedBy {
+        return list.sortedByDescending {
             it.userScore
         }
     }
