@@ -66,7 +66,7 @@ class QuizMainViewModel(
         quizGrade = currentGrade
     }
 
-    fun getQuizGrad() = quizGrade
+    fun getQuizGrade() = quizGrade
 
     fun fetchGradeQuestions() {
         ioScope.launch {
@@ -194,4 +194,7 @@ class QuizMainViewModel(
     }
 
     fun getCurrentCount() = count
+    fun getUserScore() = userScore
+    fun getCorrectAmount() = amountCorrect
+
 }

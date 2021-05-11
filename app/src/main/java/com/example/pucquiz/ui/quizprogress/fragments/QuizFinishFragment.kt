@@ -29,6 +29,9 @@ class QuizFinishFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         overrideOnBackPressed()
+        setupPointsInformation()
+        calculateUserResults()
+        setupQuizGrade()
         setupListeners()
     }
 
@@ -37,6 +40,66 @@ class QuizFinishFragment : Fragment() {
             quizConfigurationViewModel.clearViewModel()
             listener?.onBackToOnBoarding()
         }
+    }
+
+    private fun calculateUserResults() {
+        with(quizConfigurationViewModel.getCorrectAmount()) {
+            when(this) {
+                1 -> {
+                    textView_results_title.text = "Podemos melhorar!"
+                    textView_results_description.text = "Estude mais sobre a matéria em questão, você consegue se sair bem melhor!"
+                    imageView_star_1.visibility = View.VISIBLE
+                    imageView_star_2.visibility = View.GONE
+                    imageView_star_3.visibility = View.GONE
+                    imageView_star_4.visibility = View.GONE
+                    imageView_star_5.visibility = View.GONE
+                }
+                2 -> {
+                    textView_results_title.text = "Não tão ruim!"
+                    textView_results_description.text = "Mas também ainda abaixo da média! Foque mais seus estudos nessa matéria para melhorar seus resutados!"
+                    imageView_star_1.visibility = View.VISIBLE
+                    imageView_star_2.visibility = View.VISIBLE
+                    imageView_star_3.visibility = View.GONE
+                    imageView_star_4.visibility = View.GONE
+                    imageView_star_5.visibility = View.GONE
+                }
+                3 -> {
+                    textView_results_title.text = "Na média!"
+                    textView_results_description.text = "Muito bom, mas ainda há muito espaço para aprendizado, vamos lá que você consegue!"
+                    imageView_star_1.visibility = View.VISIBLE
+                    imageView_star_2.visibility = View.VISIBLE
+                    imageView_star_3.visibility = View.VISIBLE
+                    imageView_star_4.visibility = View.GONE
+                    imageView_star_5.visibility = View.GONE
+                }
+                4 -> {
+                    textView_results_title.text = "Podemos melhorar!"
+                    textView_results_description.text = "Ainda não esta perfeito, porém com mais estudos vocë conseguirá ir mais além!"
+                    imageView_star_1.visibility = View.VISIBLE
+                    imageView_star_2.visibility = View.VISIBLE
+                    imageView_star_3.visibility = View.VISIBLE
+                    imageView_star_4.visibility = View.VISIBLE
+                    imageView_star_5.visibility = View.GONE
+                }
+                5 -> {
+                    textView_results_title.text = "Genial!"
+                    textView_results_description.text = "Parabéns! Você acertou todas as questões! Continue assim!"
+                    imageView_star_1.visibility = View.VISIBLE
+                    imageView_star_2.visibility = View.VISIBLE
+                    imageView_star_3.visibility = View.VISIBLE
+                    imageView_star_4.visibility = View.VISIBLE
+                    imageView_star_5.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    private fun setupPointsInformation() {
+        textView_results_quizpoints.text = quizConfigurationViewModel.getUserScore().toString()
+    }
+
+    private fun setupQuizGrade() {
+        textView_results_quiztype.text = quizConfigurationViewModel.getQuizGrade().name
     }
 
     override fun onAttach(context: Context) {
