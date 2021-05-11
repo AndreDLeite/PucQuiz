@@ -83,6 +83,7 @@ class QuizConfigurationFragment : Fragment() {
 
     private fun restoreOnBackPressed() {
         activity?.overrideOnBackPressed(viewLifecycleOwner) {
+            quizConfigurationViewModel.clearViewModel()
             listener?.onBackToQuestionsGradeSelection()
         }
     }

@@ -14,6 +14,7 @@ import com.example.pucquiz.controllers.GradeController
 import com.example.pucquiz.extensios.overrideOnBackPressed
 import com.example.pucquiz.models.User
 import com.example.pucquiz.models.UserAdditionalInfo
+import com.example.pucquiz.models.UserRole
 import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoViewModel
 import com.example.pucquiz.ui.settings.viewmodels.SettingsViewModel
@@ -63,6 +64,7 @@ class SettingsFragment : Fragment() {
                     it.data?.let {
                         setupUserInformationText(it)
                         setupGradeList(it)
+                        validatePointsFields(it.role)
                     }
                 }
                 Resource.Status.ERROR -> {
@@ -90,6 +92,19 @@ class SettingsFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun validatePointsFields(currentUserRole: UserRole) {
+        when(currentUserRole) {
+            UserRole.STUDENT -> {
+                textView_user_score_title.visibility = View.VISIBLE
+                textView_user_score.visibility = View.VISIBLE
+            }
+            UserRole.TEACHER -> {
+                textView_user_score_title.visibility = View.GONE
+                textView_user_score.visibility = View.GONE
+            }
+        }
     }
 
     private fun setupGradeList(currentUser: User) {

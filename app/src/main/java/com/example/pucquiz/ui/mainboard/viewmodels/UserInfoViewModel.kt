@@ -39,13 +39,6 @@ class UserInfoViewModel(
     val currentUserMedals: LiveData<Resource<UserMedals>>
         get() = _currentUserMedals
 
-    init {
-        //TODO: Change this logic, since the data can always change, send help
-//        fetchUserData()
-//        fetchUserAdditionalData()
-//        fetchUserMedalsData()
-    }
-
     fun fetchUserData() {
         ioScope.launch {
             _currentUserInfo.postValue(Resource.loading())

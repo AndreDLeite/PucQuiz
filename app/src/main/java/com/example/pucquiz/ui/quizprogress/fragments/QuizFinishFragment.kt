@@ -56,7 +56,7 @@ class QuizFinishFragment : Fragment() {
                 }
                 2 -> {
                     textView_results_title.text = "Não tão ruim!"
-                    textView_results_description.text = "Mas também ainda abaixo da média! Foque mais seus estudos nessa matéria para melhorar seus resutados!"
+                    textView_results_description.text = "Mas ainda abaixo da média! Foque mais seus estudos nessa matéria para melhorar seus resutados!"
                     imageView_star_1.visibility = View.VISIBLE
                     imageView_star_2.visibility = View.VISIBLE
                     imageView_star_3.visibility = View.GONE
@@ -65,7 +65,7 @@ class QuizFinishFragment : Fragment() {
                 }
                 3 -> {
                     textView_results_title.text = "Na média!"
-                    textView_results_description.text = "Muito bom, mas ainda há muito espaço para aprendizado, vamos lá que você consegue!"
+                    textView_results_description.text = "Ainda não esta perfeito, porém com mais estudos vocë conseguirá ir mais além!"
                     imageView_star_1.visibility = View.VISIBLE
                     imageView_star_2.visibility = View.VISIBLE
                     imageView_star_3.visibility = View.VISIBLE
@@ -74,7 +74,7 @@ class QuizFinishFragment : Fragment() {
                 }
                 4 -> {
                     textView_results_title.text = "Podemos melhorar!"
-                    textView_results_description.text = "Ainda não esta perfeito, porém com mais estudos vocë conseguirá ir mais além!"
+                    textView_results_description.text = "Muito bom, mas ainda há muito espaço para aprendizado, vamos lá que você consegue!"
                     imageView_star_1.visibility = View.VISIBLE
                     imageView_star_2.visibility = View.VISIBLE
                     imageView_star_3.visibility = View.VISIBLE
