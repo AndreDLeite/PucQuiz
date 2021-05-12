@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
 import com.example.pucquiz.ui.quizhall.fragments.QuestionCreationFragment
 import com.example.pucquiz.ui.quizhall.fragments.QuestionHallFragment
+import com.example.pucquiz.ui.quizresults.framgents.QuestionsResultFragment
 import com.example.pucquiz.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
@@ -27,6 +28,7 @@ class MainBoardTeacherActivity : AppCompatActivity(),
     private fun setupNavigation() {
         val obBoardingFragment = OnBoardingFragment()
         val questionsFragment = QuestionHallFragment()
+        val resultsFragment = QuestionsResultFragment()
         val settingsFragment = SettingsFragment()
         makeCurrentFragment(obBoardingFragment)
         bottom_navigation.setOnNavigationItemSelectedListener {
@@ -39,7 +41,7 @@ class MainBoardTeacherActivity : AppCompatActivity(),
 
                 R.id.ic_students_result -> {
                     bottom_navigation.visibility = View.VISIBLE
-                    makeCurrentFragment(obBoardingFragment)
+                    makeCurrentFragment(resultsFragment)
                 }
 
                 R.id.icon_teacher_setting -> {
@@ -48,11 +50,10 @@ class MainBoardTeacherActivity : AppCompatActivity(),
                 }
 
                 else -> {
-
+                    //ignore: should not happen!
                 }
             }
             false
-
         }
     }
 

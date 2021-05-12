@@ -7,4 +7,5 @@ object AppConstants {
     const val FIREBASE_USER_INFO_BUCKET = "UsersAdditionalInfo"
     const val FIREBASE_USER_MEDALS_BUCKET = "UserMedals"
     const val FIREBASE_TEACHER_QUESTIONS_BUCKET = "Questions"
+    const val FIREBASE_QUESTIONS_ADDITIONAL_INFO_BUCKET = "QuestionsAdditionalInfo"
 }

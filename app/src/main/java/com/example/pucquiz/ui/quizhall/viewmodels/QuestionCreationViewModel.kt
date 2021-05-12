@@ -7,7 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pucquiz.controllers.GradeController
 import com.example.pucquiz.controllers.QuestionController
+import com.example.pucquiz.models.Answer
+import com.example.pucquiz.models.AnswerAdditionalInfo
 import com.example.pucquiz.models.Question
+import com.example.pucquiz.models.QuestionAdditionalInfo
 import com.example.pucquiz.repositories.firebasertdb.IFirebaseRTDBRepository
 import com.example.pucquiz.shared.AppConstants
 import com.example.pucquiz.shared.Resource
@@ -20,6 +23,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 
 class QuestionCreationViewModel(
     application: Application,
@@ -49,12 +53,10 @@ class QuestionCreationViewModel(
                     questionType = QuizType.TEACHER
 
                 )
+                val questionOperation = sendQuestionToFirebase(question)
+                val questionAddInfoOperation = sendQuestionAddInfoToFirebase(question)
                 _questionRegistrationLiveData.postValue(
-                    Resource.success(
-                        sendQuestionToFirebase(
-                            question
-                        )
-                    )
+                    Resource.success(questionOperation && questionAddInfoOperation)
                 )
             }
         }
@@ -62,9 +64,8 @@ class QuestionCreationViewModel(
 
     private fun sendQuestionToFirebase(question: Question): Boolean {
         var operationResult = false
-        val randomId = UUID.randomUUID().toString()
         FirebaseDatabase.getInstance().getReference(AppConstants.FIREBASE_TEACHER_QUESTIONS_BUCKET)
-            .child(randomId)
+            .child(question.id)
             .setValue(question)
             .addOnCompleteListener { itRTDBTask ->
                 operationResult = when {
@@ -80,6 +81,51 @@ class QuestionCreationViewModel(
                 }
             }
         return operationResult
+    }
+
+    private fun sendQuestionAddInfoToFirebase(question: Question): Boolean {
+        var operationResult = false
+        val questionAdditionalInfo = generateQuestionAdditionalInfo(question)
+        FirebaseDatabase.getInstance().getReference(AppConstants.FIREBASE_QUESTIONS_ADDITIONAL_INFO_BUCKET)
+            .child(question.id)
+            .setValue(questionAdditionalInfo)
+            .addOnCompleteListener { itRTDBTask ->
+                operationResult = when {
+                    itRTDBTask.isSuccessful -> {
+                        Log.e("QAI Creation", "Created with success!")
+                        true
+                    }
+
+                    else -> {
+                        Log.e("QAI Creation", "Failed to create...")
+                        false
+                    }
+                }
+            }
+        return operationResult
+    }
+
+    private fun generateQuestionAdditionalInfo(question: Question): QuestionAdditionalInfo {
+        val answerAdditionalInfo = generateAnswersAdditionalInfo(question.answers)
+        return QuestionAdditionalInfo(
+            questionId = question.id,
+            timesAnswered = 0,
+            answersAdditionalInfo = answerAdditionalInfo
+        )
+    }
+
+    private fun generateAnswersAdditionalInfo(answers: List<Answer>): List<AnswerAdditionalInfo> {
+        val answerList = mutableListOf<AnswerAdditionalInfo>()
+        answers.forEach {
+            answerList.add(
+                AnswerAdditionalInfo(
+                    answerId = it.id,
+                    correctAnswer = it.correctAnswer,
+                    timesAnswered = 0
+                )
+            )
+        }
+        return answerList
     }
 
     fun clearViewModel() {

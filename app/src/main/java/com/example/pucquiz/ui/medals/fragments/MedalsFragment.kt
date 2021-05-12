@@ -14,6 +14,7 @@ import com.example.pucquiz.ui.medals.adapters.MedalsAdapter
 import com.example.pucquiz.ui.medals.viewmodels.MedalsViewModel
 import kotlinx.android.synthetic.main.fragment_medals.*
 import org.koin.android.ext.android.inject
+import java.util.*
 
 class MedalsFragment : Fragment() {
 

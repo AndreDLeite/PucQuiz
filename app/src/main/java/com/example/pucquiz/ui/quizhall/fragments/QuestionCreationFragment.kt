@@ -252,10 +252,35 @@ class QuestionCreationFragment : Fragment(), AdapterView.OnItemSelectedListener 
 
     private fun validateQuestionForm() {
         if (checkFields()) {
-            createQuestion()
+            if(validateFields()) {
+                createQuestion()
+            } else {
+                showDuplicateAlternativesDialog()
+            }
         } else {
             showErrorCreationDialog()
         }
+    }
+
+    private fun showDuplicateAlternativesDialog() {
+        showDialog(
+            title = "Atenção!",
+            description = "Você não pode ter duas alternativas com a mesma resposta! Certifique-se de que cada alternativa possui sua resposta individual!",
+            confirm = "Entendi",
+            cancel = null
+        ) {
+            //ignore
+        }
+    }
+
+    private fun validateFields(): Boolean {
+        val answersList = mutableListOf<String>()
+        answersList.add(editText_first_question.text.toString().trim())
+        answersList.add(editText_second_question.text.toString().trim())
+        answersList.add(editText_third_question.text.toString().trim())
+        answersList.add(editText_forth_question.text.toString().trim())
+        answersList.add(editText_fifth_question.text.toString().trim())
+        return answersList.distinct().count() == answersList.count()
     }
 
     private fun createQuestion() {
