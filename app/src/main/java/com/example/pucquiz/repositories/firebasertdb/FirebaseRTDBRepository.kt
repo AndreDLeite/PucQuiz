@@ -8,15 +8,19 @@ import com.example.pucquiz.callbacks.FirebaseUserAddInfoUpdateCallback
 import com.example.pucquiz.callbacks.FirebaseUserCallback
 import com.example.pucquiz.callbacks.FirebaseUserMedalsCallback
 import com.example.pucquiz.callbacks.OperationCallback
+import com.example.pucquiz.callbacks.QuestionsAdditionalInfoCallback
 import com.example.pucquiz.callbacks.models.GenericCallback
 import com.example.pucquiz.callbacks.models.UserAdditionalInfoResponse
 import com.example.pucquiz.callbacks.models.UsersRankingResponse
 import com.example.pucquiz.models.GradeEnum
 import com.example.pucquiz.models.GradesAnswers
 import com.example.pucquiz.models.Question
+import com.example.pucquiz.models.QuestionAdditionalInfo
 import com.example.pucquiz.models.User
 import com.example.pucquiz.models.UserAdditionalInfo
 import com.example.pucquiz.models.UserMedals
+import com.example.pucquiz.shared.AppConstants
+import com.example.pucquiz.shared.AppConstants.FIREBASE_QUESTIONS_ADDITIONAL_INFO_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_TEACHER_QUESTIONS_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_BUCKET
 import com.example.pucquiz.shared.AppConstants.FIREBASE_USER_INFO_BUCKET
@@ -183,19 +187,30 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
 
     //endregion
 
-    override suspend fun updateUserQuestionsAnswered(userId: String, newUserAdditionalInfo: UserAdditionalInfo, callback: FirebaseUserAddInfoUpdateCallback) {
+    override suspend fun updateUserQuestionsAnswered(
+        userId: String,
+        newUserAdditionalInfo: UserAdditionalInfo,
+        callback: FirebaseUserAddInfoUpdateCallback
+    ) {
         firebaseRTDBInstance.getReference(FIREBASE_USER_INFO_BUCKET)
             .child(userId)
             .setValue(newUserAdditionalInfo)
             .addOnCompleteListener { itRTDBTask ->
-                if(itRTDBTask.isSuccessful) {
+                if (itRTDBTask.isSuccessful) {
                     callback.onResponse(UserAdditionalInfoResponse("Success", true))
                     Log.e("PQP", "Funcionou a bagaça de questoes!! :O")
                 } else {
-                    callback.onResponse(UserAdditionalInfoResponse("Erro de comunicação com o servidor. Por favor tente novamente mais tarde.", false))
+                    callback.onResponse(
+                        UserAdditionalInfoResponse(
+                            "Erro de comunicação com o servidor. Por favor tente novamente mais tarde.",
+                            false
+                        )
+                    )
                 }
             }
     }
+
+    //region Medals
 
     override suspend fun updateUserMedals(
         userId: String,
@@ -206,13 +221,68 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
             .child(userId)
             .setValue(newUserMedals)
             .addOnCompleteListener { itRTDBTask ->
-                if(itRTDBTask.isSuccessful) {
+                if (itRTDBTask.isSuccessful) {
                     callback.callbackResponse(GenericCallback("Success", true))
                     Log.e("PQP", "Funcionou a bagaça de medalhas!! :O")
                 } else {
-                    callback.callbackResponse(GenericCallback("Erro de comunicação com o servidor. Por favor tente novamente mais tarde.", false))
+                    callback.callbackResponse(
+                        GenericCallback(
+                            "Erro de comunicação com o servidor. Por favor tente novamente mais tarde.",
+                            false
+                        )
+                    )
                 }
             }
     }
     //endregion
+
+
+    //region QuestionsAdditionalInfo
+
+    override suspend fun sendQuestionAddInfoToFirebase(
+        questionId: String,
+        questionAdditionalInfo: QuestionAdditionalInfo
+    ): Boolean {
+        var operationResult = true
+        FirebaseDatabase.getInstance()
+            .getReference(AppConstants.FIREBASE_QUESTIONS_ADDITIONAL_INFO_BUCKET)
+            .child(questionId)
+            .setValue(questionAdditionalInfo)
+            .addOnCompleteListener { itRTDBTask ->
+                operationResult = when {
+                    itRTDBTask.isSuccessful -> {
+                        operationResult = true
+                        Log.e("QAI Creation", "Created with success!")
+                        true
+                    }
+
+                    else -> {
+                        operationResult = false
+                        Log.e("QAI Creation", "Failed to create...")
+                        false
+                    }
+                }
+            }
+        return operationResult
+    }
+
+
+    override suspend fun fetchQuestionAdditionalInfo(callback: QuestionsAdditionalInfoCallback) {
+        firebaseRTDBInstance.getReference(FIREBASE_QUESTIONS_ADDITIONAL_INFO_BUCKET).get()
+            .addOnCompleteListener { task ->
+                var response = listOf<QuestionAdditionalInfo>()
+                if (task.isSuccessful) {
+                    val result = task.result
+                    result?.let {
+                        response = result.children.map { snapShot ->
+                            snapShot.getValue(QuestionAdditionalInfo::class.java)!!
+                        }
+                    }
+                }
+                Log.e("QAI Fetched", response.toString())
+                callback.onResponse(response)
+            }
+    }
+
+    //endRegion
 }

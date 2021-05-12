@@ -4,13 +4,18 @@ import com.example.pucquiz.callbacks.FirebaseUserAddInfoCallback
 import com.example.pucquiz.callbacks.FirebaseUserAddInfoUpdateCallback
 import com.example.pucquiz.callbacks.FirebaseUserMedalsCallback
 import com.example.pucquiz.callbacks.OperationCallback
+import com.example.pucquiz.callbacks.QuestionsAdditionalInfoCallback
 import com.example.pucquiz.callbacks.models.GenericCallback
 import com.example.pucquiz.callbacks.models.UserAdditionalInfoResponse
 import com.example.pucquiz.callbacks.models.UsersRankingResponse
+import com.example.pucquiz.models.Answer
+import com.example.pucquiz.models.AnswerAdditionalInfo
 import com.example.pucquiz.models.GradeEnum
 import com.example.pucquiz.models.GradesAnswers
 import com.example.pucquiz.models.Medals
 import com.example.pucquiz.models.MedalsType
+import com.example.pucquiz.models.Question
+import com.example.pucquiz.models.QuestionAdditionalInfo
 import com.example.pucquiz.models.UserAdditionalInfo
 import com.example.pucquiz.models.UserMedals
 import com.example.pucquiz.repositories.firebasertdb.IFirebaseRTDBRepository
@@ -265,7 +270,7 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
             )
 
             updateUserMedals(userId, newUserMedalsInfo, callback)
-            if(hasUserDataChanged) {
+            if (hasUserDataChanged) {
                 updateUserAdditionalInfo(userId, newUserAdditionalInfo, callback)
             }
         }
@@ -294,5 +299,68 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
             })
         }
     }
+    //endregion
+
+    //region QuizAdditionalInfo
+    fun updateQuestionAdditionalInfo(answeredQuestions: HashMap<Question, Answer>) {
+        ioScope.launch {
+            firebaseRepo.fetchQuestionAdditionalInfo(object : QuestionsAdditionalInfoCallback {
+                override fun onResponse(questionsAdditionalInfo: List<QuestionAdditionalInfo>?) {
+                    questionsAdditionalInfo?.let {
+                        val newData = generateNewQuestionAddInfoData(it, answeredQuestions)
+                        updateQuestionAddInfo(newData)
+                    }
+                }
+            })
+        }
+    }
+
+    private fun updateQuestionAddInfo(newData: List<QuestionAdditionalInfo>) {
+        ioScope.launch {
+            newData.forEach {
+                firebaseRepo.sendQuestionAddInfoToFirebase(it.questionId, it)
+            }
+        }
+    }
+
+    private fun generateNewQuestionAddInfoData(
+        serverQuestionAddInfoList: List<QuestionAdditionalInfo>,
+        answeredQuestions: HashMap<Question, Answer>
+    ): List<QuestionAdditionalInfo> {
+        val newAdditionalInfoList = mutableListOf<QuestionAdditionalInfo>()
+        answeredQuestions.forEach { itMapEntry ->
+            val newAnswerAddInfoList = mutableListOf<AnswerAdditionalInfo>()
+            val serverQuestionAddInfo =
+                serverQuestionAddInfoList.find { it.questionId == itMapEntry.key.id }
+            serverQuestionAddInfo?.let {
+                val serverAnswerAddInfo =
+                    serverQuestionAddInfo.answersAdditionalInfo.find { it.answerId == itMapEntry.value.id }
+                serverAnswerAddInfo?.let {
+                    val newTimesAnswered = serverAnswerAddInfo.timesAnswered + 1
+                    val newAnswerData =
+                        AnswerAdditionalInfo(
+                            answerId = itMapEntry.value.id,
+                            correctAnswer = itMapEntry.value.correctAnswer,
+                            timesAnswered = newTimesAnswered
+                        )
+
+                    val newQuestionAddInfo = serverQuestionAddInfo.timesAnswered + 1
+                    newAnswerAddInfoList.addAll(serverQuestionAddInfo.answersAdditionalInfo)
+                    newAnswerAddInfoList.remove(serverAnswerAddInfo)
+                    newAnswerAddInfoList.add(newAnswerData)
+
+                    newAdditionalInfoList.add(
+                        QuestionAdditionalInfo(
+                            questionId = itMapEntry.key.id,
+                            timesAnswered = newQuestionAddInfo,
+                            answersAdditionalInfo = newAnswerAddInfoList
+                        )
+                    )
+                }
+            }
+        }
+        return newAdditionalInfoList
+    }
+
     //endregion
 }

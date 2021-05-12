@@ -158,6 +158,8 @@ class QuizMainViewModel(
                     amountCorrect++
                 }
             }
+            quizController.updateQuestionAdditionalInfo(answeredQuestions)
+
             quizController.updateUserInfo(amountCorrect, userScore, quizGrade, object :
                 OperationCallback {
                 override fun callbackResponse(operation: GenericCallback) {

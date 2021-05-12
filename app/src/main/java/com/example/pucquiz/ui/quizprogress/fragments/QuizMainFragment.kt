@@ -123,7 +123,6 @@ class QuizMainFragment : Fragment() {
             itBoolean ?: return@Observer
             if (itBoolean) {
                 Handler().postDelayed({
-//                    quizConfigurationViewModel.clearViewModel()
                     listener?.onQuizFinish()
                 }, 1000)
             }

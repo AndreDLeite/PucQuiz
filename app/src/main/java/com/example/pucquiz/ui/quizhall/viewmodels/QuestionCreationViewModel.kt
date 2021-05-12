@@ -85,23 +85,12 @@ class QuestionCreationViewModel(
 
     private fun sendQuestionAddInfoToFirebase(question: Question): Boolean {
         var operationResult = false
-        val questionAdditionalInfo = generateQuestionAdditionalInfo(question)
-        FirebaseDatabase.getInstance().getReference(AppConstants.FIREBASE_QUESTIONS_ADDITIONAL_INFO_BUCKET)
-            .child(question.id)
-            .setValue(questionAdditionalInfo)
-            .addOnCompleteListener { itRTDBTask ->
-                operationResult = when {
-                    itRTDBTask.isSuccessful -> {
-                        Log.e("QAI Creation", "Created with success!")
-                        true
-                    }
+        ioScope.launch {
+            val questionAdditionalInfo = generateQuestionAdditionalInfo(question)
+            operationResult =
+                firebaseRepo.sendQuestionAddInfoToFirebase(question.id, questionAdditionalInfo)
+        }
 
-                    else -> {
-                        Log.e("QAI Creation", "Failed to create...")
-                        false
-                    }
-                }
-            }
         return operationResult
     }
 
