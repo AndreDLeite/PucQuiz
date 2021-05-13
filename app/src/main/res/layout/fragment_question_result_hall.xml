@@ -16,45 +16,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_xxlarge"
+            android:background="@drawable/circular_button_background"
+            android:paddingStart="@dimen/paddingStart_medium"
+            android:paddingTop="@dimen/paddingTop_medium"
+            android:paddingEnd="@dimen/paddingStart_medium"
+            android:paddingBottom="@dimen/paddingTop_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_left"
+            app:tint="@color/colorPrimary"
+            tools:ignore="ContentDescription" />
+
         <TextView
             android:id="@+id/textView_question_headerTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
             android:fontFamily="@font/rubik_medium"
-            android:text="Seus Questionarios"
+            android:text="Resultados"
             android:textAlignment="center"
             android:textColor="@color/baseBackground"
             android:textSize="@dimen/font_xxlarge"
-            app:layout_constraintBottom_toBottomOf="@id/add_question"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/add_question" />
-
-        <ImageView
-            android:id="@+id/add_question"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/circular_button_background"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingTop="@dimen/padding_small"
-            android:paddingEnd="@dimen/padding_small"
-            android:paddingBottom="@dimen/padding_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_add"
-            app:tint="@color/colorPrimary"
-            tools:ignore="ContentDescription" />
-
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_questions_hint"
+        android:id="@+id/constraint_questions_result_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primaryTextHint"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/constraintLayout_question_header">
@@ -65,7 +63,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:fontFamily="@font/rubik_medium"
-            android:text="Toque em um item para visualizá-lo"
+            android:text="Toque em um item para obter mais informações"
             android:textColor="@color/primaryText"
             android:textSize="@dimen/font_large"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -76,13 +74,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_questions"
+        android:id="@+id/recyclerView_questions_result_resume"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraint_questions_hint"
+        app:layout_constraintTop_toBottomOf="@id/constraint_questions_result_hint"
         tools:itemCount="5"
-        tools:listitem="@layout/item_questions_resume" />
+        tools:listitem="@layout/item_questions_result_resume" />
 </androidx.constraintlayout.widget.ConstraintLayout>

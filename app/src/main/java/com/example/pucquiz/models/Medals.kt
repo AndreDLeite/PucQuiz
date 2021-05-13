@@ -28,9 +28,6 @@ enum class MedalsType {
     FH_SCORE_REACHED {
         override fun resourceColor(): Int = R.color.fiveHundredScore
     },
-//    FIRST_RANKING_POSITION {
-//        override fun resourceColor(): Int = R.color.firstRanking
-//    },
     UNKNOWN {
         override fun resourceColor(): Int = R.color.primaryText
     };

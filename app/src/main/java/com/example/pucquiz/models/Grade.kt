@@ -1,5 +1,7 @@
 package com.example.pucquiz.models
 
+import com.example.pucquiz.R
+
 
 data class Grade(
     val gradeType: String = "",

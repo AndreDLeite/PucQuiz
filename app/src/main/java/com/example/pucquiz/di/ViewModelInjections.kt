@@ -6,6 +6,7 @@ import com.example.pucquiz.ui.medals.viewmodels.MedalsViewModel
 import com.example.pucquiz.ui.quizhall.viewmodels.QuestionCreationViewModel
 import com.example.pucquiz.ui.quizhall.viewmodels.QuestionsHallViewModel
 import com.example.pucquiz.ui.quizprogress.viewmodels.QuizMainViewModel
+import com.example.pucquiz.ui.quizresults.viewmodels.QuestionsResultViewModel
 import com.example.pucquiz.ui.ranking.viewmodels.RankingViewModel
 import com.example.pucquiz.ui.register.viewmodels.RegisterViewModel
 import com.example.pucquiz.ui.settings.viewmodels.SettingsViewModel
@@ -25,6 +26,7 @@ fun Module.viewModelInjections() {
     viewModel { QuestionsHallViewModel(androidApplication(), get()) }
     viewModel { QuestionCreationViewModel(androidApplication(), get()) }
     viewModel { QuizMainViewModel(androidApplication(), get(), get()) }
+    viewModel { QuestionsResultViewModel(androidApplication(), get()) }
 
 //    viewModel { WelcomeViewModel(androidApplication()) }
 //    viewModel { RedesQuizViewModel(androidApplication()) }

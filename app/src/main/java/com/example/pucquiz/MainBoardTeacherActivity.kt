@@ -9,14 +9,19 @@ import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
 import com.example.pucquiz.ui.quizhall.fragments.QuestionCreationFragment
 import com.example.pucquiz.ui.quizhall.fragments.QuestionHallFragment
-import com.example.pucquiz.ui.quizresults.framgents.QuestionsResultFragment
+import com.example.pucquiz.ui.quizresults.framgents.QuestionResultFragment
+import com.example.pucquiz.ui.quizresults.framgents.QuestionsResultGradeSelectionFragment
+import com.example.pucquiz.ui.quizresults.framgents.QuestionsResultHallFragment
 import com.example.pucquiz.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_onboarding.*
 
 class MainBoardTeacherActivity : AppCompatActivity(),
     SettingsFragment.OnFragmentInteractionListener,
     QuestionHallFragment.OnFragmentInteractionListener,
-    QuestionCreationFragment.OnFragmentInteractionListener {
+    QuestionCreationFragment.OnFragmentInteractionListener,
+    QuestionsResultGradeSelectionFragment.OnFragmentInteractionListener,
+    QuestionsResultHallFragment.OnFragmentInteractionListener,
+    QuestionResultFragment.OnFragmentInteractionListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +33,7 @@ class MainBoardTeacherActivity : AppCompatActivity(),
     private fun setupNavigation() {
         val obBoardingFragment = OnBoardingFragment()
         val questionsFragment = QuestionHallFragment()
-        val resultsFragment = QuestionsResultFragment()
+        val resultsFragment = QuestionsResultGradeSelectionFragment()
         val settingsFragment = SettingsFragment()
         makeCurrentFragment(obBoardingFragment)
         bottom_navigation.setOnNavigationItemSelectedListener {
@@ -71,7 +76,7 @@ class MainBoardTeacherActivity : AppCompatActivity(),
             }
     }
 
-    //region Settings_Interactions
+    //region SettingsInteractions
     override fun onLogout() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
@@ -79,7 +84,7 @@ class MainBoardTeacherActivity : AppCompatActivity(),
     }
     //endregion
 
-    //region Questions_Interactions
+    //region QuestionsInteractions
     override fun onAddQuestionClicked() {
         bottom_navigation.visibility = View.GONE
         makeCurrentFragment(QuestionCreationFragment())
@@ -91,6 +96,24 @@ class MainBoardTeacherActivity : AppCompatActivity(),
 
     override fun backToQuestionsHall() {
         makeCurrentFragment(QuestionHallFragment(), false)
+    }
+    //endregion
+
+    //region TeacherQuestionsResult
+    override fun onGradeCardClicked() {
+        makeCurrentFragment(QuestionsResultHallFragment())
+    }
+
+    override fun onBackToTeacherGradeSelection() {
+        makeCurrentFragment(QuestionsResultGradeSelectionFragment(), false)
+    }
+
+    override fun onQuestionCardClicked() {
+        makeCurrentFragment(QuestionResultFragment())
+    }
+
+    override fun onBackToQuestionResultHall() {
+        makeCurrentFragment(QuestionsResultHallFragment(), false)
     }
     //endregion
 
