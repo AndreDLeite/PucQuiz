@@ -1,5 +1,6 @@
 package com.example.pucquiz.di
 
+import com.example.pucquiz.ui.forgotpassword.viewmodels.ForgotPasswordViewModel
 import com.example.pucquiz.ui.login.viewmodels.LoginViewModel
 import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoViewModel
 import com.example.pucquiz.ui.medals.viewmodels.MedalsViewModel
@@ -18,6 +19,7 @@ import org.koin.core.module.Module
 fun Module.viewModelInjections() {
     viewModel { SplashViewModel(androidApplication()) }
     viewModel { LoginViewModel(androidApplication()) }
+    viewModel { ForgotPasswordViewModel(androidApplication()) }
     viewModel { RegisterViewModel(androidApplication()) }
     viewModel { SettingsViewModel(androidApplication()) }
     viewModel { MedalsViewModel(androidApplication(), get()) }
@@ -27,7 +29,4 @@ fun Module.viewModelInjections() {
     viewModel { QuestionCreationViewModel(androidApplication(), get()) }
     viewModel { QuizMainViewModel(androidApplication(), get(), get()) }
     viewModel { QuestionsResultViewModel(androidApplication(), get()) }
-
-//    viewModel { WelcomeViewModel(androidApplication()) }
-//    viewModel { RedesQuizViewModel(androidApplication()) }
 }

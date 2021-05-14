@@ -47,13 +47,17 @@ class LoginFragment : Fragment() {
             activity?.hideKeyboard(materialButton_login)
             loginUser()
         }
+
+        textView_forgot_password.setOnClickListener {
+            listener?.onForgotPasswordClicked()
+        }
     }
 
     private fun setupViewModelObservers() {
         loginViewModel.loginLiveData.observe(viewLifecycleOwner, Observer { itLoginOperation ->
             when (itLoginOperation.status) {
                 Resource.Status.SUCCESS -> {
-                    listener?.onSuccessfullLogin()
+                    listener?.onSuccessfulLogin()
                 }
                 Resource.Status.ERROR -> {
                     showLoginErrorDialog()
@@ -193,8 +197,8 @@ class LoginFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun onRegisterClicked()
-        fun onSuccessfullLogin()
-
+        fun onSuccessfulLogin()
+        fun onForgotPasswordClicked()
     }
 
 }

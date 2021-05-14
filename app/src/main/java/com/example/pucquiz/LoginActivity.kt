@@ -5,11 +5,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import com.example.pucquiz.ui.forgotpassword.fragments.ForgotPasswordFragment
 import com.example.pucquiz.ui.login.LoginFragment
 import com.example.pucquiz.ui.register.GradeSelectionFragment
 import com.example.pucquiz.ui.register.RegisterFragment
 
-class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionListener,
+class LoginActivity : AppCompatActivity(),
+    LoginFragment.OnFragmentInteractionListener,
+    ForgotPasswordFragment.OnFragmentInteractionListener,
     RegisterFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +44,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionLi
         replaceFragment(RegisterFragment(), true)
     }
 
-    override fun onSuccessfullLogin() {
+    override fun onSuccessfulLogin() {
         val intent = Intent(this, ConfigurationActivity::class.java)
         startActivity(intent)
         finish()
@@ -53,6 +56,14 @@ class LoginActivity : AppCompatActivity(), LoginFragment.OnFragmentInteractionLi
 
     override fun onGradeSelectorClicked() {
         replaceFragment(GradeSelectionFragment(), true)
+    }
+
+    override fun onForgotPasswordClicked() {
+        replaceFragment(ForgotPasswordFragment(), false)
+    }
+
+    override fun onSendForgotPasswordSent() {
+        replaceFragment(LoginFragment(), false)
     }
 
 }
