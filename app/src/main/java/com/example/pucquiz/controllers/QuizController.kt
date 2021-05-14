@@ -332,9 +332,12 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
             val newAnswerAddInfoList = mutableListOf<AnswerAdditionalInfo>()
             val serverQuestionAddInfo =
                 serverQuestionAddInfoList.find { it.questionId == itMapEntry.key.id }
-            serverQuestionAddInfo?.let {
+
+            serverQuestionAddInfo?.let { currentQuestionAddInfo ->
+
                 val serverAnswerAddInfo =
-                    serverQuestionAddInfo.answersAdditionalInfo.find { it.answerId == itMapEntry.value.id }
+                    currentQuestionAddInfo.answersAdditionalInfo.find { it.answerId == itMapEntry.value.id }
+
                 serverAnswerAddInfo?.let {
                     val newTimesAnswered = serverAnswerAddInfo.timesAnswered + 1
                     val newAnswerData =
@@ -344,8 +347,8 @@ class QuizController(private val firebaseRepo: IFirebaseRTDBRepository) {
                             timesAnswered = newTimesAnswered
                         )
 
-                    val newQuestionAddInfo = serverQuestionAddInfo.timesAnswered + 1
-                    newAnswerAddInfoList.addAll(serverQuestionAddInfo.answersAdditionalInfo)
+                    val newQuestionAddInfo = currentQuestionAddInfo.timesAnswered + 1
+                    newAnswerAddInfoList.addAll(currentQuestionAddInfo.answersAdditionalInfo)
                     newAnswerAddInfoList.remove(serverAnswerAddInfo)
                     newAnswerAddInfoList.add(newAnswerData)
 

@@ -9,6 +9,7 @@ import com.example.pucquiz.callbacks.FirebaseUserCallback
 import com.example.pucquiz.callbacks.FirebaseUserMedalsCallback
 import com.example.pucquiz.callbacks.OperationCallback
 import com.example.pucquiz.callbacks.QuestionsAdditionalInfoCallback
+import com.example.pucquiz.callbacks.SingleQuestionAddInfoCallback
 import com.example.pucquiz.callbacks.models.GenericCallback
 import com.example.pucquiz.callbacks.models.UserAdditionalInfoResponse
 import com.example.pucquiz.callbacks.models.UsersRankingResponse
@@ -282,6 +283,29 @@ class FirebaseRTDBRepository : IFirebaseRTDBRepository {
                 Log.e("QAI Fetched", response.toString())
                 callback.onResponse(response)
             }
+    }
+
+    override suspend fun fetchQuestionAdditionalInfoByQuestionId(
+        questionId: String,
+        callback: SingleQuestionAddInfoCallback
+    ) {
+        firebaseRTDBInstance.getReference(FIREBASE_QUESTIONS_ADDITIONAL_INFO_BUCKET).child(questionId)
+            .addListenerForSingleValueEvent(
+                object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val questionAdditionalInfo = snapshot.getValue(QuestionAdditionalInfo::class.java)
+                        Log.d("QAI fetch", "$questionAdditionalInfo")
+                        questionAdditionalInfo?.let {
+                            callback.onResponse(data = questionAdditionalInfo)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        callback.onResponse(null)
+                    }
+
+                }
+            )
     }
 
     //endRegion

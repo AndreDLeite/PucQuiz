@@ -8,6 +8,7 @@ import com.example.pucquiz.callbacks.FirebaseUserCallback
 import com.example.pucquiz.callbacks.FirebaseUserMedalsCallback
 import com.example.pucquiz.callbacks.OperationCallback
 import com.example.pucquiz.callbacks.QuestionsAdditionalInfoCallback
+import com.example.pucquiz.callbacks.SingleQuestionAddInfoCallback
 import com.example.pucquiz.models.GradeEnum
 import com.example.pucquiz.models.GradesAnswers
 import com.example.pucquiz.models.Question
@@ -35,6 +36,8 @@ interface IFirebaseRTDBRepository {
     suspend fun updateUserMedals(userId: String, newUserMedals: UserMedals, callback: OperationCallback)
 
     suspend fun fetchQuestionAdditionalInfo(callback: QuestionsAdditionalInfoCallback)
+
+    suspend fun fetchQuestionAdditionalInfoByQuestionId(questionId: String, callback: SingleQuestionAddInfoCallback)
 
     suspend fun sendQuestionAddInfoToFirebase(questionId: String, questionAdditionalInfo: QuestionAdditionalInfo): Boolean
 }

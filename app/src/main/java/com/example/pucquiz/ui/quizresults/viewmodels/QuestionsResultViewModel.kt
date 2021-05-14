@@ -6,9 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pucquiz.callbacks.FirebaseGradeQuestionsCallBack
 import com.example.pucquiz.callbacks.FirebaseTeacherQuestionsCallback
+import com.example.pucquiz.callbacks.SingleQuestionAddInfoCallback
+import com.example.pucquiz.models.AnswerAdditionalInfo
 import com.example.pucquiz.models.Grade
 import com.example.pucquiz.models.GradeEnum
 import com.example.pucquiz.models.Question
+import com.example.pucquiz.models.QuestionAdditionalInfo
 import com.example.pucquiz.repositories.firebasertdb.IFirebaseRTDBRepository
 import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.shared.enums.QuizType
@@ -32,9 +35,25 @@ class QuestionsResultViewModel(
     val teacherQuestions: LiveData<Resource<List<Question>?>>
         get() = _teacherQuestions
 
+    private val _questionAdditionalInfo = MutableLiveData<Resource<QuestionAdditionalInfo>>()
+    val questionAdditionalInfo: LiveData<Resource<QuestionAdditionalInfo>>
+        get() = _questionAdditionalInfo
+
+    private val _questionQuantityAnswered = MutableLiveData<Int>()
+    val questionQuantityAnswered: LiveData<Int>
+        get() = _questionQuantityAnswered
+
+    private val _questionAverageCorrects = MutableLiveData<Int>()
+    val questionAverageCorrects: LiveData<Int>
+        get() = _questionAverageCorrects
+
+    private var answerPercentageMap = hashMapOf<String, Int>()
+
     fun setCurrentTeacherGrade(grade: GradeEnum) {
         currentTeacherGrade = grade
     }
+
+    fun getCurrentTeacherGrade() = currentTeacherGrade
 
     fun setCurrentQuestion(question: Question) {
         currentQuestion = question
@@ -49,6 +68,9 @@ class QuestionsResultViewModel(
         currentQuestion = null
         ioScope.launch {
             _teacherQuestions.postValue(null)
+            _questionAdditionalInfo.postValue(null)
+            _questionQuantityAnswered.postValue(null)
+            _questionAverageCorrects.postValue(null)
         }
     }
 
@@ -62,10 +84,16 @@ class QuestionsResultViewModel(
                     object : FirebaseTeacherQuestionsCallback {
                         override fun onResponse(questions: List<Question>?) {
                             questions?.let {
-                                val filteredQuestions = questions.filter { it.questionGrade == currentTeacherGrade }
+                                val filteredQuestions =
+                                    questions.filter { it.questionGrade == currentTeacherGrade }
                                 _teacherQuestions.postValue(Resource.success(filteredQuestions))
                             } ?: run {
-                                _teacherQuestions.postValue(Resource.error("error fetch questions", questions))
+                                _teacherQuestions.postValue(
+                                    Resource.error(
+                                        "error fetch questions",
+                                        questions
+                                    )
+                                )
                             }
                         }
                     })
@@ -74,5 +102,67 @@ class QuestionsResultViewModel(
             }
         }
     }
+
+    fun fetchQuestionAdditionalInfo() {
+        ioScope.launch {
+            _questionAdditionalInfo.postValue(Resource.loading())
+            currentQuestion?.let { itCurrentQuestion ->
+                firebaseRepo.fetchQuestionAdditionalInfoByQuestionId(
+                    itCurrentQuestion.id,
+                    object : SingleQuestionAddInfoCallback {
+                        override fun onResponse(data: QuestionAdditionalInfo?) {
+                            data?.let {
+                                calculateQuestionData(it)
+                                _questionAdditionalInfo.postValue(Resource.success(it))
+                            } ?: run {
+                                _questionAdditionalInfo.postValue(
+                                    Resource.error(
+                                        "Erro ao buscar informações da pergunta.",
+                                        null
+                                    )
+                                )
+                            }
+                        }
+                    }
+                )
+            }
+        }
+    }
+
+    private fun calculateQuestionData(currentQuestionAddInfo: QuestionAdditionalInfo) {
+        _questionQuantityAnswered.postValue(currentQuestionAddInfo.timesAnswered)
+        val averageCorrects = calculateAverageCorrects(currentQuestionAddInfo)
+        _questionAverageCorrects.postValue(averageCorrects)
+        calculateAnswersAdditionalInfo(currentQuestionAddInfo)
+    }
+
+    private fun calculateAverageCorrects(currentQuestionAddInfo: QuestionAdditionalInfo): Int {
+        val timesAnswered = currentQuestionAddInfo.timesAnswered
+        val amountCorrect =
+            currentQuestionAddInfo.answersAdditionalInfo.find { it.correctAnswer }?.timesAnswered
+                ?: 1
+        return if (amountCorrect == 0) {
+            amountCorrect
+        } else {
+            (timesAnswered / amountCorrect) * 100
+        }
+    }
+
+    private fun calculateAnswersAdditionalInfo(currentQuestionAddInfo: QuestionAdditionalInfo) {
+        val totalAnswers = currentQuestionAddInfo.timesAnswered
+        currentQuestionAddInfo.answersAdditionalInfo.forEach {
+            answerPercentageMap[it.answerId] = if (it.timesAnswered == 0 || totalAnswers == 0) {
+                0
+            } else {
+                (it.timesAnswered / totalAnswers ) * 100
+            }
+        }
+    }
+
+    fun getAnswerPercentage(answerId: String): Int {
+        return answerPercentageMap[answerId] ?: 0
+    }
+
+    fun getCurrentQuestion() = currentQuestion
 
 }
