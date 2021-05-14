@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.pucquiz.ui.mainboard.fragments.OnBoardingFragment
 import com.example.pucquiz.ui.quizhall.fragments.QuestionCreationFragment
+import com.example.pucquiz.ui.quizhall.fragments.QuestionEditFragment
 import com.example.pucquiz.ui.quizhall.fragments.QuestionHallFragment
 import com.example.pucquiz.ui.quizresults.framgents.QuestionResultFragment
 import com.example.pucquiz.ui.quizresults.framgents.QuestionsResultGradeSelectionFragment
@@ -21,7 +22,8 @@ class MainBoardTeacherActivity : AppCompatActivity(),
     QuestionCreationFragment.OnFragmentInteractionListener,
     QuestionsResultGradeSelectionFragment.OnFragmentInteractionListener,
     QuestionsResultHallFragment.OnFragmentInteractionListener,
-    QuestionResultFragment.OnFragmentInteractionListener{
+    QuestionResultFragment.OnFragmentInteractionListener,
+    QuestionEditFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +99,11 @@ class MainBoardTeacherActivity : AppCompatActivity(),
     override fun backToQuestionsHall() {
         makeCurrentFragment(QuestionHallFragment(), false)
     }
+
+    override fun onQuestionEditClicked() {
+        bottom_navigation.visibility = View.GONE
+        makeCurrentFragment(QuestionEditFragment())
+    }
     //endregion
 
     //region TeacherQuestionsResult
@@ -114,6 +121,10 @@ class MainBoardTeacherActivity : AppCompatActivity(),
 
     override fun onBackToQuestionResultHall() {
         makeCurrentFragment(QuestionsResultHallFragment(), false)
+    }
+
+    override fun onBackToTeacherQuestionsList() {
+        makeCurrentFragment(QuestionHallFragment(), false)
     }
     //endregion
 

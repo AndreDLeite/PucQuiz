@@ -163,11 +163,13 @@ class QuestionHallFragment : Fragment(), QuestionCardDelegate.OnQuestionCardClic
     }
 
     override fun onQuestionCardClicked(question: Question) {
-        //TODO: Open same screen as the "quiz" but with the option to delete the question...
+        questionsHallViewModel.serCurrentSelectedQuestion(question)
+        listener?.onQuestionEditClicked()
     }
 
     interface OnFragmentInteractionListener {
         fun onAddQuestionClicked()
+        fun onQuestionEditClicked()
         fun onFragmentCreated()
     }
 }

@@ -4,6 +4,7 @@ import com.example.pucquiz.models.Answer
 import com.example.pucquiz.models.GradeEnum
 import com.example.pucquiz.models.Question
 import com.example.pucquiz.ui.shared.enums.QuizType
+import kotlinx.coroutines.processNextEventInCurrentThread
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -35,6 +36,22 @@ class QuestionController {
             answers = realAnswerList,
             questionGrade = questionGrade,
             questionType = questionType
+        )
+    }
+
+    fun generateUpdatedQuestion(
+        teacherId: String,
+        summary: String,
+        answerList: List<Answer>,
+        newQuestionData: Question
+    ): Question {
+        return Question(
+            id = newQuestionData.id,
+            teacherId = teacherId,
+            summary = summary,
+            answers = answerList,
+            questionGrade = newQuestionData.questionGrade,
+            questionType = newQuestionData.questionType
         )
     }
 
