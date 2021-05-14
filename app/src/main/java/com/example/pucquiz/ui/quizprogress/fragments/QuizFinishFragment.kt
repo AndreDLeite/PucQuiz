@@ -45,6 +45,17 @@ class QuizFinishFragment : Fragment() {
     private fun calculateUserResults() {
         with(quizConfigurationViewModel.getCorrectAmount()) {
             when(this) {
+                0 -> {
+                    textView_results_title.text = "Que pena!"
+                    textView_results_description.text = "Você não acertou nenhuma das questões! \n Foque mais nos estudos e tire suas dúvidas para melhorar seu desempenho!"
+                    imageView_star_1.visibility = View.GONE
+                    imageView_star_2.visibility = View.GONE
+                    imageView_star_3.visibility = View.GONE
+                    imageView_star_4.visibility = View.GONE
+                    imageView_star_5.visibility = View.GONE
+                    imageView_star_0.visibility = View.VISIBLE
+                }
+
                 1 -> {
                     textView_results_title.text = "Podemos melhorar!"
                     textView_results_description.text = "Estude mais sobre a matéria em questão, você consegue se sair bem melhor!"

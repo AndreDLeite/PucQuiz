@@ -43,11 +43,11 @@ class QuestionsResultViewModel(
     val questionQuantityAnswered: LiveData<Int>
         get() = _questionQuantityAnswered
 
-    private val _questionAverageCorrects = MutableLiveData<Int>()
-    val questionAverageCorrects: LiveData<Int>
+    private val _questionAverageCorrects = MutableLiveData<Double>()
+    val questionAverageCorrects: LiveData<Double>
         get() = _questionAverageCorrects
 
-    private var answerPercentageMap = hashMapOf<String, Int>()
+    private var answerPercentageMap = hashMapOf<String, Double>()
 
     fun setCurrentTeacherGrade(grade: GradeEnum) {
         currentTeacherGrade = grade
@@ -66,6 +66,7 @@ class QuestionsResultViewModel(
     fun clearViewModel() {
         currentTeacherGrade = GradeEnum.UNKOWN
         currentQuestion = null
+        answerPercentageMap = hashMapOf()
         ioScope.launch {
             _teacherQuestions.postValue(null)
             _questionAdditionalInfo.postValue(null)
@@ -136,31 +137,32 @@ class QuestionsResultViewModel(
         calculateAnswersAdditionalInfo(currentQuestionAddInfo)
     }
 
-    private fun calculateAverageCorrects(currentQuestionAddInfo: QuestionAdditionalInfo): Int {
+    private fun calculateAverageCorrects(currentQuestionAddInfo: QuestionAdditionalInfo): Double {
         val timesAnswered = currentQuestionAddInfo.timesAnswered
         val amountCorrect =
             currentQuestionAddInfo.answersAdditionalInfo.find { it.correctAnswer }?.timesAnswered
                 ?: 1
         return if (amountCorrect == 0) {
-            amountCorrect
+            amountCorrect.toDouble()
         } else {
-            (timesAnswered / amountCorrect) * 100
+            (amountCorrect.toDouble() / timesAnswered.toDouble() ) * 100
         }
     }
 
     private fun calculateAnswersAdditionalInfo(currentQuestionAddInfo: QuestionAdditionalInfo) {
         val totalAnswers = currentQuestionAddInfo.timesAnswered
         currentQuestionAddInfo.answersAdditionalInfo.forEach {
+            val currentAnswer = it
             answerPercentageMap[it.answerId] = if (it.timesAnswered == 0 || totalAnswers == 0) {
-                0
+                0.0
             } else {
-                (it.timesAnswered / totalAnswers ) * 100
+                (it.timesAnswered.toDouble() / totalAnswers.toDouble()) * 100
             }
         }
     }
 
-    fun getAnswerPercentage(answerId: String): Int {
-        return answerPercentageMap[answerId] ?: 0
+    fun getAnswerPercentage(answerId: String): Double {
+        return answerPercentageMap[answerId] ?: 0.0
     }
 
     fun getCurrentQuestion() = currentQuestion

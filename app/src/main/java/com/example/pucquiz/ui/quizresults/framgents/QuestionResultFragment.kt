@@ -117,31 +117,31 @@ class QuestionResultFragment: Fragment() {
                 0 -> {
                     question_first_option.text = answer.summary
                     question_first_option.isChecked = correctAnswer
-                    textView_first_option_info.text = String.format("%d%% das respostas foram na alternativa abaixo", answerPercentage)
+                    textView_first_option_info.text = String.format("%.1f%% das respostas foram na alternativa abaixo", answerPercentage)
                 }
 
                 1 -> {
                     question_second_option.text = answer.summary
                     question_second_option.isChecked = correctAnswer
-                    textView_second_option_info.text = String.format("%d%% das respostas foram na alternativa abaixo", answerPercentage)
+                    textView_second_option_info.text = String.format("%.1f%% das respostas foram na alternativa abaixo", answerPercentage)
                 }
 
                 2 -> {
                     question_third_option.text = answer.summary
                     question_third_option.isChecked = correctAnswer
-                    textView_third_option_info.text = String.format("%d%% das respostas foram na alternativa abaixo", answerPercentage)
+                    textView_third_option_info.text = String.format("%.1f%% das respostas foram na alternativa abaixo", answerPercentage)
                 }
 
                 3 -> {
                     question_forth_option.text = answer.summary
                     question_forth_option.isChecked = correctAnswer
-                    textView_forth_option_info.text = String.format("%d%% das respostas foram na alternativa abaixo", answerPercentage)
+                    textView_forth_option_info.text = String.format("%.1f%% das respostas foram na alternativa abaixo", answerPercentage)
                 }
 
                 4 -> {
                     question_fifth_option.text = answer.summary
                     question_fifth_option.isChecked = correctAnswer
-                    textView_fifth_option_info.text = String.format("%d%% das respostas foram na alternativa abaixo", answerPercentage)
+                    textView_fifth_option_info.text = String.format("%.1f%% das respostas foram na alternativa abaixo", answerPercentage)
                 }
 
                 else -> {
@@ -162,8 +162,8 @@ class QuestionResultFragment: Fragment() {
         }
     }
 
-    private fun updateAverageText(average: Int) {
-        textVIew_question_grade_total_average.text = String.format("%d%%", average)
+    private fun updateAverageText(average: Double) {
+        textVIew_question_grade_total_average.text = String.format("%.2f%%", average)
     }
 
     private fun updateAmountAnsweredText(amountAnswered: Int) {
