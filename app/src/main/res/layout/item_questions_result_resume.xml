@@ -30,6 +30,20 @@
         android:id="@+id/textView_question_result_grade"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Matéria:"
+        android:textAlignment="textStart"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/font_large"
+        app:layout_constraintBottom_toBottomOf="@id/textView_question_result_descritption"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textView_question_result_descritption" />
+
+    <TextView
+        android:id="@+id/textView_question_result_descritption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
@@ -42,24 +56,43 @@
         android:textColor="@color/primaryText"
         android:textSize="@dimen/font_default"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_question_result_descritption"
+        app:layout_constraintStart_toEndOf="@+id/textView_question_result_grade"
         app:layout_constraintTop_toBottomOf="@+id/textView_question_title"
         tools:text="Desenvolvimento de interfaces web para computadores super maneiros" />
 
     <TextView
-        android:id="@+id/textView_question_result_descritption"
+        android:id="@+id/textView_question_result_authority_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/rubik_medium"
-        android:text="Matéria:"
+        android:text="Autoría:"
         android:textAlignment="textStart"
         android:textColor="@color/primaryText"
         android:textSize="@dimen/font_large"
-        app:layout_constraintBottom_toBottomOf="@id/textView_question_result_grade"
+        app:layout_constraintBottom_toBottomOf="@id/textView_question_result_authority"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textView_question_result_grade" />
+        app:layout_constraintTop_toTopOf="@id/textView_question_result_authority" />
 
+    <TextView
+        android:id="@+id/textView_question_result_authority"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/rubik_lightitalic"
+        android:letterSpacing="0.04"
+        android:maxWidth="280dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="20dp"
+        android:singleLine="true"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/font_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView_question_result_authority_title"
+        app:layout_constraintTop_toBottomOf="@+id/textView_question_result_descritption"
+        tools:text="ENADE" />
 
     <View
         android:id="@+id/view_line_divider"
@@ -72,7 +105,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_question_result_grade" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_question_result_authority" />
 
     <TextView
         android:id="@+id/textView_question_descritption"

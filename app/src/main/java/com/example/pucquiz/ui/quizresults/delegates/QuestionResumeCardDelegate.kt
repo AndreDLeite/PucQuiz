@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pucquiz.R
 import com.example.pucquiz.controllers.GradeController
+import com.example.pucquiz.controllers.QuizTypeController
 import com.example.pucquiz.models.Question
 import com.example.pucquiz.ui.quizresults.viewholders.QuestionResumeCardViewHolder
+import com.example.pucquiz.ui.shared.enums.QuizType
 
 class QuestionResumeCardDelegate {
 
@@ -30,6 +32,7 @@ class QuestionResumeCardDelegate {
             val gradeType = GradeController().gradeToString(question.questionGrade)
             description.text = question.summary
             questionGrade.text = gradeType
+            autority.text = QuizTypeController().quizTypeToString(question.questionType)
             container.setOnClickListener {
                 questionCardListener?.onQuestionCardClicked(question)
             }

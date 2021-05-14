@@ -40,6 +40,8 @@ class QuestionCreationViewModel(
     var questionSummary = ""
     var answers = HashMap<String, Boolean>()
 
+    private var currentQuestionType = QuizType.TEACHER
+
     fun createQuestion() {
         ioScope.launch {
             _questionRegistrationLiveData.postValue(Resource.loading())
@@ -50,7 +52,7 @@ class QuestionCreationViewModel(
                     summary = questionSummary,
                     answerList = answers,
                     questionGrade = gradeEnum,
-                    questionType = QuizType.TEACHER
+                    questionType = currentQuestionType
 
                 )
                 val questionOperation = sendQuestionToFirebase(question)
@@ -115,6 +117,10 @@ class QuestionCreationViewModel(
             )
         }
         return answerList
+    }
+
+    fun setCurrentQuestionType(newValue: QuizType) {
+        currentQuestionType = newValue
     }
 
     fun clearViewModel() {

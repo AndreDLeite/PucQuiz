@@ -20,6 +20,7 @@ import com.example.pucquiz.shared.Resource
 import com.example.pucquiz.ui.mainboard.viewmodels.UserInfoViewModel
 import com.example.pucquiz.ui.quizhall.viewmodels.QuestionCreationViewModel
 import com.example.pucquiz.ui.quizhall.viewmodels.QuestionsHallViewModel
+import com.example.pucquiz.ui.shared.enums.QuizType
 import kotlinx.android.synthetic.main.fragment_question_creation.*
 import kotlinx.android.synthetic.main.fragment_question_creation.backButton
 import kotlinx.android.synthetic.main.fragment_question_creation.spinner_drop_down_grade_selector
@@ -131,6 +132,21 @@ class QuestionCreationFragment : Fragment(), AdapterView.OnItemSelectedListener 
 
         imageView_grade_hint.setOnClickListener {
             showGradeHintDialog()
+        }
+
+        imageView_question_type_hint.setOnClickListener {
+            showQuestionAuthorityDialog()
+        }
+    }
+
+    private fun showQuestionAuthorityDialog() {
+        showDialog(
+            title = "Autoría",
+            description = "Caso a questão seja originária de uma prova do ENADE, você deve marcar 'ENADE' como opção, caso contrário, selecione 'PESSOAL'.",
+            confirm = "Entendi",
+            cancel = null
+        ) {
+            //ignore
         }
     }
 
@@ -295,6 +311,20 @@ class QuestionCreationFragment : Fragment(), AdapterView.OnItemSelectedListener 
             forth_option.isChecked
         questionViewModel.answers[editText_fifth_question.text.toString().trim()] =
             fifth_option.isChecked
+
+        when(radioGroup_questionType.checkedRadioButtonId) {
+            radioButton_personal.id -> {
+                questionViewModel.setCurrentQuestionType(QuizType.TEACHER)
+            }
+
+            radioButton_enade.id -> {
+                questionViewModel.setCurrentQuestionType(QuizType.ENADE)
+            }
+
+            else -> {
+                questionViewModel.setCurrentQuestionType(QuizType.TEACHER)
+            }
+        }
 
         questionViewModel.createQuestion()
 

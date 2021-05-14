@@ -33,6 +33,11 @@
         <item>7</item>
         <item>8</item>
     </string-array>
+
+    <string-array name="question_type">
+        <item>ENADE</item>
+        <item>Pessoal</item>
+    </string-array>
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.
