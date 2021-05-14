@@ -1,6 +1,5 @@
 package com.example.pucquiz.ui.forgotpassword.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Patterns
@@ -25,8 +24,6 @@ class ForgotPasswordFragment : Fragment() {
 
     private val forgotPasswordViewModel by inject<ForgotPasswordViewModel>()
 
-    private var listener: OnFragmentInteractionListener? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,7 +46,7 @@ class ForgotPasswordFragment : Fragment() {
 
         materialButton_reset_password.setOnClickListener {
             activity?.hideKeyboard(materialButton_reset_password)
-            setLoadingViewState()
+            showLoadingViewState()
             validateEmailField()
         }
     }
@@ -64,11 +61,12 @@ class ForgotPasswordFragment : Fragment() {
                 }
                 Resource.Status.ERROR -> {
                     itResource.message?.let {
+                        showDefaultViewState()
                         showErrorDialog(it)
                     }
                 }
                 Resource.Status.LOADING -> {
-                    setLoadingViewState()
+                    showLoadingViewState()
                 }
             }
         })
@@ -82,7 +80,7 @@ class ForgotPasswordFragment : Fragment() {
             cancel = null
         ) {
             forgotPasswordViewModel.clearViewModel()
-            listener?.onSendForgotPasswordSent()
+            activity?.onBackPressed()
         }
     }
 
@@ -97,7 +95,7 @@ class ForgotPasswordFragment : Fragment() {
         }
     }
 
-    private fun setLoadingViewState() {
+    private fun showLoadingViewState() {
         group_loading.visibility = View.VISIBLE
     }
 
@@ -154,17 +152,4 @@ class ForgotPasswordFragment : Fragment() {
             dialog.show(supportFragmentManager, DialogSimple::class.java.simpleName)
         }
     }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        }
-    }
-
-    interface OnFragmentInteractionListener {
-        fun onSendForgotPasswordSent()
-    }
-
 }

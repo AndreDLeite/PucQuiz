@@ -12,7 +12,6 @@ import com.example.pucquiz.ui.register.RegisterFragment
 
 class LoginActivity : AppCompatActivity(),
     LoginFragment.OnFragmentInteractionListener,
-    ForgotPasswordFragment.OnFragmentInteractionListener,
     RegisterFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +58,7 @@ class LoginActivity : AppCompatActivity(),
     }
 
     override fun onForgotPasswordClicked() {
-        replaceFragment(ForgotPasswordFragment(), false)
-    }
-
-    override fun onSendForgotPasswordSent() {
-        replaceFragment(LoginFragment(), false)
+        replaceFragment(ForgotPasswordFragment(), true)
     }
 
 }
