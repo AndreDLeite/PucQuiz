@@ -153,7 +153,7 @@ class QuestionCreationFragment : Fragment(), AdapterView.OnItemSelectedListener 
     private fun showQuestionCreationDialog() {
         showDialog(
             title = "Atenção!",
-            description = "Você está prestes a criar uma questão, os campos preenchidos não poderão ser alterados no futuro. Tem certeza de que deseja continuar?",
+            description = "Você está prestes a criar uma questão, você pode alterá-la futuramente caso queira. Tem certeza de que deseja continuar?",
             confirm = "Sim",
             cancel = "Não"
         ) {
